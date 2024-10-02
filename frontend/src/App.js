@@ -1,9 +1,19 @@
-import './App.css';
+import { Routes, Route} from "react-router-dom"
+import Register from "./Pages/Auth/Register";
+import HomePage from "./Pages/HomePage";
+import PageNotFound from "./Pages/PageNotFound";
+
 
 function App() {
   return (
     <>
-      <h1>Smart Waste Management System</h1>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="*" element={<PageNotFound />} />
+      <Route path='/register' element={<Register/>}/>
+    </Routes>
+    
+     
     </>
   );
 }
