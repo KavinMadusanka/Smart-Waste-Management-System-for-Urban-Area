@@ -71,7 +71,7 @@ const AdminMenu = () => {
           </ListItem>
           <Collapse in={openWaste} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button sx={{ pl: 4 }} component={Link} to="/admin/waste/schedule">
+              <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management">
                 <ListItemText primary="Schedule Management" />
               </ListItem>
               <ListItem button sx={{ pl: 4 }} component={Link} to="/admin/waste/history">
