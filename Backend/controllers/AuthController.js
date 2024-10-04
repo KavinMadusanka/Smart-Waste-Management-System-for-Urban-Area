@@ -59,7 +59,7 @@ export const registerController = async (req, res) => {
         firstName,
         lastName,
         email,
-        password,
+        password:hashedPassword,
         contactNumber,
         address,
         accountType,
@@ -82,3 +82,70 @@ export const registerController = async (req, res) => {
     }
 
 }
+
+export const loginController = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // Validation
+        if (!email || !password) {
+            return res.status(400).send({
+                success: false,
+                message: "Email and password are required"
+            });
+        }
+
+        // Check user
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(404).send({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Check password
+        const match = await comparePassword(password, user.password);
+        if (!match) {
+            return res.status(400).send({
+                success: false,
+                message: "Invalid password"
+            });
+        }
+
+        // Determine role based on account type or admin role
+        let role = user.role;  // Default role
+        if (role !== 1) {  // If not admin, check account type
+            if (user.accountType === 'Resident') {
+                role = 'Resident';
+            } else if (user.accountType === 'WasteCollector') {
+                role = 'Waste Collector';
+            }
+        }
+
+        // Token generation
+        const token = JWT.sign({ _id: user._id, role }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+        });
+
+        // Send response
+        res.status(200).send({
+            success: true,
+            message: "Login successful",
+            user: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                role,  // Use the determined role
+            },
+            token,
+        });
+    } catch (error) {
+        console.error("Login error:", error);  // Improved error logging
+        res.status(500).send({
+            success: false,
+            message: "Error in login",
+            error,
+        });
+    }
+};
