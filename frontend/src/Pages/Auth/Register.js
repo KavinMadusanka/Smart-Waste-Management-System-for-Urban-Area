@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Grid, Container, Typography, Paper, Box } from '@mui/material';
+import { TextField, Button, MenuItem, Grid, Container, Typography, Paper, Box, Avatar } from '@mui/material';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 // Account types and waste bin types for dropdowns
-const accountTypes = ['Resident', 'WasteCollector'];
+const accountTypes = ['Resident', 'Waste Collector'];
 const wasteBinTypes = ['General', 'Recyclable'];
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -69,6 +71,8 @@ const RegistrationForm = () => {
         const response = await axios.post('/api/v1/auth/register', formData);
         if (response.data.success) {
           toast.success('Registration successful!');
+          // Redirect to login page
+          navigate('/login');
         } else {
           toast.error(response.data.message);
         }
@@ -80,10 +84,13 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4 }}>
-      <Typography variant="h5" align="center" gutterBottom>
-        Registration Form
-      </Typography>
+    <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }} />
+        <Typography variant="h5" align="center" gutterBottom>
+          Registration Form
+        </Typography>
+      </Box>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={2}>
           {/* First Name */}
