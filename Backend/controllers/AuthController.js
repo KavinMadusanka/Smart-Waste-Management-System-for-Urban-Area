@@ -149,3 +149,14 @@ export const loginController = async (req, res) => {
         });
     }
 };
+
+
+export const getAllWasteCollectors = async (req, res) => {
+    try {
+        const wasteCollectors = await userModel.find({ accountType: 'WasteCollector' });
+        res.status(200).json(wasteCollectors);
+    } catch (error) {
+        console.error('Error fetching waste collectors:', error); // Log the actual error
+        res.status(500).json({ error: 'Failed to fetch waste collectors' });
+    }
+};
