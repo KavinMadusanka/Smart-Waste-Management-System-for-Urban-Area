@@ -9,6 +9,7 @@ import ViewSchedules from "./Pages/Admin/ViewSchedules";
 import UpdatesSchedules from "./Pages/Admin/UpdateSchedules";
 import ViewSchedulesCalendar from './Pages/Admin/ViewSchedulesCalender';
 import ScheduleManagement from "./Pages/Admin/ScheduleManagement";
+import BulkCategories from "./Pages/Admin/BulkCategories";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Route path='/schedule-management/update-schedule/:id' element={<UpdatesSchedules />}/>
       <Route path='/schedule-management/schedule-calender-view' element={<ViewSchedulesCalendar />}/>
       <Route path='/schedule-management' element={<ScheduleManagement />}/>
+      <Route path='/bulkcategories' element={<BulkCategories/>}/>
     </Routes>  
     </>
   );
