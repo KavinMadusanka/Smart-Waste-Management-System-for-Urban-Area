@@ -118,7 +118,7 @@ export const loginController = async (req, res) => {
         if (role !== 1) {  // If not admin, check account type
             if (user.accountType === 'Resident') {
                 role = 'Resident';
-            } else if (user.accountType === 'WasteCollector') {
+            } else if (user.accountType === 'Waste Collector') {
                 role = 'Waste Collector';
             }
         }
