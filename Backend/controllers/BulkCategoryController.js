@@ -43,3 +43,25 @@ export const createBulkCategoryController = async (req,res) => {
         })
     }
 }
+
+// get all bulk categories
+export const getAllBulkCategoryController = async (req, res) => {
+    try {
+        // Correctly call the model to fetch bulk categories
+        const bulkCategories = await bulkCategoryModel.find({});  // Use bulkCategoryModel here
+        
+        res.status(200).send({
+            success: true,
+            countTotal: bulkCategories.length,  // Corrected from 'products.length' to 'bulkCategories.length'
+            message: "All Bulk Categories",
+            bulkCategories,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error in getting Bulk Categories',
+            error: error.message,
+        });
+    }
+};
