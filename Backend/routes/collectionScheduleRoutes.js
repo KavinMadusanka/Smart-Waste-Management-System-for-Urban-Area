@@ -1,5 +1,6 @@
 import express from 'express'
-import { createCollectionSchedule, getAllCollectionSchedules, getCollectionScheduleById, updateCollectionSchedule } from './../controllers/collectionScheduleController.js';
+import { requireSignIn } from '../middlewares/AuthMiddleware.js'
+import { createCollectionSchedule, getAllCollectionSchedules, getCollectionScheduleById,  updateCollectionSchedule } from './../controllers/collectionScheduleController.js';
 
 //router object
 const router = express.Router()
