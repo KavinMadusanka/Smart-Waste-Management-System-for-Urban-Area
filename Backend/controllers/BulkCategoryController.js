@@ -127,3 +127,32 @@ export const bulkCategoryPhotoController = async (req, res) => {
         });
     }
 };
+
+// delete bulk category
+export const deleteBulkCategoryController = async (req, res) => {
+    try {
+        // Find the bulk category by the correct parameter (cid)
+        const bulkCategory = await bulkCategoryModel.findByIdAndDelete(req.params.cid).select("-photo");
+
+        // If no bulk category is found, return 404
+        if (!bulkCategory) {
+            return res.status(404).send({
+                success: false,
+                message: 'Bulk Category not found',
+            });
+        }
+
+        // If bulk category was deleted successfully
+        res.status(200).send({
+            success: true,
+            message: 'Bulk Category Deleted Successfully',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while deleting Bulk Category',
+            error: error.message,
+        });
+    }
+};
