@@ -1,5 +1,5 @@
 import express from "express";
-import { bulkCategoryPhotoController, createBulkCategoryController, deleteBulkCategoryController, getAllBulkCategoryController, getSingleBulkCategoryController } from "../controllers/BulkCategoryController.js";
+import { bulkCategoryPhotoController, createBulkCategoryController, deleteBulkCategoryController, getAllBulkCategoryController, getSingleBulkCategoryController, updateBulkCategoryController } from "../controllers/BulkCategoryController.js";
 import formidable from 'express-formidable';
 
 export const router = express.Router();
@@ -15,3 +15,5 @@ router.get('/get-single-product/:slug', getSingleBulkCategoryController);
 router.get('/bulkcategory-photo/:cid',bulkCategoryPhotoController);
 // delete bulk category
 router.delete('/delete-bulkCategory/:cid',deleteBulkCategoryController);
+// update bulk category
+router.put('/update-bulkCategory/:cid',formidable(),updateBulkCategoryController);
