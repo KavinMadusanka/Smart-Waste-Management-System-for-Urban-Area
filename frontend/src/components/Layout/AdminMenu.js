@@ -73,6 +73,7 @@ const AdminMenu = () => {
             <List component="div" disablePadding>
               <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management">
                 <ListItemText primary="Waste collection Management" />
+                <ListItemText primary="Schedule Management" />
               </ListItem>
               <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management/create-schedule">
                 <ListItemText primary="Add waste collection schedule" />
