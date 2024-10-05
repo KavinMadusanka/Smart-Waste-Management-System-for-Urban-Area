@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     accountType: {
         type: String,
         required: true,
-        enum: ['Resident', 'WasteCollector']
+        enum: ['Resident', 'Waste Collector']
     },
     wasteBinType: {
         type: String,
