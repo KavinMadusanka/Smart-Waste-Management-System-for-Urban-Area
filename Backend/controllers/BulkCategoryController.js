@@ -65,3 +65,65 @@ export const getAllBulkCategoryController = async (req, res) => {
         });
     }
 };
+
+// get single bulk category
+export const getSingleBulkCategoryController = async (req, res) => {
+    const { slug } = req.params;
+    try {
+        const bulkCategory = await bulkCategoryModel.findOne({ slug }).select("-photo");
+        
+        if (!bulkCategory) {
+            return res.status(404).send({
+                success: false,
+                message: "Bulk Category not found",
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            message: 'Single Bulk Category Fetched',
+            bulkCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while getting single bulk category',
+            error: error.message,
+        });
+    }
+};
+
+// get photo
+export const bulkCategoryPhotoController = async (req, res) => {
+    try {
+        // Ensure the request parameter is defined and valid
+        const bulkCategory = await bulkCategoryModel.findById(req.params.cid).select("photo");
+
+        // Check if bulkCategory was found
+        if (!bulkCategory) {
+            return res.status(404).send({
+                success: false,
+                message: 'Bulk Category not found',
+            });
+        }
+
+        // Check if photo data exists
+        if (bulkCategory.photo && bulkCategory.photo.data) {
+            res.set('Content-Type', bulkCategory.photo.contentType);
+            return res.status(200).send(bulkCategory.photo.data);
+        } else {
+            return res.status(404).send({
+                success: false,
+                message: 'Photo not available',
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while getting photo',
+            error: error.message,
+        });
+    }
+};
