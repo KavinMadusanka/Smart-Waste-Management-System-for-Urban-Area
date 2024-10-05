@@ -156,3 +156,65 @@ export const deleteBulkCategoryController = async (req, res) => {
         });
     }
 };
+
+// update bulk category
+export const updateBulkCategoryController = async (req, res) => {
+    try {
+        const { name, slug, description, additionalDescription, instructions, benefits } = req.fields;
+        const { photo } = req.files;
+        
+        // Validation
+        switch (true) {
+            case !name:
+                return res.status(500).send({ error: 'Name is Required' });
+            case !description:
+                return res.status(500).send({ error: 'Description is Required' });
+            case !additionalDescription:
+                return res.status(500).send({ error: 'Additional Description is Required' });
+            case !instructions:
+                return res.status(500).send({ error: 'Instructions are Required' });
+            case !benefits:
+                return res.status(500).send({ error: 'Benefits are Required' });
+            case photo && photo.size > 1000000:
+                return res.status(500).send({ error: 'Photo is Required and less than 1MB' });
+        }
+
+        // Update the bulk category
+        const bulkCategory = await bulkCategoryModel.findByIdAndUpdate(
+            req.params.cid, 
+            { ...req.fields, slug: slugify(name) }, 
+            { new: true } // To return the updated document
+        );
+
+        // If the category was not found
+        if (!bulkCategory) {
+            return res.status(404).send({
+                success: false,
+                message: 'Bulk Category not found',
+            });
+        }
+
+        // If a new photo is uploaded, update it
+        if (photo) {
+            bulkCategory.photo.data = fs.readFileSync(photo.path);
+            bulkCategory.photo.contentType = photo.type;
+        }
+
+        // Save the updated document
+        await bulkCategory.save();
+
+        // Send response
+        res.status(201).send({
+            success: true,
+            message: 'Bulk Category Updated Successfully',
+            bulkCategory,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            error,
+            message: 'Error in Updating Bulk Category',
+        });
+    }
+};
