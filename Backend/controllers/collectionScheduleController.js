@@ -6,7 +6,7 @@ export const createCollectionSchedule = async (req, res) => {
         const { area, pickupDate, pickupTime, binType, assignedCollectorId } = req.body;
 
         // Check if the assigned collector exists and is a WasteCollector
-        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'WasteCollector' });
+        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'Waste Collector' });
         if (!collector) {
             return res.status(400).json({ message: 'Invalid Waste Collector' });
         }
@@ -36,7 +36,7 @@ export const updateCollectionSchedule = async (req, res) => {
 
     try {
         // Check if the assigned collector exists and is a WasteCollector
-        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'WasteCollector' });
+        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'Waste Collector' });
         if (!collector) {
             return res.status(400).json({ message: 'Invalid Waste Collector' });
         }
