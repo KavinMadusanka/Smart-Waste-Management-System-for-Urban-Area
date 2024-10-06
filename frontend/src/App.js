@@ -11,6 +11,7 @@ import ViewSchedulesCalendar from './Pages/Admin/ViewSchedulesCalender';
 import ScheduleManagement from "./Pages/Admin/ScheduleManagement";
 import BulkCategories from "./Pages/Admin/BulkCategories";
 import BulkCategoryUser from "./Pages/User/BulkCategoryUser";
+import BulkWasteRequestForm from "./Pages/User/BulkWasteRequestForm"
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path='/schedule-management' element={<ScheduleManagement />}/>
       <Route path='/bulkcategories' element={<BulkCategories/>}/>
       <Route path='/bcategories' element={<BulkCategoryUser/>}/>
+      <Route path='/brequestform' element={<BulkWasteRequestForm/>}/>
     </Routes>  
     </>
   );

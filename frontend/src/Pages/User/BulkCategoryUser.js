@@ -137,7 +137,7 @@ const BulkCategoryUser = () => {
                     }}>
                         <Button
                             type="primary"
-                            onClick={() => navigate('/request-form')}
+                            onClick={() => navigate('/brequestform')}
                             style={{
                                 backgroundColor: '#1A4D2E',
                                 color: '#fff',
