@@ -17,7 +17,7 @@ export const createCollectionSchedule = async (req, res) => {
             pickupDate,
             pickupTime,
             binType,
-            assignedCollector: collector._id
+            assignedCollector: collector.email
         });
 
         await newSchedule.save();
