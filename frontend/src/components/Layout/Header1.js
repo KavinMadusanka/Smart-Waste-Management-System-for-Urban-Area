@@ -15,8 +15,6 @@ const Header1 = () => {
     window.location.reload(); // Refresh page after logout
   };
 
-const Header1 = () => {
-
   return (
     <header className="navbar">
       <div className="navbar-left">
@@ -34,7 +32,7 @@ const Header1 = () => {
                 </>
               )}
 
-              {/* If regular user with accountType 'user' */}
+              {/* If regular user with accountType 'Resident' */}
               {auth.user.role === 'Resident' && (
                 <>
                   <Link to="/services" className="nav-link">Services</Link>
@@ -81,23 +79,6 @@ const Header1 = () => {
             <Link to="/signup" className="nav-link">Sign Up</Link>
           </>
         )}
-          <a href="/" className="nav-link">Home</a>
-          <a href="/about" className="nav-link">About Us</a>
-          <div className="dropdown">
-            <a href="/services" className="nav-link">Services</a>
-            <div className="dropdown-content">
-              <a href="/services/option1">Option 1</a>
-              <a href="/services/option2">Option 2</a>
-              <a href="/services/option3">Option 3</a>
-            </div>
-          </div>
-          <a href="/contact" className="nav-link">Contact Us</a>
-        </nav>
-      </div>
-      <div className="navbar-right">
-        <a href="/schedule-pickup" className="nav-link">Schedule Pickup</a>
-        <a href="/login" className="nav-link">Log In</a>
-        <a href="/signup" className="nav-link">Sign Up</a>
         <FaBell className="bell-icon" />  {/* Bell Icon */}
         <FaUserCircle className="profile-icon" />  {/* Profile Icon */}
       </div>
