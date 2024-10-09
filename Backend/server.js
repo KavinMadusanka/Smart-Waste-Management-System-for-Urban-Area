@@ -7,6 +7,7 @@ import cors from "cors";
 import AuthRoutes from './routes/AuthRoute.js'
 import CollectionSchedule from './routes/collectionScheduleRoutes.js'
 import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
+import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 
 //configure env
 dotenv.config();
@@ -26,6 +27,7 @@ app.use(morgan('dev'))
 app.use('/api/v1/auth',AuthRoutes )
 app.use('/api/v1/collectionSchedule',CollectionSchedule)
 app.use('/api/v1/bulkCategory',BulkCategoryRoutes)
+app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
 
 
 // rest api
