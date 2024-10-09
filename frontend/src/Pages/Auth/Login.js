@@ -12,8 +12,10 @@ import {
     Grid,
     Snackbar,
     Alert,
+    Box
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import Header1 from '../../components/Layout/Header1';
 
 // StyledCard definition
 const StyledCard = styled(Card)({
@@ -38,28 +40,20 @@ const Login = () => {
         e.preventDefault();
         setLoading(true);
         setError('');
-
+    
         try {
             const { data } = await axios.post(`/api/v1/auth/login`, { email, password });
             setLoading(false);
-
+    
             if (data.success) {
                 setAuth({ user: data.user, token: data.token });
                 localStorage.setItem('auth', JSON.stringify({ user: data.user, token: data.token }));
-
+    
                 setSnackbarMessage('Login successful!');
                 setOpenSnackbar(true);
-
-                // Redirect based on user role
-                if (data.user.role === 1) {
-                    navigate('/admin-profile');
-                } else if (data.user.role === "Resident") {
-                    navigate('/resident-profile');
-                } else if (data.user.role === "Waste Collector") {
-                    navigate('/waste-collector-profile');
-                } else {
-                    navigate('/');
-                }
+    
+                // Redirect to home page for all roles
+                navigate('/');
             } else {
                 setSnackbarMessage(data.message);
                 setOpenSnackbar(true);
@@ -71,12 +65,15 @@ const Login = () => {
             setOpenSnackbar(true);
         }
     };
-
+    
     const handleCloseSnackbar = () => {
         setOpenSnackbar(false);
     };
 
     return (
+        <Box>
+
+        <Header1/>
         <Grid container justifyContent="center" alignItems="center" style={{ height: '100vh' }}>
             <StyledCard>
                 <CardContent>
@@ -130,6 +127,7 @@ const Login = () => {
                 </Alert>
             </Snackbar>
         </Grid>
+        </Box>
     );
 };
 
