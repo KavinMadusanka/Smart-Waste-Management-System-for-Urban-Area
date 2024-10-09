@@ -21,8 +21,9 @@ const collectionScheduleSchema = new mongoose.Schema({
         required: true
     },
     assignedCollector: {
-        type: mongoose.ObjectId,
-        ref: 'users', // Reference to WasteCollector from the User model
+        type: String,
+        // type: mongoose.ObjectId,
+        // ref: 'users', // Reference to WasteCollector from the User model
         required: true
     },
     status: {
