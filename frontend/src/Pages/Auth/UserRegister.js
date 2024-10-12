@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Header1 from '../../components/Layout/Header1';
 
 // Account types and waste bin types for dropdowns
 const wasteBinTypes = ['General', 'Recyclable'];
@@ -83,6 +84,7 @@ const UserRegister = () => {
 
   return (
     <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
+      <Header1/>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
         <Avatar sx={{ m: 1, bgcolor: 'primary.main' }} />
         <Typography variant="h5" align="center" gutterBottom>
