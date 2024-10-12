@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from '../../context/auth';
 import { Container,Link, Box, Typography, TextField, Button, Paper } from '@mui/material';
+import Header1 from '../../components/Layout/Header1';
 
 const AuthLogin = () => {
     const [email, setEmail] = useState("");
@@ -58,6 +59,7 @@ const AuthLogin = () => {
 
     return (
       <Box>
+        <Header1/>
             <Container maxWidth="xs">
                 <Box
                     sx={{
