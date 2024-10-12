@@ -19,6 +19,7 @@ import UserRegister from "./Pages/Auth/UserRegister";
 import WasteCollectorRegister from "./Pages/Auth/WasteCollectorRegister";
 import AuthLogin from "./Pages/Auth/AuthLogin";
 import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
+import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
       <Route path='/registerCollector' element={<WasteCollectorRegister />}/>
       <Route path='/login' element={<AuthLogin />}/>
       <Route path='/collector-profile' element={<CollectorProfile />}/>
+      <Route path='/all-schedule' element={<ViewAllSchedules />}/>
     </Routes>  
     </>
   );
