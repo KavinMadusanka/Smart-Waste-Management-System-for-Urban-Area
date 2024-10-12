@@ -13,6 +13,7 @@ import BulkCategories from "./Pages/Admin/BulkCategories";
 import BulkCategoryUser from "./Pages/User/BulkCategoryUser";
 import BulkWasteRequestForm from "./Pages/User/BulkWasteRequestForm"
 import WasteCategory from "./Pages/Admin/WasteCategory"
+import UsermaintenanceRequest from "./Pages/User/UsermaintenanceRequest"
 
 function App() {
   return (
@@ -32,6 +33,8 @@ function App() {
       <Route path='/bcategories' element={<BulkCategoryUser/>}/>
       <Route path='/brequestform' element={<BulkWasteRequestForm/>}/>
       <Route path='/WasteCategory' element={<WasteCategory/>}/>
+      <Route path='/usermaintenanceRequest' element={<UsermaintenanceRequest/>}/>
+
     </Routes>  
     </>
   );
