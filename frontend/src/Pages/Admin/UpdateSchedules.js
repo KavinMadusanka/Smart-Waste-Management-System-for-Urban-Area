@@ -189,6 +189,7 @@ const UpdatesSchedules = () => {
                             name="status"
                             value={formData.status}
                             onChange={handleChange}
+                            disabled
                         >
                             <MenuItem value="Scheduled">Scheduled</MenuItem>
                             <MenuItem value="In Progress">In Progress</MenuItem>
