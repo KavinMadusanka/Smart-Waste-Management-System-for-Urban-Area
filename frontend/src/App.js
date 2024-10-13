@@ -14,6 +14,14 @@ import BulkCategoryUser from "./Pages/User/BulkCategoryUser";
 import BulkWasteRequestForm from "./Pages/User/BulkWasteRequestForm"
 import WasteCategory from "./Pages/Admin/WasteCategory"
 import UsermaintenanceRequest from "./Pages/User/UsermaintenanceRequest"
+import CollectorSchedules from "./Pages/WasteCollector/CollectorSchedules";
+import UserRegister from "./Pages/Auth/UserRegister";
+import WasteCollectorRegister from "./Pages/Auth/WasteCollectorRegister";
+import AuthLogin from "./Pages/Auth/AuthLogin";
+import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
+import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
+import MaintaintRequestDashboard from "./Pages/Admin/MaintaintRequestDashboard"
+import ApproveForm from "./Pages/Admin/ApproveForm"
 
 function App() {
   return (
@@ -34,7 +42,15 @@ function App() {
       <Route path='/brequestform' element={<BulkWasteRequestForm/>}/>
       <Route path='/WasteCategory' element={<WasteCategory/>}/>
       <Route path='/usermaintenanceRequest' element={<UsermaintenanceRequest/>}/>
-
+      <Route path='/collector-schedule' element={<CollectorSchedules />}/>
+      <Route path='/registerUser' element={<UserRegister />}/>
+      <Route path='/registerCollector' element={<WasteCollectorRegister />}/>
+      <Route path='/login' element={<AuthLogin />}/>
+      <Route path='/collector-profile' element={<CollectorProfile />}/>
+      <Route path='/all-schedule' element={<ViewAllSchedules />}/>
+      <Route path='/maintaintRequestDashboard' element={<MaintaintRequestDashboard />}/>
+      <Route path='/approveForm' element={<ApproveForm />}/>
+      
     </Routes>  
     </>
   );
