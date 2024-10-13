@@ -4,12 +4,12 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import Header1 from '../../components/Layout/Header1';
 
 // Account types and waste bin types for dropdowns
-const accountTypes = ['Resident', 'Waste Collector'];
 const wasteBinTypes = ['General', 'Recyclable'];
 
-const RegistrationForm = () => {
+const UserRegister = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -23,8 +23,7 @@ const RegistrationForm = () => {
       postalCode: '',
       country: ''
     },
-    accountType: 'Resident',
-    wasteBinType: 'General'
+    wasteBinType: 'General',
   });
 
   const [errors, setErrors] = useState({});
@@ -68,7 +67,7 @@ const RegistrationForm = () => {
       setErrors({});
       try {
         // Make an API call to register the user
-        const response = await axios.post('/api/v1/auth/register', formData);
+        const response = await axios.post('/api/v1/auth/registerUser', formData);
         if (response.data.success) {
           toast.success('Registration successful!');
           // Redirect to login page
@@ -84,9 +83,11 @@ const RegistrationForm = () => {
   };
 
   return (
+    <Box>
+      <Header1/>
     <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }} />
+        <Avatar sx={{ m: 1, bgcolor: 'green' }} />
         <Typography variant="h5" align="center" gutterBottom>
           Registration Form
         </Typography>
@@ -209,24 +210,6 @@ const RegistrationForm = () => {
             />
           </Grid>
 
-          {/* Account Type */}
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              select
-              label="Account Type"
-              name="accountType"
-              value={formData.accountType}
-              onChange={handleChange}
-            >
-              {accountTypes.map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </TextField>
-          </Grid>
-
           {/* Waste Bin Type */}
           <Grid item xs={6}>
             <TextField
@@ -248,7 +231,7 @@ const RegistrationForm = () => {
           {/* Submit Button */}
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="success">
                 Register
               </Button>
             </Box>
@@ -259,7 +242,8 @@ const RegistrationForm = () => {
       {/* Toast Notification Container */}
       <ToastContainer />
     </Container>
+    </Box>
   );
 };
 
-export default RegistrationForm;
+export default UserRegister;

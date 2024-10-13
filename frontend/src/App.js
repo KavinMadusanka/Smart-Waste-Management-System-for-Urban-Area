@@ -1,8 +1,8 @@
 import { Routes, Route} from "react-router-dom"
-import Register from "./Pages/Auth/Register";
+
 import HomePage from "./Pages/HomePage";
 import PageNotFound from "./Pages/PageNotFound";
-import Login from "./Pages/Auth/Login";
+
 import AdminDashboard from "./Pages/Admin/AdminDashboard";
 import CreateCollectionSchedule from "./Pages/Admin/CreateCollectionSchedule";
 import ViewSchedules from "./Pages/Admin/ViewSchedules";
@@ -22,6 +22,9 @@ import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
 import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
 import MaintaintRequestDashboard from "./Pages/Admin/MaintaintRequestDashboard"
 import ApproveForm from "./Pages/Admin/ApproveForm"
+import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
+import RegisterOption from "./Pages/Auth/RegisterOption";
+import UserSchedules from "./Pages/User/UserSchedules";
 
 function App() {
   return (
@@ -29,8 +32,6 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="*" element={<PageNotFound />} />
-      <Route path='/register' element={<Register/>}/>
-      <Route path='login' element={<Login />} />
       <Route path='/adminDashboard' element={<AdminDashboard /> }/>
       <Route path='/schedule-management/create-schedule' element={<CreateCollectionSchedule />} />
       <Route path='/schedule-management/view-schedules' element={<ViewSchedules />}/>
@@ -50,7 +51,9 @@ function App() {
       <Route path='/all-schedule' element={<ViewAllSchedules />}/>
       <Route path='/maintaintRequestDashboard' element={<MaintaintRequestDashboard />}/>
       <Route path='/approveForm' element={<ApproveForm />}/>
-      
+      <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
+      <Route path='/register-option' element={<RegisterOption />}/>
+      <Route path='/my-schedule' element={<UserSchedules />}/>
     </Routes>  
     </>
   );

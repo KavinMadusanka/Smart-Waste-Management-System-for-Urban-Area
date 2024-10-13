@@ -14,9 +14,10 @@ const WasteCategory = () => {
 
     const getAllBulkCategory = async () => {
         try {
-            const { data } = await axios.get('/api/v1/bulkCategory/get-bulkCategory');
+            const { data } = await axios.get('/api/v1/wasteCategory/get-wasteCategory');
             if (data?.success) {
                 setCategories(data.bulkCategories);
+                getAllBulkCategory();
             }
         } catch (error) {
             console.log(error);
@@ -59,7 +60,7 @@ const WasteCategory = () => {
         }
 
         try {
-            const { data } = await axios.put(`/api/v1/bulkCategory/update-bulkCategory/${selectedCategory._id}`, formData, {
+            const { data } = await axios.put(`/api/v1/wasteCategory/update-wasteCategory/${selectedCategory._id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', 
                 },
@@ -92,18 +93,19 @@ const WasteCategory = () => {
         }
     
         try {
-            const { data } = await axios.post('/api/v1/bulkCategory/create-bulkCategory', formData, {
+            const { data } = await axios.post('/api/v1/wasteCategory/create-wasteCategory', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
     
             if (data?.success) {
-                toast.success('Category added successfully');
+                toast.success(data.message);
                 setFile(null);
                 getAllBulkCategory();
+                form.resetFields();
             } else {
-                toast.error('Failed to add category');
+                toast.error(data.message);
             }
         } catch (error) {
             console.log('Error while adding category:', error);
@@ -119,7 +121,7 @@ const WasteCategory = () => {
             content: 'This action cannot be undone.',
             onOk: async () => {
                 try {
-                    const { data } = await axios.delete(`/api/v1/bulkCategory/delete-bulkCategory/${selectedCategory._id}`);
+                    const { data } = await axios.delete(`/api/v1/wasteCategory/delete-wasteCategory/${selectedCategory._id}`);
                     if (data?.success) {
                         toast.success('Category deleted successfully');
                         getAllBulkCategory();
@@ -136,6 +138,22 @@ const WasteCategory = () => {
         });
     };
 
+     //only gets alpherbatds
+    const handleKeyPress = (event) => {
+        const regex = /^[a-zA-Z\s]*$/;
+        if(!regex.test(event.key)){
+        event.preventDefault();
+        }
+    };
+
+    //only gets numbers
+    const handleKeyNumber = (event) => {
+        const regex = /^[0-9\s]*$/;
+        if(!regex.test(event.key)){
+          event.preventDefault();
+        }
+    };
+
     return (
         <div className="bulk-categories-container" style={{ padding: '30px', backgroundColor: '#F3F4F6', minHeight: '100vh' }}>
             <Row gutter={16}>
@@ -147,7 +165,7 @@ const WasteCategory = () => {
                                 <Input className="category-name-input" />
                             </Form.Item>
 
-                            <Form.Item label="Category Points" name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
+                            <Form.Item label="Category Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
                                 <Input className="category-name-input" />
                             </Form.Item>
 
@@ -189,7 +207,7 @@ const WasteCategory = () => {
 
                 {/* Bulk Waste Categories Section */}
                 <Col span={16}>
-                    <h2 className="categories-title" style={{ color: '#1A4D2E' }}>Bulk Waste Categories</h2>
+                    <h2 className="categories-title" style={{ color: '#1A4D2E' }}>Waste Categories</h2>
                     <div className="categories-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
                         {categories.map((category) => (
                             <Card
@@ -208,7 +226,7 @@ const WasteCategory = () => {
                                 cover={
                                     category.photo ? (
                                         <img
-                                            src={`/api/v1/bulkCategory/bulkcategory-photo/${category._id}?t=${new Date().getTime()}`}
+                                            src={`/api/v1/wasteCategory/watecategory-photo/${category._id}?t=${new Date().getTime()}`}
                                             alt={category.name}
                                             style={{
                                                 width: '100%',

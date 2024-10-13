@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles';
 import { format, addDays, startOfWeek, subDays } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
+import { useAuth } from '../../context/auth'; // Assuming you're using a context for authentication
 
 // Styled component for Day Button
 const DayButton = styled(Button)(({ selected }) => ({
@@ -44,7 +45,7 @@ const ViewAllSchedules = () => {
     const [filteredSchedules, setFilteredSchedules] = useState([]);
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [weekDays, setWeekDays] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+    const [auth] = useAuth(); // Access the logged-in user
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,7 +69,12 @@ const ViewAllSchedules = () => {
 
     const filterSchedules = (schedulesList, selectedDate) => {
         const filtered = schedulesList.filter(schedule => {
-            return format(new Date(schedule.pickupDate), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd');
+            // Check if the schedule area matches the user's city
+            const userCity = auth?.user?.address?.city?.toLowerCase();
+            return (
+                format(new Date(schedule.pickupDate), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd') &&
+                schedule.area.toLowerCase() === userCity
+            );
         });
         setFilteredSchedules(filtered);
     };
@@ -78,27 +84,12 @@ const ViewAllSchedules = () => {
         filterSchedules(schedules, day);
     };
 
-    const handleSearch = () => {
-        if (searchQuery.trim() === '') {
-            setFilteredSchedules(schedules);
-        } else {
-            const filtered = schedules.filter(schedule =>
-                schedule.area.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setFilteredSchedules(filtered);
-        }
-    };
-
-    const handleViewAllClick = () => {
-        setFilteredSchedules(schedules); // Set filteredSchedules to all schedules
-    };
-
     return (
         <Box>
             <Header1/>
             <Container maxWidth="lg" sx={{ p: 4, mt: 4 }}>
                 <Typography variant="h5" align="center" gutterBottom>
-                    All Pickups
+                    Schedule pickups {auth?.user?.address?.city || 'Your City'}
                 </Typography>
 
                 {/* Week Navigation */}
@@ -125,23 +116,6 @@ const ViewAllSchedules = () => {
                     </Box>
                 </Box>
 
-                {/* Search and View All Schedules */}
-                <Box sx={{ mb: 2, textAlign: 'center' }}>
-                    <TextField
-                        label="Search by Area"
-                        variant="outlined"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        sx={{ width: '300px', height: '40px', borderRadius: '8px', '& .MuiOutlinedInput-root': { borderRadius: '8px' } }}
-                    />
-                    <Button variant="outlined" onClick={handleSearch} sx={{ ml: 2 }}>
-                        Search
-                    </Button>
-                    <Button variant="outlined" onClick={handleViewAllClick} sx={{ ml: 2 }}>
-                        View All Schedules
-                    </Button>
-                </Box>
-
                 {/* Schedule Cards */}
                 <Grid container spacing={2}>
                     {filteredSchedules.length > 0 ? (
@@ -160,7 +134,7 @@ const ViewAllSchedules = () => {
                         ))
                     ) : (
                         <Typography variant="body1" sx={{ textAlign: 'center', mt: 2 }}>
-                            No schedules available for this date.
+                            No schedules available for this date in your area.
                         </Typography>
                     )}
                 </Grid>

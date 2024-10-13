@@ -24,31 +24,31 @@ const Header1 = () => {
 
           {auth?.user ? (
             <>
-              {/* If admin role */}
+              {/* If admin role (role === 1) */}
               {auth.user.role === 1 && (
                 <>
                   <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
-                  <Link to="/waste-collection" className="nav-link">Waste Collection</Link>
+                  <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
                 </>
               )}
 
-              {/* If regular user with accountType 'Resident' */}
-              {auth.user.role === 'Resident' && (
+              {/* If regular user with accountType 'Resident' (role === 0) */}
+              {auth.user.role === 0 && (
                 <>
-                  <Link to="/services" className="nav-link">Services</Link>
+                  <div className="dropdown">
+                <a href="/services" className="nav-link">Services</a>
+                <div className="dropdown-content">
+                  <a href="/services/option1">Option 1</a>
+                  <a href="/services/option2">Option 2</a>
+                  <a href="/services/option3">Option 3</a>
+                </div>
+              </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
-                  <Link to="/schedule-pickup" className="nav-link">Schedule Pickup</Link>
+                  <Link to="/my-schedule" className="nav-link">Schedule Pickup</Link>
                 </>
               )}
 
-              {/* If waste collector */}
-              {auth.user.role === 'Waste Collector' && (
-                <>
-                  <Link to="/assign-schedule" className="nav-link">Assign Schedule</Link>
-                  <Link to="/dashboard" className="nav-link">Dashboard</Link>
-                </>
-              )}
-
+              
               {/* Show logout for all authenticated users */}
               <Link to="/" onClick={handleLogout} className="nav-link">Logout</Link>
             </>
@@ -74,9 +74,9 @@ const Header1 = () => {
       <div className="navbar-right">
         {!auth?.user && (
           <>
-            <Link to="/schedule-pickup" className="nav-link">Schedule Pickup</Link>
+            <Link to="/all-schedule" className="nav-link">Schedule Pickup</Link>
             <Link to="/login" className="nav-link">Log In</Link>
-            <Link to="/signup" className="nav-link">Sign Up</Link>
+            <Link to="/register-option" className="nav-link">Sign Up</Link>
           </>
         )}
         <FaBell className="bell-icon" />  {/* Bell Icon */}

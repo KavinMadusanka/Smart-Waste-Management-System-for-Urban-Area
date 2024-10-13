@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 // Create User Schema
-const userSchema = new mongoose.Schema({
+const wasteCollectorSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -32,19 +32,10 @@ const userSchema = new mongoose.Schema({
         postalCode: { type: String, required: true },
         country: { type: String, required: true }
     },
-    wasteBinType: {
-        type: String,
-        enum: ['General', 'Recyclable'],
-        default: 'General'
-    },
-    points: {
-        type: Number,
-        default: 0,
-    },
     role: {
         type: Number,
-        default: 0,
+        default: 2,
     }
 });
 
-export default mongoose.model('user', userSchema);
+export default mongoose.model('wasteCollector', wasteCollectorSchema);
