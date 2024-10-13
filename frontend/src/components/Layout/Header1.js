@@ -27,7 +27,7 @@ const Header1 = () => {
               {/* If admin role (role === 1) */}
               {auth.user.role === 1 && (
                 <>
-                  <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
+                  <Link to="/adminDashboard" className="nav-link">Dashboard</Link>
                   <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
                 </>
               )}
