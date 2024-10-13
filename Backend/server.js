@@ -9,6 +9,7 @@ import CollectionSchedule from './routes/collectionScheduleRoutes.js'
 import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
 import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
+import {router as MaintainReplyRoutes} from './routes/maintainReplyRoutes.js';
 
 
 //configure env
@@ -31,6 +32,7 @@ app.use('/api/v1/collectionSchedule',CollectionSchedule)
 app.use('/api/v1/bulkCategory',BulkCategoryRoutes)
 app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
 app.use('/api/v1/maintenance',MaintenanceRoutes)
+app.use('/api/v1/replies',MaintainReplyRoutes)
 
 // rest api
 app.get("/" , (req,res) => {
