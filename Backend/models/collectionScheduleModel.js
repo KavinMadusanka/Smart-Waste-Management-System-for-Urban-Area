@@ -20,10 +20,9 @@ const collectionScheduleSchema = new mongoose.Schema({
         enum: ['General', 'Recyclable', 'Bulk'],
         required: true
     },
-    assignedCollector: {
-        type: String,
-        // type: mongoose.ObjectId,
-        // ref: 'users', // Reference to WasteCollector from the User model
+    assignedCollector: {  
+        type: mongoose.ObjectId,
+        ref: 'wasteCollector', // Reference to WasteCollector from the User model
         required: true
     },
     status: {
