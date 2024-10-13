@@ -27,7 +27,7 @@ const Header1 = () => {
               {/* If admin role (role === 1) */}
               {auth.user.role === 1 && (
                 <>
-                  <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
+                  <Link to="/adminDashboard" className="nav-link">Dashboard</Link>
                   <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
                 </>
               )}
@@ -38,13 +38,14 @@ const Header1 = () => {
                   <div className="dropdown">
                 <a href="/services" className="nav-link">Services</a>
                 <div className="dropdown-content">
-                  <a href="/services/option1">Option 1</a>
+                  <a href="/bcategories">Bulk Waste Categories</a>
                   <a href="/services/option2">Option 2</a>
                   <a href="/services/option3">Option 3</a>
                 </div>
               </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
-                  <Link to="/all-schedule" className="nav-link">Schedule Pickup</Link>
+                  <Link to="/my-schedule" className="nav-link">Schedule Pickup</Link>
+                  <Link to="/collection-history" className="nav-link">Collection Hostory</Link>
                 </>
               )}
 
@@ -74,12 +75,14 @@ const Header1 = () => {
       <div className="navbar-right">
         {!auth?.user && (
           <>
-            <Link to="/schedule-pickup" className="nav-link">Schedule Pickup</Link>
+            <Link to="/all-schedule" className="nav-link">Schedule Pickup</Link>
             <Link to="/login" className="nav-link">Log In</Link>
-            <Link to="/signup" className="nav-link">Sign Up</Link>
+            <Link to="/register-option" className="nav-link">Sign Up</Link>
           </>
         )}
-        <FaBell className="bell-icon" />  {/* Bell Icon */}
+        <Link to="/notifications" style={{ textDecoration: 'none' }}>
+          <FaBell className="bell-icon" />
+        </Link>
         <FaUserCircle className="profile-icon" />  {/* Profile Icon */}
       </div>
     </header>
