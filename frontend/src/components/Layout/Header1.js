@@ -74,7 +74,7 @@ const Header1 = () => {
       <div className="navbar-right">
         {!auth?.user && (
           <>
-            <Link to="/schedule-pickup" className="nav-link">Schedule Pickup</Link>
+            <Link to="/all-schedule" className="nav-link">Schedule Pickup</Link>
             <Link to="/login" className="nav-link">Log In</Link>
             <Link to="/register-option" className="nav-link">Sign Up</Link>
           </>
