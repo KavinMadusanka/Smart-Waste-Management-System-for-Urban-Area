@@ -45,7 +45,6 @@ const ViewAllSchedules = () => {
     const [filteredSchedules, setFilteredSchedules] = useState([]);
     const [selectedDay, setSelectedDay] = useState(new Date());
     const [weekDays, setWeekDays] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
     const [auth] = useAuth(); // Access the logged-in user
     const navigate = useNavigate();
 
@@ -85,18 +84,6 @@ const ViewAllSchedules = () => {
         filterSchedules(schedules, day);
     };
 
-    const handlePreviousWeek = () => {
-        const newStartDay = subDays(weekDays[0], 7);
-        const days = Array.from({ length: 7 }, (_, i) => addDays(newStartDay, i));
-        setWeekDays(days);
-    };
-
-    const handleNextWeek = () => {
-        const newStartDay = addDays(weekDays[0], 7);
-        const days = Array.from({ length: 7 }, (_, i) => addDays(newStartDay, i));
-        setWeekDays(days);
-    };
-
     return (
         <Box>
             <Header1/>
@@ -107,7 +94,6 @@ const ViewAllSchedules = () => {
 
                 {/* Week Navigation */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-                    <Button onClick={handlePreviousWeek}>Previous Week</Button>
                     <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                         {weekDays.map((day, index) => (
                             <Box key={index} sx={{ mx: 1, textAlign: 'center' }}>
@@ -128,7 +114,6 @@ const ViewAllSchedules = () => {
                             </Box>
                         ))}
                     </Box>
-                    <Button onClick={handleNextWeek}>Next Week</Button>
                 </Box>
 
                 {/* Schedule Cards */}
