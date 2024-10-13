@@ -15,10 +15,10 @@ const UpdatesSchedules = () => {
 
     const [formData, setFormData] = useState({
         area: '',
-        pickupDate: null, // Change to `null` to handle DatePicker's value correctly
+        pickupDate: null,
         pickupTime: '',
         binType: 'General',
-        assignedCollectorId: '',
+        assignedCollector: '',
         status: 'Scheduled' 
     });
 
@@ -29,16 +29,17 @@ const UpdatesSchedules = () => {
         const fetchCollectors = async () => {
             try {
                 const response = await axios.get(`/api/v1/auth/get-all-collectors`); 
-                setCollectors(response.data);
+                console.log(response.data); // Log the response data
+                setCollectors(response.data.wasteCollector || []);
             } catch (error) {
                 console.error("Error fetching collectors", error);
                 toast.error('Error fetching collectors. Please try again.');
             }
         };
-
+    
         fetchCollectors();
     }, []);
-
+    
     useEffect(() => {
         const fetchSchedule = async () => {
             try {
@@ -50,7 +51,7 @@ const UpdatesSchedules = () => {
                     pickupDate: new Date(scheduleData.pickupDate), 
                     pickupTime: scheduleData.pickupTime,
                     binType: scheduleData.binType,
-                    assignedCollectorId: scheduleData.assignedCollector._id,
+                    assignedCollector: scheduleData.assignedCollector._id,
                     status: scheduleData.status 
                 });
             } catch (error) {
@@ -72,7 +73,7 @@ const UpdatesSchedules = () => {
         if (!formData.area) tempErrors.area = 'Area is required';
         if (!formData.pickupDate) tempErrors.pickupDate = 'Pickup date is required';
         if (!formData.pickupTime) tempErrors.pickupTime = 'Pickup time is required';
-        if (!formData.assignedCollectorId) tempErrors.assignedCollectorId = 'Assigned collector is required';
+        if (!formData.assignedCollector) tempErrors.assignedCollector = 'Assigned collector is required'; // Fixed key here
         return tempErrors;
     };
 
@@ -85,9 +86,12 @@ const UpdatesSchedules = () => {
             setErrors({});
             try {
                 const response = await axios.put(`/api/v1/collectionSchedule/update-schedule/${id}`, formData);
+                console.log(response.data); // Log response data for debugging
                 if (response.data.success) {
                     toast.success('Schedule updated successfully!');
-                    //navigate('/schedule-management/view-schedules'); 
+                    navigate('/schedule-management/view-schedules'); // Uncomment to navigate after success
+                } else {
+                    toast.error('Failed to update schedule.'); // Handle failure case
                 }
             } catch (error) {
                 toast.error('Error updating schedule. Please try again.');
@@ -115,7 +119,6 @@ const UpdatesSchedules = () => {
                             helperText={errors.area}
                         />
 
-                        {/* Date Picker for Pickup Date */}
                         <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
                                 label="Pickup Date"
@@ -162,17 +165,21 @@ const UpdatesSchedules = () => {
                             fullWidth
                             select
                             label="Assigned Collector"
-                            name="assignedCollectorId"
-                            value={formData.assignedCollectorId}
+                            name="assignedCollector" // Ensure this matches the formData field
+                            value={formData.assignedCollector} // Ensure the value is formData.assignedCollector
                             onChange={handleChange}
-                            error={!!errors.assignedCollectorId}
-                            helperText={errors.assignedCollectorId}
+                            error={!!errors.assignedCollector}
+                            helperText={errors.assignedCollector}
                         >
-                            {collectors.map((collector) => (
-                                <MenuItem key={collector._id} value={collector._id}>
-                                    {collector.firstName} {collector.lastName}
-                                </MenuItem>
-                            ))}
+                            {Array.isArray(collectors) && collectors.length > 0 ? (
+                                collectors.map((collector) => (
+                                    <MenuItem key={collector._id} value={collector._id}>
+                                        {collector.firstName} {collector.lastName}
+                                    </MenuItem>
+                                ))
+                            ) : (
+                                <MenuItem disabled>No collectors available</MenuItem>
+                            )}
                         </TextField>
 
                         <TextField
