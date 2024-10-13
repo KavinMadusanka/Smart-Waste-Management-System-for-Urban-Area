@@ -83,8 +83,9 @@ const UserRegister = () => {
   };
 
   return (
-    <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
+    <Box>
       <Header1/>
+    <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
         <Avatar sx={{ m: 1, bgcolor: 'primary.main' }} />
         <Typography variant="h5" align="center" gutterBottom>
@@ -241,6 +242,7 @@ const UserRegister = () => {
       {/* Toast Notification Container */}
       <ToastContainer />
     </Container>
+    </Box>
   );
 };
 
