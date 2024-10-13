@@ -38,7 +38,7 @@ const Header1 = () => {
                   <div className="dropdown">
                 <a href="/services" className="nav-link">Services</a>
                 <div className="dropdown-content">
-                  <a href="/services/option1">Option 1</a>
+                  <a href="/bcategories">Bulk Waste Categories</a>
                   <a href="/services/option2">Option 2</a>
                   <a href="/services/option3">Option 3</a>
                 </div>
