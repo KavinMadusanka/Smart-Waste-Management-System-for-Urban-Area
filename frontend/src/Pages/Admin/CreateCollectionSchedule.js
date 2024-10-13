@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AdminMenu from './../../components/Layout/AdminMenu';
 import dayjs from 'dayjs';
+import Header1 from './../../components/Layout/Header1';
 
 const CreateCollectionSchedule = () => {
     const [formData, setFormData] = useState({
@@ -102,6 +103,7 @@ const CreateCollectionSchedule = () => {
     };
 
     return (
+        <Box>  <Header1/>
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
             <AdminMenu />
             <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4 }}>
@@ -191,6 +193,7 @@ const CreateCollectionSchedule = () => {
                 </form>
                 <ToastContainer />
             </Container>
+        </Box>
         </Box>
     );
 };
