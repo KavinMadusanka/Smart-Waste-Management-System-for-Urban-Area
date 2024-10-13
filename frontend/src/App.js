@@ -30,7 +30,6 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="*" element={<PageNotFound />} />
- 
       <Route path='/adminDashboard' element={<AdminDashboard /> }/>
       <Route path='/schedule-management/create-schedule' element={<CreateCollectionSchedule />} />
       <Route path='/schedule-management/view-schedules' element={<ViewSchedules />}/>

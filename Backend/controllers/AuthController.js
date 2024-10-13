@@ -12,8 +12,7 @@ export const userRegisterController = async(req,res) => {
                password,
                contactNumber,
                address,
-               wasteBinType,
-               points,              
+               wasteBinType,             
             } = req.body
 
     //validation
@@ -60,7 +59,6 @@ export const userRegisterController = async(req,res) => {
                contactNumber,
                address,
                wasteBinType,
-               points,
     }).save()
 
     res.status(201).send({
@@ -78,7 +76,6 @@ export const userRegisterController = async(req,res) => {
         })
     }
 };
-
 
 
 // Waste Collector Registration Controller
