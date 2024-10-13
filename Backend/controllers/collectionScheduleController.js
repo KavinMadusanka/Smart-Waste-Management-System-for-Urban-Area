@@ -1,14 +1,21 @@
 import CollectionSchedule from './../models/collectionScheduleModel.js';
-import User from './../models/userModel.js'
+import wasteCollector from '../models/wasteCollectorModel.js';
+import collectionScheduleModel from './../models/collectionScheduleModel.js';
 
+//create collection schedule
 export const createCollectionSchedule = async (req, res) => {
     try {
-        const { area, pickupDate, pickupTime, binType, assignedCollectorId } = req.body;
+        const { area, pickupDate, pickupTime, binType, assignedCollector } = req.body;
+
+        // Input validation
+        if (!area || !pickupDate || !pickupTime || !binType || !assignedCollector) {
+            return res.status(400).json({ success: false, message: 'All fields are required' });
+        }
 
         // Check if the assigned collector exists and is a WasteCollector
-        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'WasteCollector' });
+        const collector = await wasteCollector.findById(assignedCollector);
         if (!collector) {
-            return res.status(400).json({ message: 'Invalid Waste Collector' });
+            return res.status(400).json({ success: false, message: 'Invalid Waste Collector' });
         }
 
         // Create a new collection schedule
@@ -23,8 +30,8 @@ export const createCollectionSchedule = async (req, res) => {
         await newSchedule.save();
         res.status(201).json({ success: true, message: 'Schedule created successfully', schedule: newSchedule });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Error creating schedule' });
+        console.error('Error creating schedule:', error);
+        res.status(500).json({ success: false, message: 'Error creating schedule', error: error.message });
     }
 };
 
@@ -32,16 +39,14 @@ export const createCollectionSchedule = async (req, res) => {
 //update collection schedule
 export const updateCollectionSchedule = async (req, res) => {
     const { id } = req.params; // Get the schedule ID from the URL parameters
-    const { area, pickupDate, pickupTime, binType, assignedCollectorId,status } = req.body;
+    const { area, pickupDate, pickupTime, binType, assignedCollector, status } = req.body;
 
     try {
-        // Check if the assigned collector exists and is a WasteCollector
-        const collector = await User.findOne({ _id: assignedCollectorId, accountType: 'WasteCollector' });
+        const collector = await wasteCollector.findById(assignedCollector);
         if (!collector) {
-            return res.status(400).json({ message: 'Invalid Waste Collector' });
+            return res.status(400).json({ success: false, message: 'Invalid Waste Collector' });
         }
 
-        // Update the collection schedule
         const updatedSchedule = await CollectionSchedule.findByIdAndUpdate(
             id,
             {
@@ -56,15 +61,16 @@ export const updateCollectionSchedule = async (req, res) => {
         );
 
         if (!updatedSchedule) {
-            return res.status(404).json({ message: 'Schedule not found' });
+            return res.status(404).json({ success: false, message: 'Schedule not found' });
         }
 
         res.status(200).json({ success: true, message: 'Schedule updated successfully', schedule: updatedSchedule });
     } catch (error) {
         console.error('Error updating schedule:', error);
-        res.status(500).json({ success: false, message: 'Error updating schedule' });
+        res.status(500).json({ success: false, message: 'Error updating schedule', error: error.message });
     }
 };
+
 
 //get all collection schedules
 export const getAllCollectionSchedules = async (req, res) => {
@@ -76,6 +82,7 @@ export const getAllCollectionSchedules = async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch schedules' });
     }
 };
+
 
 //get collection schedule by ID
 export const getCollectionScheduleById = async (req, res) => {
@@ -96,3 +103,45 @@ export const getCollectionScheduleById = async (req, res) => {
     }
 };
 
+
+export const getScheduleByWasteCollectorController = async (req, res) => {
+    try {
+        const collectionSchedules = await collectionScheduleModel.find({ assignedCollector: req.params.assignedCollectorId });
+
+        res.status(200).send({
+            success: true,
+            collectionSchedules, // Ensure you're using the correct variable name
+        });
+    } catch (error) {
+        res.status(500).send({
+            success: false,
+            message: 'Error fetching schedules', // Updated error message
+            error: error.message || 'An unexpected error occurred.',
+        });
+    }
+};
+
+
+// Update the status of a collection schedule
+export const updateScheduleStatus = async (req, res) => {
+    const { id } = req.params; // Get the schedule ID from the URL
+    const { status } = req.body; // Get the new status from the request body
+
+    try {
+        // Find the schedule by ID and update its status
+        const updatedSchedule = await CollectionSchedule.findByIdAndUpdate(
+            id,
+            { status }, // Set the new status
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedSchedule) {
+            return res.status(404).json({ success: false, message: 'Schedule not found.' });
+        }
+
+        res.status(200).json({ success: true, message: 'Status updated successfully.', updatedSchedule });
+    } catch (error) {
+        console.error('Error updating schedule status:', error);
+        res.status(500).json({ success: false, message: 'Error updating status. Please try again.' });
+    }
+};

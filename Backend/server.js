@@ -7,13 +7,12 @@ import cors from "cors";
 import AuthRoutes from './routes/AuthRoute.js'
 import CollectionSchedule from './routes/collectionScheduleRoutes.js'
 import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
-<<<<<<< Updated upstream
-=======
 import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
 import BrequestFormRoutes from './routes/bRequestFormRoutes.js';
-
->>>>>>> Stashed changes
+import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
+import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
+import {router as MaintainReplyRoutes} from './routes/maintainReplyRoutes.js';
 
 //configure env
 dotenv.config();
@@ -33,13 +32,12 @@ app.use(morgan('dev'))
 app.use('/api/v1/auth',AuthRoutes )
 app.use('/api/v1/collectionSchedule',CollectionSchedule)
 app.use('/api/v1/bulkCategory',BulkCategoryRoutes)
-<<<<<<< Updated upstream
-
-=======
 app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
 app.use('/api/v1/maintenance',MaintenanceRoutes)
 app.use('/api/v1/bulkRequestForm',BrequestFormRoutes)
->>>>>>> Stashed changes
+app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
+app.use('/api/v1/maintenance',MaintenanceRoutes)
+app.use('/api/v1/replies',MaintainReplyRoutes)
 
 // rest api
 app.get("/" , (req,res) => {
