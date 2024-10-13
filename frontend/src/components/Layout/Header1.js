@@ -76,7 +76,7 @@ const Header1 = () => {
           <>
             <Link to="/schedule-pickup" className="nav-link">Schedule Pickup</Link>
             <Link to="/login" className="nav-link">Log In</Link>
-            <Link to="/signup" className="nav-link">Sign Up</Link>
+            <Link to="/register-option" className="nav-link">Sign Up</Link>
           </>
         )}
         <FaBell className="bell-icon" />  {/* Bell Icon */}
