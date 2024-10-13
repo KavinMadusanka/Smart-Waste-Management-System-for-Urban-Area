@@ -3,12 +3,15 @@ import axios from 'axios';
 import { Card, Col, Row, Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import WasteRequestForm from './../Form/WasteRequestForm'
 import Header1 from '../../components/Layout/Header1'; // Import Header1
 
 const WasteCategoryUser = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const [modalContent, setModalContent] = useState(null);
     const navigate = useNavigate();
 
     const getAllBulkCategories = async () => {
@@ -16,6 +19,8 @@ const WasteCategoryUser = () => {
             const { data } = await axios.get('/api/v1/wasteCategory/get-wasteCategory');
             if (data?.success) {
                 setCategories(data.bulkCategories);
+                console.log(data);
+                getAllBulkCategories();
             }
         } catch (error) {
             console.error('Error fetching categories:', error);
@@ -34,6 +39,12 @@ const WasteCategoryUser = () => {
     const handleCloseModal = () => {
         setIsModalVisible(false);
         setSelectedCategory(null);
+    };
+
+    // Function to handle modal visibility and content
+    const handleModal = (content) => {
+        setVisible(true);
+        setModalContent(content);
     };
 
     return (
@@ -141,7 +152,7 @@ const WasteCategoryUser = () => {
                     }}>
                         <Button
                             type="primary"
-                            onClick={() => navigate('/brequestform')}
+                            onClick={() => { handleModal(<WasteRequestForm />);}}
                             style={{
                                 backgroundColor: '#1A4D2E',
                                 color: '#fff',
@@ -186,6 +197,12 @@ const WasteCategoryUser = () => {
                         )}
                     </div>
                 </Modal>
+                <Modal
+                    onCancel={() => setVisible(false)}
+                    footer={null}
+                    visible={visible}>
+                    {modalContent}
+              </Modal> 
 
             </div>
         </div>
