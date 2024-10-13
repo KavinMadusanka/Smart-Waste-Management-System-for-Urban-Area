@@ -122,7 +122,6 @@ const ViewAllSchedules = () => {
                         filteredSchedules.map(schedule => (
                             <Grid item xs={12} key={schedule._id}>
                                 <ScheduleCard>
-                                    <Typography variant="h6">{schedule.area}</Typography>
                                     <Typography>Pickup Time: {schedule.pickupTime}</Typography>
                                     <Typography>Bin Type: {schedule.binType}</Typography>
                                     <Typography>
