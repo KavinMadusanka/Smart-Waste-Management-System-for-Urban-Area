@@ -1,0 +1,56 @@
+/* Header1.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    background-color: white;  /* Light background */
+    color: black;
+    height: 60px;             /* Dark text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Slight shadow for depth */
+}
+
+.toolbar {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem; /* Logo text size */
+    font-weight: bold; /* Bold logo text */
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-link {
+    margin: 0 15px;  /* Add spacing between the links */
+    font-size: 16px;
+    text-transform: none;  /* Disable text transformation (like uppercase) */
+    color: black;
+}
+
+.nav-link:hover {
+    color: #f3f2f0; /* Color change on hover for links */
+}
+
+.logout-link {
+    font-weight: bold;  /* Make the logout button bolder */
+}
+
+.bell-icon, .profile-icon {
+    font-size: 1.5rem;
+    color: black;
+    margin-left: 15px;  /* Spacing between icons */
+    cursor: pointer;
+}
+
+.bell-icon:hover, .profile-icon:hover {
+    color: #eee9e1; /* Color change on hover for icons */
+}
