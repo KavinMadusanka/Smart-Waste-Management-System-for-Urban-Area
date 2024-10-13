@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 import { createWasteCategoryController, getAllWasteCategoryController, getSingleWasteCategoryController, wasteCategoryPhotoController, deleteWasteCategoryController, updateWasteCategoryController } from "../controllers/wasteCategoryController.js";
 import formidable from 'express-formidable';
 
