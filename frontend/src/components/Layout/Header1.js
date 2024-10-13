@@ -27,7 +27,7 @@ const Header1 = () => {
               {/* If admin role (role === 1) */}
               {auth.user.role === 1 && (
                 <>
-                  <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
+                  <Link to="/adminDashboard" className="nav-link">Dashboard</Link>
                   <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
                 </>
               )}
@@ -45,6 +45,7 @@ const Header1 = () => {
               </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
                   <Link to="/my-schedule" className="nav-link">Schedule Pickup</Link>
+                  <Link to="/collection-history" className="nav-link">Collection Hostory</Link>
                 </>
               )}
 
@@ -79,7 +80,9 @@ const Header1 = () => {
             <Link to="/register-option" className="nav-link">Sign Up</Link>
           </>
         )}
-        <FaBell className="bell-icon" />  {/* Bell Icon */}
+        <Link to="/notifications" style={{ textDecoration: 'none' }}>
+          <FaBell className="bell-icon" />
+        </Link>
         <FaUserCircle className="profile-icon" />  {/* Profile Icon */}
       </div>
     </header>
