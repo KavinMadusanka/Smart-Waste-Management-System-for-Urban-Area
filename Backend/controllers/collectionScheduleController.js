@@ -120,3 +120,28 @@ export const getScheduleByWasteCollectorController = async (req, res) => {
         });
     }
 };
+
+
+// Update the status of a collection schedule
+export const updateScheduleStatus = async (req, res) => {
+    const { id } = req.params; // Get the schedule ID from the URL
+    const { status } = req.body; // Get the new status from the request body
+
+    try {
+        // Find the schedule by ID and update its status
+        const updatedSchedule = await CollectionSchedule.findByIdAndUpdate(
+            id,
+            { status }, // Set the new status
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedSchedule) {
+            return res.status(404).json({ success: false, message: 'Schedule not found.' });
+        }
+
+        res.status(200).json({ success: true, message: 'Status updated successfully.', updatedSchedule });
+    } catch (error) {
+        console.error('Error updating schedule status:', error);
+        res.status(500).json({ success: false, message: 'Error updating status. Please try again.' });
+    }
+};
