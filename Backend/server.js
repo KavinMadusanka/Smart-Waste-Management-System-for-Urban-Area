@@ -9,7 +9,8 @@ import CollectionSchedule from './routes/collectionScheduleRoutes.js'
 import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
 import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
-
+import {router as MaintainReplyRoutes} from './routes/maintainReplyRoutes.js';
+import WasteRequestRoutes from './routes/wasteRequestRoutes.js';
 
 //configure env
 dotenv.config();
@@ -31,6 +32,8 @@ app.use('/api/v1/collectionSchedule',CollectionSchedule)
 app.use('/api/v1/bulkCategory',BulkCategoryRoutes)
 app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
 app.use('/api/v1/maintenance',MaintenanceRoutes)
+app.use('/api/v1/replies',MaintainReplyRoutes)
+app.use('/api/v1/wasteRequest',WasteRequestRoutes)
 
 // rest api
 app.get("/" , (req,res) => {
