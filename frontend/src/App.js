@@ -22,7 +22,6 @@ import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
 import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 import RegisterOption from "./Pages/Auth/RegisterOption";
-import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 
 function App() {
   return (
@@ -49,7 +48,6 @@ function App() {
       <Route path='/all-schedule' element={<ViewAllSchedules />}/>
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
       <Route path='/register-option' element={<RegisterOption />}/>
-      <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
     </Routes>  
     </>
   );
