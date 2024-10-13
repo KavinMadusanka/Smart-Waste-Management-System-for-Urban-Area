@@ -23,6 +23,8 @@ import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 import RegisterOption from "./Pages/Auth/RegisterOption";
 import UserSchedules from "./Pages/User/UserSchedules";
+import BRequests from "./Pages/User/BRequests"
+import AllBRequests from "./Pages/WasteCollector/AllBRequests";
 
 function App() {
   return (
@@ -50,6 +52,8 @@ function App() {
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
       <Route path='/register-option' element={<RegisterOption />}/>
       <Route path='/my-schedule' element={<UserSchedules />}/>
+      <Route path='/bRequests' element={<BRequests />}/>
+      <Route path='/allbRequests' element={<AllBRequests />}/>
     </Routes>  
     </>
   );
