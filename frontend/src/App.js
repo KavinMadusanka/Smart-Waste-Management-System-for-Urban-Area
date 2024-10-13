@@ -20,6 +20,8 @@ import WasteCollectorRegister from "./Pages/Auth/WasteCollectorRegister";
 import AuthLogin from "./Pages/Auth/AuthLogin";
 import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
 import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
+import MaintaintRequestDashboard from "./Pages/Admin/MaintaintRequestDashboard"
+import ApproveForm from "./Pages/Admin/ApproveForm"
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 import RegisterOption from "./Pages/Auth/RegisterOption";
 import UserSchedules from "./Pages/User/UserSchedules";
@@ -47,6 +49,8 @@ function App() {
       <Route path='/login' element={<AuthLogin />}/>
       <Route path='/collector-profile' element={<CollectorProfile />}/>
       <Route path='/all-schedule' element={<ViewAllSchedules />}/>
+      <Route path='/maintaintRequestDashboard' element={<MaintaintRequestDashboard />}/>
+      <Route path='/approveForm' element={<ApproveForm />}/>
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
       <Route path='/register-option' element={<RegisterOption />}/>
       <Route path='/my-schedule' element={<UserSchedules />}/>
