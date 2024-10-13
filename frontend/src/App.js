@@ -25,6 +25,8 @@ import ApproveForm from "./Pages/Admin/ApproveForm"
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 import RegisterOption from "./Pages/Auth/RegisterOption";
 import UserSchedules from "./Pages/User/UserSchedules";
+import Notifications from "./Pages/User/Notifications";
+import CollectionHistory from "./Pages/User/WasteCollectionHistory";
 
 function App() {
   return (
@@ -54,6 +56,11 @@ function App() {
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
       <Route path='/register-option' element={<RegisterOption />}/>
       <Route path='/my-schedule' element={<UserSchedules />}/>
+
+
+
+      <Route path='/notifications' element={<Notifications />}/>
+      <Route path='/collection-history' element={<CollectionHistory />}/>
     </Routes>  
     </>
   );
