@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, MenuItem, Container, Typography, Paper, Box } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'; // Import DatePicker
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'; // Adapter for Day.js
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; // LocalizationProvider for DatePicker
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify'; // Import Toastify components
-import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import AdminMenu from './../../components/Layout/AdminMenu';
-import dayjs from 'dayjs'; // For date formatting
+import dayjs from 'dayjs';
 
 const CreateCollectionSchedule = () => {
     const [formData, setFormData] = useState({
         area: '',
-        pickupDate: null, // Initialize with current date using dayjs
+        pickupDate: dayjs(), // Initialize with the current date
         pickupTime: '',
         binType: 'General',
-        assignedCollectorId: ''
+        assignedCollector: ''
     });
 
-    const [collectors, setCollectors] = useState([]);
+    const [collectors, setCollectors] = useState([]); // State to store the fetched collectors
     const [errors, setErrors] = useState({});
 
     useEffect(() => {
         // Fetch the list of waste collectors
         const fetchCollectors = async () => {
             try {
-                const response = await axios.get(`/api/v1/auth/get-all-collectors`); // Adjust based on your backend route
-                setCollectors(response.data);
+                const response = await axios.get(`/api/v1/auth/get-all-collectors`);
+                console.log(response.data); // Log the response to check the format
+                setCollectors(response.data.wasteCollector || []); // Set collectors or fallback to an empty array
             } catch (error) {
                 console.error("Error fetching collectors", error);
-                toast.error('Error fetching collectors. Please try again.'); // Show error toast
+                toast.error('Error fetching collectors. Please try again.');
             }
         };
 
@@ -42,29 +43,29 @@ const CreateCollectionSchedule = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    // Handle date changes for the DatePicker
+    // Handle date changes
     const handleDateChange = (newDate) => {
         setFormData({ ...formData, pickupDate: newDate });
     };
 
     // Validate form inputs
     const validate = () => {
-        let hasError = false; // Track if any error occurs
+        let hasError = false;
 
         if (!formData.area) {
-            toast.error('Area is required'); // Show toast for this error
+            toast.error('Area is required');
             hasError = true;
         }
         if (!formData.pickupDate) {
-            toast.error('Pickup date is required'); // Show toast for this error
+            toast.error('Pickup date is required');
             hasError = true;
         }
         if (!formData.pickupTime) {
-            toast.error('Pickup time is required'); // Show toast for this error
+            toast.error('Pickup time is required');
             hasError = true;
         }
-        if (!formData.assignedCollectorId) {
-            toast.error('Assigned collector is required'); // Show toast for this error
+        if (!formData.assignedCollector) {
+            toast.error('Assigned collector is required');
             hasError = true;
         }
 
@@ -76,29 +77,27 @@ const CreateCollectionSchedule = () => {
         e.preventDefault();
         const { hasError } = validate();
 
-        if (hasError) {
-            return; // Stop submission if there are errors
-        } else {
-            try {
-                const response = await axios.post('/api/v1/collectionSchedule/create-schedule', {
-                    ...formData,
-                    pickupDate: formData.pickupDate.format('YYYY-MM-DD'), // Send formatted date
+        if (hasError) return; // Stop submission if there are errors
+
+        try {
+            const response = await axios.post('/api/v1/collectionSchedule/create-schedule', {
+                ...formData,
+                pickupDate: formData.pickupDate.format('YYYY-MM-DD'), // Send formatted date
+            });
+            if (response.data.success) {
+                toast.success('Schedule created successfully!');
+                // Reset form after submission
+                setFormData({
+                    area: '',
+                    pickupDate: dayjs(), // Reset to current date
+                    pickupTime: '',
+                    binType: 'General',
+                    assignedCollector: ''
                 });
-                if (response.data.success) {
-                    toast.success('Schedule created successfully!'); // Show success toast
-                    // Clear form after successful submission
-                    setFormData({
-                        area: '',
-                        pickupDate: dayjs(), // Reset to current date
-                        pickupTime: '',
-                        binType: 'General',
-                        assignedCollectorId: ''
-                    });
-                }
-            } catch (error) {
-                toast.error('Error creating schedule. Please try again.'); // Show error toast
-                console.error("Error:", error);
             }
+        } catch (error) {
+            toast.error('Error creating schedule. Please try again.');
+            console.error("Error:", error);
         }
     };
 
@@ -132,7 +131,7 @@ const CreateCollectionSchedule = () => {
 
                         <TextField
                             fullWidth
-                            select // Adding this to make the TextField act as a Select dropdown
+                            select
                             label="Pickup Time"
                             name="pickupTime"
                             value={formData.pickupTime}
@@ -141,11 +140,10 @@ const CreateCollectionSchedule = () => {
                             helperText={errors.pickupTime}
                         >
                             <MenuItem value="08:00 AM-10:00 AM">08:00 AM-10:00 AM</MenuItem>
-                            <MenuItem value="10:00 AM-12:00 PM">11:00 AM-12:00 PM</MenuItem>
-                            <MenuItem value="12:00 PM-3:00 PM">1:00 PM-3:00 PM</MenuItem>
-                            <MenuItem value="02:00 PM-6:00 PM">04:00 PM-6:00 PM</MenuItem>
+                            <MenuItem value="10:00 AM-12:00 PM">10:00 AM-12:00 PM</MenuItem>
+                            <MenuItem value="12:00 PM-3:00 PM">12:00 PM-3:00 PM</MenuItem>
+                            <MenuItem value="02:00 PM-6:00 PM">02:00 PM-6:00 PM</MenuItem>
                         </TextField>
-
 
                         <TextField
                             fullWidth
@@ -164,31 +162,33 @@ const CreateCollectionSchedule = () => {
                             fullWidth
                             select
                             label="Assigned Collector"
-                            name="assignedCollectorId"
-                            value={formData.assignedCollectorId}
+                            name="assignedCollector"
+                            value={formData.assignedCollector}
                             onChange={handleChange}
-                            error={!!errors.assignedCollectorId}
-                            helperText={errors.assignedCollectorId}
+                            error={!!errors.assignedCollector}
+                            helperText={errors.assignedCollector}
                         >
-                            {collectors.map((collector) => (
-                                <MenuItem key={collector._id} value={collector._id}>
-                                    {collector.firstName} {collector.lastName}
-                                </MenuItem>
-                            ))}
+                            {Array.isArray(collectors) && collectors.length > 0 ? (
+                                collectors.map((collector) => (
+                                    <MenuItem key={collector._id} value={collector._id}>
+                                        {collector.firstName} {collector.lastName}
+                                    </MenuItem>
+                                ))
+                            ) : (
+                                <MenuItem disabled>No collectors available</MenuItem>
+                            )}
                         </TextField>
 
                         <Button
                             type="submit"
                             variant="contained"
                             fullWidth
-                            sx={{ backgroundColor: '#4CAF50', color: '#fff' }} // Green button style
+                            sx={{ backgroundColor: '#4CAF50', color: '#fff' }}
                         >
                             Send Schedule
                         </Button>
                     </Box>
                 </form>
-
-                {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
         </Box>
