@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Layout from '../../components/Layout/Header1';
-// import Layout from '../../components/Layout/Layout';
-
+import Header1 from '../../components/Layout/Header1'; // Import the Header1 component
+import { Link } from 'react-router-dom'; // Use Link for navigation if needed
 
 const UserMaintainRequest = () => {
   // State to manage form inputs
@@ -32,6 +31,15 @@ const UserMaintainRequest = () => {
       const response = await axios.post('/api/v1/maintenance/create-maintenance', formData);
       if (response.status === 201) {
         alert('Maintenance request submitted successfully.');
+        // Clear form after submission if needed
+        setFormData({
+          fullName: '',
+          contactNumber: '',
+          email: '',
+          issueDescription: '',
+          objectType: '',
+          material: ''
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -40,97 +48,144 @@ const UserMaintainRequest = () => {
   };
 
   return (
-    
-    <div style={styles.container}>
-    
-      <h2 style={styles.heading}>Submit a Repair Request</h2>
-      <form style={styles.form} onSubmit={handleSubmit}>
-        <label style={styles.label}>Full Name:</label>
-        <input
-          type="text"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
+    <>
+      {/* Add the Header1 component */}
+      <Header1 />
 
-        <label style={styles.label}>Contact Number:</label>
-        <input
-          type="text"
-          name="contactNumber"
-          value={formData.contactNumber}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
+      {/* Main content area with sidebar and form */}
+      <div style={styles.mainContainer}>
+        
+        {/* Sidebar with navigation tabs */}
+        <div style={styles.sidebar}>
+          <h3>Navigation</h3>
+          <ul style={styles.navList}>
+            <li><Link to="/" style={styles.navLink}>Home</Link></li>
+            <li><Link to="/services" style={styles.navLink}>Services</Link></li>
+            <li><Link to="/contact" style={styles.navLink}>Contact Us</Link></li>
+            <li><Link to="/about" style={styles.navLink}>About Us</Link></li>
+            <li><Link to="/schedule-pickup" style={styles.navLink}>Schedule Pickup</Link></li>
+          </ul>
+        </div>
 
-        <label style={styles.label}>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          style={styles.input}
-          required
-        />
+        {/* Form content */}
+        <div style={styles.formContainer}>
+          <h2 style={styles.heading}>Submit a Repair Request</h2>
+          <form style={styles.form} onSubmit={handleSubmit}>
+            <label style={styles.label}>Full Name:</label>
+            <input
+              type="text"
+              name="fullName"
+              value={formData.fullName}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
 
-        <label style={styles.label}>Issue Description:</label>
-        <textarea
-          name="issueDescription"
-          value={formData.issueDescription}
-          onChange={handleChange}
-          style={styles.textarea}
-          required
-        ></textarea>
+            <label style={styles.label}>Contact Number:</label>
+            <input
+              type="text"
+              name="contactNumber"
+              value={formData.contactNumber}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
 
-        <label style={styles.label}>Object Type:</label>
-        <select
-          name="objectType"
-          value={formData.objectType}
-          onChange={handleChange}
-          style={styles.select}
-          required
-        >
-          <option value="" disabled>Select Object Type</option>
-          <option value="Waste Bin">Waste Bin</option>
-          <option value="Sensor">Sensor</option>
-          <option value="Lid">Lid</option>
-          <option value="Other">Other</option>
-        </select>
+            <label style={styles.label}>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
 
-        <label style={styles.label}>Material:</label>
-        <select
-          name="material"
-          value={formData.material}
-          onChange={handleChange}
-          style={styles.select}
-          required
-        >
-          <option value="" disabled>Select Material</option>
-          <option value="Plastic">Plastic</option>
-          <option value="Metal">Metal</option>
-          <option value="Composite">Composite</option>
-          <option value="Other">Other</option>
-        </select>
+            <label style={styles.label}>Issue Description:</label>
+            <textarea
+              name="issueDescription"
+              value={formData.issueDescription}
+              onChange={handleChange}
+              style={styles.textarea}
+              required
+            ></textarea>
 
-        <button type="submit" style={styles.button}>Submit</button>
-      </form>
-    </div>
-  
-    
+            <label style={styles.label}>Object Type:</label>
+            <select
+              name="objectType"
+              value={formData.objectType}
+              onChange={handleChange}
+              style={styles.select}
+              required
+            >
+              <option value="" disabled>Select Object Type</option>
+              <option value="Waste Bin">Waste Bin</option>
+              <option value="Sensor">Sensor</option>
+              <option value="Lid">Lid</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <label style={styles.label}>Material:</label>
+            <select
+              name="material"
+              value={formData.material}
+              onChange={handleChange}
+              style={styles.select}
+              required
+            >
+              <option value="" disabled>Select Material</option>
+              <option value="Plastic">Plastic</option>
+              <option value="Metal">Metal</option>
+              <option value="Composite">Composite</option>
+              <option value="Other">Other</option>
+            </select>
+
+            <button type="submit" style={styles.button}>Submit</button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 
 // Inline CSS styles
 const styles = {
-  container: {
-    maxWidth: '600px',
-    margin: '50px auto',
+  mainContainer: {
+    display: 'flex',
+    alignItems: 'flex-start', // Aligns both elements to the top
+    minHeight: '100vh', // Full viewport height
+    padding: '20px',
+    backgroundColor: '#f0f0f0', // Light background for the page
+  },
+  sidebar: {
+    width: '300px', // Sidebar width
+    marginRight: '20px',
+    padding: '15px',
+    backgroundColor: '#f4f4f4',
+    borderRadius: '8px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    height: 'fit-content', // Ensure the sidebar does not stretch to full height
+  },
+  navList: {
+    listStyleType: 'none',
+    padding: '0',
+  },
+  navLink: {
+    display: 'block',
+    padding: '10px 0',
+    color: '#333',
+    textDecoration: 'none',
+    fontWeight: 'bold',
+    fontSize: '16px',
+  },
+  formContainer: {
+    flex: 1, // Allow the form to take up the remaining space
+    maxWidth: '600px', // Reduced the max width of the form
+    backgroundColor: '#fff',
     padding: '20px',
     borderRadius: '8px',
-    backgroundColor: '#f7f7f7',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    alignItems: 'center'
   },
   heading: {
     textAlign: 'center',
@@ -180,9 +235,6 @@ const styles = {
     border: 'none',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
-  },
-  buttonHover: {
-    backgroundColor: '#45a049',
   },
 };
 
