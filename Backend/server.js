@@ -7,8 +7,8 @@ import cors from "cors";
 import AuthRoutes from './routes/AuthRoute.js'
 import CollectionSchedule from './routes/collectionScheduleRoutes.js'
 import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
-import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
-import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
+// import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
+// import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
 import BrequestFormRoutes from './routes/bRequestFormRoutes.js';
 import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
