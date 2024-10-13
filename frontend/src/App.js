@@ -21,6 +21,8 @@ import AuthLogin from "./Pages/Auth/AuthLogin";
 import CollectorProfile from "./Pages/WasteCollector/CollectorProfile";
 import ViewAllSchedules from "./Pages/User/ViewAllSchedules";
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
+import RegisterOption from "./Pages/Auth/RegisterOption";
+import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 
 function App() {
   return (
@@ -28,7 +30,6 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="*" element={<PageNotFound />} />
- 
       <Route path='/adminDashboard' element={<AdminDashboard /> }/>
       <Route path='/schedule-management/create-schedule' element={<CreateCollectionSchedule />} />
       <Route path='/schedule-management/view-schedules' element={<ViewSchedules />}/>
@@ -46,6 +47,8 @@ function App() {
       <Route path='/login' element={<AuthLogin />}/>
       <Route path='/collector-profile' element={<CollectorProfile />}/>
       <Route path='/all-schedule' element={<ViewAllSchedules />}/>
+      <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
+      <Route path='/register-option' element={<RegisterOption />}/>
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
     </Routes>  
     </>
