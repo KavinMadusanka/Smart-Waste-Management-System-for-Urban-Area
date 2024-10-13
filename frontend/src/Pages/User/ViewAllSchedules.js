@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles';
 import { format, addDays, startOfWeek, subDays } from 'date-fns';
+import Header1 from '../../components/Layout/Header1';
 
 // Styled component for Day Button
 const DayButton = styled(Button)(({ selected }) => ({
@@ -105,7 +106,8 @@ const ViewAllSchedules = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex', flexGrow: 1 }}>
+        <Box>
+            <Header1/>
             <Container maxWidth="lg" sx={{ p: 4, mt: 4 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     All Pickups

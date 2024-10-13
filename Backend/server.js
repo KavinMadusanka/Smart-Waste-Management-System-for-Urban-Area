@@ -6,6 +6,10 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 import AuthRoutes from './routes/AuthRoute.js'
 import CollectionSchedule from './routes/collectionScheduleRoutes.js'
+import { router as BulkCategoryRoutes } from './routes/bulkCategoryRoute.js';
+import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
+import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
+
 
 //configure env
 dotenv.config();
@@ -24,7 +28,9 @@ app.use(morgan('dev'))
 //Route
 app.use('/api/v1/auth',AuthRoutes )
 app.use('/api/v1/collectionSchedule',CollectionSchedule)
-
+app.use('/api/v1/bulkCategory',BulkCategoryRoutes)
+app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
+app.use('/api/v1/maintenance',MaintenanceRoutes)
 
 // rest api
 app.get("/" , (req,res) => {

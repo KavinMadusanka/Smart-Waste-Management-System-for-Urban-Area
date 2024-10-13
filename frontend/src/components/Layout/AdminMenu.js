@@ -72,13 +72,16 @@ const AdminMenu = () => {
           <Collapse in={openWaste} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management">
-                <ListItemText primary="Schedule Management" />
+                <ListItemText primary="Waste collection Management" />
               </ListItem>
-              <ListItem button sx={{ pl: 4 }} component={Link} to="/admin/waste/history">
-                <ListItemText primary="Collection History" />
+              <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management/create-schedule">
+                <ListItemText primary="Add waste collection schedule" />
               </ListItem>
-              <ListItem button sx={{ pl: 4 }} component={Link} to="/admin/waste/reports">
-                <ListItemText primary="Collection Reports" />
+              <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management/view-schedules">
+                <ListItemText primary="View Collection Schedule" />
+              </ListItem>
+              <ListItem button sx={{ pl: 4 }} component={Link} to="/schedule-management/schedule-calender-view">
+                <ListItemText primary="Schedule Calender View" />
               </ListItem>
             </List>
           </Collapse>

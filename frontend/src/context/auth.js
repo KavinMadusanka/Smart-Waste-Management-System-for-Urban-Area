@@ -6,6 +6,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({
     user: null,
+    wasteCollector: null,
     token: "",
     role: ""
   });
@@ -16,6 +17,7 @@ const AuthProvider = ({ children }) => {
       const parseData = JSON.parse(data);
       setAuth({
         user: parseData.user || null,
+        wasteCollector: parseData.wasteCollector || null,
         token: parseData.token,
       });
     }

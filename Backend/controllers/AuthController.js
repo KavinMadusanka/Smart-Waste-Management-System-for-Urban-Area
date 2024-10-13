@@ -1,46 +1,43 @@
 import { comparePassword, hashPassword } from "../helpers/AuthHelper.js";
 import userModel from "../models/userModel.js";
 import JWT from "jsonwebtoken"
+import wasteCollectorModel from "../models/wasteCollectorModel.js";
 
-
-export const registerController = async (req, res) => {
+//register user
+export const userRegisterController = async(req,res) => {
     try{
-        const { firstName, 
-                lastName, 
-                email, 
-                password, 
-                contactNumber, 
-                address, 
-                accountType, 
-                wasteBinType
-            } = req.body;
+        const {firstName,
+               lastName,
+               email,
+               password,
+               contactNumber,
+               address,
+               wasteBinType,
+               points,              
+            } = req.body
 
     //validation
     if (!firstName) {
-        return res.send({ message: "First name name is Required" });
+        return res.send({ message: "Full name name is Required" });
     }
     if (!lastName) {
-        return res.send({ message: "Last name name is Required" });
+        return res.send({ message: "Full name name is Required" });
     }
     if (!email) {
-        return res.send({ message: "Full name name is Required" });
+        return res.send({ message: "Email is Required" });
     }
     if (!password) {
-        return res.send({ message: "Full name name is Required" });
+        return res.send({ message: "DOB is Required" });
     }
     if (!contactNumber) {
-        return res.send({ message: "Contact number is Required" });
+        return res.send({ message: "Phone Number is Required" });
     }
     if (!address) {
-        return res.send({ message: "Address is Required" });
-    }
-    if (!accountType) {
-        return res.send({ message: "Account type is Required" });
+        return res.send({ message: "Residential Address is Required" });
     }
     if (!wasteBinType) {
-        return res.send({ message: "Waste bin type is Required" });
+        return res.send({ message: "Password is Required" });
     }
-
     //check user
     const existingUser = await userModel.findOne({email})
 
@@ -57,13 +54,13 @@ export const registerController = async (req, res) => {
     //save
     const user = await new userModel({
         firstName,
-        lastName,
-        email,
-        password:hashedPassword,
-        contactNumber,
-        address,
-        accountType,
-        wasteBinType
+               lastName,
+               email,
+               password:hashedPassword,
+               contactNumber,
+               address,
+               wasteBinType,
+               points,
     }).save()
 
     res.status(201).send({
@@ -76,87 +73,122 @@ export const registerController = async (req, res) => {
         console.log(error)
         res.status(500).send({
             success:false,
-            message:"Error in registration",
+            message:'Error in Registration',
             error
         })
-    }
-
-}
-
-export const loginController = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-
-        // Validation
-        if (!email || !password) {
-            return res.status(400).send({
-                success: false,
-                message: "Email and password are required"
-            });
-        }
-
-        // Check user
-        const user = await userModel.findOne({ email });
-        if (!user) {
-            return res.status(404).send({
-                success: false,
-                message: "User not found"
-            });
-        }
-
-        // Check password
-        const match = await comparePassword(password, user.password);
-        if (!match) {
-            return res.status(400).send({
-                success: false,
-                message: "Invalid password"
-            });
-        }
-
-        // Determine role based on account type or admin role
-        let role = user.role;  // Default role
-        if (role !== 1) {  // If not admin, check account type
-            if (user.accountType === 'Resident') {
-                role = 'Resident';
-            } else if (user.accountType === 'WasteCollector') {
-                role = 'Waste Collector';
-            }
-        }
-
-        // Token generation
-        const token = JWT.sign({ _id: user._id, role }, process.env.JWT_SECRET, {
-            expiresIn: "7d",
-        });
-
-        // Send response
-        res.status(200).send({
-            success: true,
-            message: "Login successful",
-            user: {
-                firstName: user.firstName,
-                lastName: user.lastName,
-                email: user.email,
-                role,  // Use the determined role
-            },
-            token,
-        });
-    } catch (error) {
-        console.error("Login error:", error);  // Improved error logging
-        res.status(500).send({
-            success: false,
-            message: "Error in login",
-            error,
-        });
     }
 };
 
 
-export const getAllWasteCollectors = async (req, res) => {
+
+// Waste Collector Registration Controller
+export const wasteCollectorRegisterController = async (req, res) => {
     try {
-        const wasteCollectors = await userModel.find({ accountType: 'Waste Collector' });
-        res.status(200).json(wasteCollectors);
+      const {
+        firstName,
+        lastName,
+        email,
+        password,
+        contactNumber,
+        address,
+      } = req.body;
+
+      const hashedPassword = await hashPassword(password)
+
+      // Create the shop object with all details and binary image
+      const shop = await new wasteCollectorModel({
+        firstName,
+        lastName,
+        email,
+        password:hashedPassword,
+        contactNumber,
+        address,
+      }).save();
+  
+      res.status(201).json({
+        success: true,
+        message: 'Waste Collector registered successfully',
+        shop,
+      });
     } catch (error) {
-        console.error('Error fetching waste collectors:', error); // Log the actual error
-        res.status(500).json({ error: 'Failed to fetch waste collectors' });
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: 'Error in registration',
+      });
     }
+  };
+  
+
+
+
+
+//login for customer,user and admin  
+export const LoginController = async (req, res) => {
+  
+    try {
+      const { email, password } = req.body;
+  
+      // Validate input
+      if (!email || !password) {
+        return res.status(400).send({ success: false, message: "Email and password are required" });
+      }
+  
+      // Check in users table
+      let user = await userModel.findOne({ email });
+      if (user) {
+        const match = await comparePassword(password, user.password);
+        if (match) {
+          const token = JWT.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "7d" });
+          return res.status(200).send({
+            success: true,
+            message: "Login successful",
+            token,
+            role: user.role,
+            user,
+          });
+        }
+      }
+  
+      // Check in shops table
+      let wasteCollector = await wasteCollectorModel.findOne({ email });
+      if (wasteCollector) {
+        const match = await comparePassword(password, wasteCollector.password);
+        if (match) {
+          const token = JWT.sign({ _id: wasteCollector._id, role: 2 }, process.env.JWT_SECRET, { expiresIn: "7d" });
+          return res.status(200).send({
+            success: true,
+            message: "wasteCollector login successful",
+            token,
+            role: 2,
+            wasteCollector,
+          });
+        }
+      }
+  
+      // If no match found
+      return res.status(400).send({ success: false, message: "Invalid email or password" });
+      
+    } catch (error) {
+      console.error("Login error:", error);
+      return res.status(500).send({ success: false, message: "Error during login", error });
+    }
+  };
+
+
+export const getAllWasteCollectors = async (req, res) => {
+  try {
+      const wasteCollector = await wasteCollectorModel.find(); // Fetch all shops from the database
+      res.status(200).send({
+          success: true,
+          wasteCollector,
+      });
+  } catch (error) {
+      console.error(error);
+      res.status(500).send({
+          success: false,
+          message: 'Error fetching shops',
+          error,
+      });
+  }
 };
