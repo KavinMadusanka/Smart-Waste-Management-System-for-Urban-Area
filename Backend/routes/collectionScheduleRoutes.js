@@ -1,6 +1,6 @@
 import express from 'express'
 import { requireSignIn } from '../middlewares/AuthMiddleware.js'
-import { createCollectionSchedule, getAllCollectionSchedules, getCollectionScheduleById,  updateCollectionSchedule } from './../controllers/collectionScheduleController.js';
+import { createCollectionSchedule, getAllCollectionSchedules, getCollectionScheduleById,  getScheduleByWasteCollectorController,  updateCollectionSchedule } from './../controllers/collectionScheduleController.js';
 
 //router object
 const router = express.Router()
@@ -17,5 +17,8 @@ router.get('/get-schedules',getAllCollectionSchedules)
 
 //get collection schedule by ID
 router.get('/get-schedules/:id', getCollectionScheduleById );
+
+//get schedule by collector
+router.get('/get-schedule-by-collector/:assignedCollectorId',getScheduleByWasteCollectorController )
 
 export default router
