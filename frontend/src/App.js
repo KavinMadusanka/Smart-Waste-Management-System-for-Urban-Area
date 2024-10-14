@@ -30,6 +30,14 @@ import AllBRequests from "./Pages/WasteCollector/AllBRequests";
 import Notifications from "./Pages/User/Notifications";
 import CollectionHistory from "./Pages/User/WasteCollectionHistory";
 
+import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+import Rewards from "./Pages/Admin/CreateRedeemReward";
+import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 function App() {
   return (
     <>
@@ -60,6 +68,7 @@ function App() {
       <Route path='/my-schedule' element={<UserSchedules />}/>
       <Route path='/bRequests' element={<BRequests />}/>
       <Route path='/allbRequests' element={<AllBRequests />}/>
+      <Route path='/updatebRequest/:_id' element={<UpdateBRequestForm />}/>
 
 
 
