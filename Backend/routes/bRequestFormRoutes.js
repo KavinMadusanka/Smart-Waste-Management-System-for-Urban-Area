@@ -1,5 +1,5 @@
 import express from 'express'
-import { createbRequestFormController, deleteBRequestFormController, getAllBRequestFormController, getBRequestFormController, getSingleBRequestFormController, updateBRequestFormController, updateBRequestFormPointsController, updateBRequestFormStatusController } from '../controllers/bRequestFormController.js'
+import { completeBRequestFormStatusController, createbRequestFormController, deleteBRequestFormController, getAllBRequestFormController, getBRequestFormController, getSingleBRequestFormController, updateBRequestFormController, updateBRequestFormPointsController, updateBRequestFormStatusController } from '../controllers/bRequestFormController.js'
 import formidable from 'express-formidable';
 
 const router = express.Router()
@@ -20,5 +20,7 @@ router.delete('/delete-brequestform/:_id',deleteBRequestFormController);
 router.patch('/update-status-brequestform/:_id', updateBRequestFormStatusController);
 // Update points and status of bulk request form
 router.patch('/update-points-brequestform/:_id', formidable(), updateBRequestFormPointsController);
+// Update status of bulk request form
+router.patch('/update-final-tatus-brequestform/:_id', completeBRequestFormStatusController);
 
 export default router
