@@ -3,13 +3,13 @@ import axios from 'axios';
 import { Card, Col, Row, Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import WasteRequestForm from './Form/WasteRequestForm'
-import Header1 from '../components/Layout/Header1'
-import {} from './../components/style/RecyclingPage.css';
-import recyclingImage from './../components/image/recycling-image.jpeg';
+import WasteRequestForm from './../Form/WasteRequestForm'
+import Header1 from '../../components/Layout/Header1'; // Import Header1
+import {} from './../../components/style/RecyclingPage.css';
+import recyclingImage from './../../components/image/recycling-image.jpeg';
 
-const HomePage = () => {
-  const [categories, setCategories] = useState([]);
+const RedeemRewards = () => {
+    const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
@@ -18,7 +18,7 @@ const HomePage = () => {
 
     const getAllBulkCategories = async () => {
         try {
-            const { data } = await axios.get('/api/v1/wasteCategory/get-wasteCategory');
+            const { data } = await axios.get('/api/v1/RewardRoutes/get-rewards');
             if (data?.success) {
                 setCategories(data.bulkCategories);
                 console.log(data);
@@ -48,8 +48,9 @@ const HomePage = () => {
         setVisible(true);
         setModalContent(content);
     };
-  return (
-    <div style={{ backgroundColor: '#F3F4F6' }}>
+
+    return (
+        <div style={{ backgroundColor: '#F3F4F6' }}>
             <Header1 /> {/* Include Header1 here */}
             <div style={{
                 padding: '30px',
@@ -103,7 +104,7 @@ const HomePage = () => {
                                     cover={
                                         category.photo ? (
                                             <img
-                                                src={`/api/v1/wasteCategory/watecategory-photo/${category._id}?t=${new Date().getTime()}`}
+                                                src={`/api/v1/RewardRoutes/reward-photo/${category._id}?t=${new Date().getTime()}`}
                                                 alt={category.name}
                                                 style={{
                                                     width: '100%',
@@ -206,7 +207,7 @@ const HomePage = () => {
                         </div>
                         {selectedCategory?.photo && (
                             <img
-                                src={`/api/v1/wasteCategory/watecategory-photo/${selectedCategory._id}?t=${new Date().getTime()}`}
+                                src={`/api/v1/RewardRoutes/reward-photo/${selectedCategory._id}?t=${new Date().getTime()}`}
                                 alt={selectedCategory.name}
                                 style={{ width: '300px', borderRadius: '8px', marginTop: '20px' }} // Add margin for spacing
                             />
@@ -222,7 +223,7 @@ const HomePage = () => {
 
             </div>
         </div>
-  );
+    );
 };
 
-export default HomePage
+export default RedeemRewards;

@@ -14,7 +14,7 @@ const AuthLogin = () => {
     const location = useLocation();
 
     const handleLoginClick = () => {
-      navigate('/register'); // Redirect to the login page
+      navigate('/register-option'); // Redirect to the login page
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,7 +108,7 @@ const AuthLogin = () => {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    color="primary"
+                                    color="success"
                                     sx={{ marginTop: 2 }}
                                 >
                                     Login
@@ -117,12 +117,9 @@ const AuthLogin = () => {
                         </form>
                         <br/>
                         <Box sx={{display: 'flex',flexDirection: 'column',alignItems: 'center',justifyContent: 'center'}}>
-                        <Typography variant="body2">If forgot password,Click Here
-                            <Link href="/forgot-password"> Forgot Password?</Link>
-                        </Typography>
                         <br/>
                         <Typography>If you Don't have an Account, Please
-                            <Link component="button" variant="body2" onClick={handleLoginClick} sx={{ cursor: 'pointer', color: 'blue', marginLeft: 1 }}>
+                            <Link component="button" variant="body2" onClick={handleLoginClick} sx={{ cursor: 'pointer', color: 'green', marginLeft: 1 }}>
                             Register
                             </Link>
                         </Typography>
