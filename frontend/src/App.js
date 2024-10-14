@@ -37,6 +37,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Home from "./Pages/WasteCollector/Home";
 import CollectorNotifications from "./Pages/WasteCollector/CollectorNotifications";
 import RejectForm from "./Pages/Admin/RejectForm";
+import AllRequest from "./Pages/User/AllRequest"
+//import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+//import Rewards from "./Pages/Admin/CreateRedeemReward";
+import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+
+//import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 //import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 //import Rewards from "./Pages/Admin/CreateRedeemReward";
@@ -78,7 +86,7 @@ function App() {
       <Route path='/allbRequests' element={<AllBRequests />}/>
       <Route path='/updatebRequest/:_id' element={<UpdateBRequestForm />}/>
       <Route path='/rejectForm' element={<RejectForm />}/>
-
+      <Route path='/allRequest' element={<AllRequest />}/>
 
 
 
