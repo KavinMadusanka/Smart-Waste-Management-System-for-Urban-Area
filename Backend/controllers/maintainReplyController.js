@@ -16,7 +16,7 @@ export const getAllReplies = async (req, res) => {
 // Controller to create a new reply for a maintenance request
 export const createReply = async (req, res) => {
   try {
-    const { requestId, status, scheduledDate, estimateDuration, repairDescription, assignedTechnician, rejectDescription} = req.body;
+    const { requestId, status, scheduledDate, estimateDuration, repairDescription, assignedTechnician, rejectDescription } = req.body;
 
     // Validate the requestId is a valid ObjectId
     if (!mongoose.Types.ObjectId.isValid(requestId)) {
@@ -42,20 +42,22 @@ export const createReply = async (req, res) => {
       return res.status(400).json({ error: 'Invalid status. Must be either "Approved" or "Rejected".' });
     }
 
+    // Create the reply object
     const newReply = new Reply({
       requestId,
       status,
-      scheduledDate: new Date(scheduledDate), // Ensure date is in proper format
-      estimateDuration,
-      repairDescription,
-      assignedTechnician,
-      rejectDescription: req.body.rejectDescription || null,
+      scheduledDate: status === 'Approved' ? new Date(scheduledDate) : null, // Only save if approved
+      estimateDuration: status === 'Approved' ? estimateDuration : null,
+      repairDescription: status === 'Approved' ? repairDescription : null,
+      assignedTechnician: status === 'Approved' ? assignedTechnician : null,
+      rejectDescription: status === 'Rejected' ? rejectDescription : null,
     });
 
     await newReply.save(); // Save the new reply to the database
     res.status(201).json({ success: true, message: 'Reply created successfully' });
   } catch (error) {
     console.error('Error creating reply:', error); // Log the actual error for debugging
-    res.status(500).json({ message: 'Error creating reply', error: error.message }); // Return the specific error message to the client
+    res.status(500).json({ message: 'Error creating reply', error: error.message });
   }
 };
+
