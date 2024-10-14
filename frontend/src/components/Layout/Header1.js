@@ -40,8 +40,8 @@ const Header1 = () => {
                 <a href="/services" className="nav-link">Services</a>
                 <div className="dropdown-content">
                   <a href="/bcategories">Bulk Waste Categories</a>
-                  <a href="/services/option2">Option 2</a>
-                  <a href="/services/option3">Option 3</a>
+                  <a href="/RedeemRewards">Redeem Rewards</a>
+                  <a href="/usermaintenanceRequest">Maintain Request</a>
                 </div>
               </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
@@ -60,9 +60,9 @@ const Header1 = () => {
               <div className="dropdown">
                 <a href="/services" className="nav-link">Services</a>
                 <div className="dropdown-content">
-                  <a href="/services/option1">Option 1</a>
-                  <a href="/services/option2">Option 2</a>
-                  <a href="/services/option3">Option 3</a>
+                  <a href="/bcategories">Bulk Waste Categories</a>
+                  <a href="/RedeemRewards">Redeem Rewards</a>
+                  <a href="/usermaintenanceRequest">Maintain Request</a>
                 </div>
               </div>
               <Link to="/about" className="nav-link">About Us</Link>
