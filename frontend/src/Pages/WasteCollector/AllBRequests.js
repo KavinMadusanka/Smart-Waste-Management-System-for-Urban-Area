@@ -3,7 +3,7 @@ import { Box, Button, TextField, Modal, Typography, Select, MenuItem } from '@mu
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
-import Header1 from '../../components/Layout/Header1'; // Import Header1
+import Header1 from '../../components/Layout/Header1';
 
 const AllBRequests = () => {
     const navigate = useNavigate();
@@ -14,7 +14,7 @@ const AllBRequests = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
-    const [pvalue, setPvalue] = useState(''); // Add pvalue state
+    const [pvalues, setPvalues] = useState({}); // Use an object to hold pvalue for each request
 
     // Category mapping
     const categoryMap = {
@@ -78,9 +78,8 @@ const AllBRequests = () => {
         const confirmed = window.confirm('Are you sure this request has been collected?');
         if (confirmed) {
             try {
-                await axios.patch(`/api/v1/bulkRequestForm/update-status-brequestform/${requestId}`); // Use PATCH method
-                // Refresh the request list after updating
-                fetchRequests();
+                await axios.patch(`/api/v1/bulkRequestForm/update-status-brequestform/${requestId}`);
+                fetchRequests(); // Refresh the request list after updating
             } catch (error) {
                 console.error('Error updating request status:', error);
             }
@@ -89,33 +88,29 @@ const AllBRequests = () => {
 
     // Handle Confirm Cash Payment
     const handleConfirmPayment = async (requestId) => {
-        if (isNaN(pvalue) || pvalue <= 0) {
+        const paymentValue = pvalues[requestId]; // Get the specific payment value for this request
+        if (isNaN(paymentValue) || paymentValue <= 0) {
             alert("Please enter a valid payment amount.");
             return;
         }
 
-        console.log(`Confirming payment for Request ID: ${requestId} with amount: ${pvalue}`); // Log the ID and value
-
-        const confirmed = window.confirm(`Confirm payment of ${pvalue}?`);
+        const confirmed = window.confirm(`Confirm payment of ${paymentValue}?`);
         if (confirmed) {
-
             try {
-                const response = await axios.patch(`/api/v1/bulkRequestForm/update-points-brequestform/${requestId}`, {
-                    pvalue
-                });
-                console.log('Response Data:', response.data); // Log the response for debugging
-                setPvalue(''); // Reset pvalue after confirming payment
+                await axios.put(`/api/v1/bulkRequestForm/update-points-brequestform/${requestId}`, paymentValue);
+                console.log('Payment confirmed for request:', requestId); // Log confirmation
+                setPvalues(prev => ({ ...prev, [requestId]: '' })); // Reset the specific pvalue after confirming payment
                 fetchRequests(); // Refresh the request list after updating
             } catch (error) {
                 console.error('Error confirming payment:', error.response ? error.response.data : error);
-                alert("Payment confirmation failed. Please try again."); // Inform the user
+                alert("Payment confirmation failed. Please try again.");
             }
         }
     };
 
     return (
         <div>
-            <Header1 /> {/* Include Header1 here */}
+            <Header1 />
             <div style={{ backgroundColor: '#F3F4F6', padding: '30px', width: '100%', margin: '0' }}>
                 <h1 style={{ textAlign: 'center', color: '#1A4D2E', fontWeight: 600, marginBottom: '40px' }}>
                     Bulk Waste Disposal Requests
@@ -162,7 +157,6 @@ const AllBRequests = () => {
                                     },
                                 }}
                             >
-                                {/* Display all request details */}
                                 <Typography variant="h6" sx={{ color: '#1A4D2E', fontWeight: 500 }}>
                                     {request.name}
                                 </Typography>
@@ -173,18 +167,17 @@ const AllBRequests = () => {
                                 <Typography sx={{ color: '#333' }}>Details: {request.details}</Typography>
 
                                 {request.status === 'two' && (
-                                    <Box mt={2} display="flex" alignItems="center"> {/* Align field and button horizontally */}
-                                        {/* pvalue TextField */}
+                                    <Box mt={2} display="flex" alignItems="center">
                                         <TextField
                                             label="Payment Amount"
                                             variant="outlined"
-                                            value={pvalue}
-                                            onChange={(e) => setPvalue(e.target.value)}
+                                            value={pvalues[request._id] || ''}
+                                            onChange={(e) => setPvalues(prev => ({ ...prev, [request._id]: e.target.value }))} // Update pvalue for this request
                                             sx={{
                                                 mb: 2,
-                                                mr: 2, // Add right margin to create space between field and button
+                                                mr: 2,
                                                 height: '56px',
-                                                '.MuiInputBase-root': { height: '56px' }, // Ensures height is consistent
+                                                '.MuiInputBase-root': { height: '56px' },
                                             }}
                                         />
                                         <Button
@@ -192,7 +185,7 @@ const AllBRequests = () => {
                                             style={{
                                                 backgroundColor: '#1A4D2E',
                                                 color: '#FFFFFF',
-                                                height: '56px', // Set the height of the button to match the TextField
+                                                height: '56px',
                                             }}
                                             onClick={() => handleConfirmPayment(request._id)}
                                         >
@@ -205,12 +198,12 @@ const AllBRequests = () => {
                                     <Button
                                         variant="contained"
                                         style={{
-                                            backgroundColor: request.status === "one" ? '#1A4D2E' : '#A0A0A0', // Use a different color for disabled
+                                            backgroundColor: request.status === "one" ? '#1A4D2E' : '#A0A0A0',
                                             color: '#FFFFFF',
                                         }}
                                         onClick={() => handleCollectedClick(request._id)}
-                                        disabled={request.status !== "one"} // Disable if status is not "one"
-                                        sx={{ mr: 2 }} // Add margin-right to create space between the buttons
+                                        disabled={request.status !== "one"}
+                                        sx={{ mr: 2 }}
                                     >
                                         Collected
                                     </Button>
@@ -251,7 +244,6 @@ const AllBRequests = () => {
                                     <p><strong>Email:</strong> {selectedRequest.emailAddress}</p>
                                     <p><strong>Address:</strong> {selectedRequest.address}</p>
                                     <p><strong>Details:</strong> {selectedRequest.details}</p>
-                                    <p><strong>Status:</strong> {selectedRequest.status}</p>
                                 </>
                             )}
                         </Typography>
