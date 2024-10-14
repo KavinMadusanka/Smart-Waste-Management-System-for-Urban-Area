@@ -62,7 +62,7 @@ const Notifications = () => {
             <Container maxWidth="lg" sx={{ p: 2, mt: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Schedule Pickup Notifications
-                </Typography>
+                </Typography><br/>
 
                 {/* Schedule Cards for Scheduled Schedules */}
                 <Box>
