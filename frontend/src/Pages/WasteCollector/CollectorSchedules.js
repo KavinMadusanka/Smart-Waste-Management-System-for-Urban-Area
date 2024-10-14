@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Typography, Spin, Alert, Input, Modal, Select} from 'antd'; // Ant Design components
+import { Table, Spin, Alert, Input, Modal, Select} from 'antd'; // Ant Design components
 import { useAuth } from '../../context/auth';  
 import { Box } from '@mui/material';
 import CollectorHeader from './../../components/Layout/CollectorHeader';
 import './../../components/style/collectorSchedule.css';
+import {  Typography} from '@mui/material';
 
 const { Title } = Typography;
 const { Option } = Select; // For Select component
@@ -118,7 +119,9 @@ const CollectorSchedules = () => {
         <Box>
             <CollectorHeader />
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '15vh', padding: '20px', alignItems: 'center' }}>
-                <Title level={4} style={{ textAlign: 'center' }}>Collection Schedules</Title>
+                <Typography variant="h5" align="center" gutterBottom>
+                    Waste Collection Pickup Schedule
+                </Typography><br/>
                 
                 <Input.Search
                     placeholder="Search by area or status"
@@ -126,7 +129,7 @@ const CollectorSchedules = () => {
                     onChange={(e) => handleSearch(e.target.value)}
                     style={{ marginBottom: '20px', width: '300px', textAlign: 'center' }} // Adjust width as needed
                 />
-            </Box>
+            </Box><br/>
             <Box sx={{ display: 'flex', flexDirection: 'column', padding: '30px' }}>
                 {loading ? (
                     <Spin tip="Loading schedules..." />
