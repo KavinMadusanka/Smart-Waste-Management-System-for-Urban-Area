@@ -25,6 +25,18 @@ import ApproveForm from "./Pages/Admin/ApproveForm"
 import WasteCategoryUser from "./Pages/User/wasteCategoryUser"
 import RegisterOption from "./Pages/Auth/RegisterOption";
 import UserSchedules from "./Pages/User/UserSchedules";
+import BRequests from "./Pages/User/BRequests"
+import AllBRequests from "./Pages/WasteCollector/AllBRequests";
+import Notifications from "./Pages/User/Notifications";
+import CollectionHistory from "./Pages/User/WasteCollectionHistory";
+import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+import Rewards from "./Pages/Admin/CreateRedeemReward";
+import RedeemRewards from "./Pages/User/RedeemRewards"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from "./Pages/WasteCollector/Home";
+import CollectorNotifications from "./Pages/WasteCollector/CollectorNotifications";
+import RejectForm from "./Pages/Admin/RejectForm";
 
 function App() {
   return (
@@ -54,7 +66,25 @@ function App() {
       <Route path='/wasteCategoryUser' element={<WasteCategoryUser/>}/>
       <Route path='/register-option' element={<RegisterOption />}/>
       <Route path='/my-schedule' element={<UserSchedules />}/>
-    </Routes>  
+      <Route path='/bRequests' element={<BRequests />}/>
+      <Route path='/allbRequests' element={<AllBRequests />}/>
+      <Route path='/rejectForm' element={<RejectForm />}/>
+
+
+
+
+      <Route path='/notifications' element={<Notifications />}/>
+      <Route path='/collection-history' element={<CollectionHistory />}/>
+      <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+      <Route path='/whome' element={<Home />}/>
+      <Route path="/notify" element={<CollectorNotifications />}/>
+      <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+    </Routes>
+
     </>
   );
 }
