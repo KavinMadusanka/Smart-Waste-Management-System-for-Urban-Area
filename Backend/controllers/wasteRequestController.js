@@ -27,10 +27,10 @@ export const createWasteRequest = async (req, res) => {
     await newWasteRequest.save();
 
     res.status(201).json({
-      success: true,
-      message: 'Waste request submitted successfully!',
-      data: newWasteRequest,
-    });
+        success: true,
+        message: 'Waste request submitted successfully!',
+        data: newWasteRequest, // Return the saved request data
+      });
   } catch (error) {
     console.error('Error submitting waste request:', error);
     res.status(500).json({
