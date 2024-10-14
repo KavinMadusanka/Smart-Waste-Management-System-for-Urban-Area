@@ -1,0 +1,48 @@
+.recyclingContainer {
+    max-width: 80%; /* Remove quotes around the percentage value */
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.h1Header {
+    font-size: 2em;
+    color: #2d2d2d;
+    padding-left: 15%;
+}
+
+.h2Header {
+    font-size: 1.5em;
+    color: #2d2d2d;
+    margin-top: 20px;
+    align-items: center;
+    text-align: center;
+}
+
+.firstContent {
+    display: flex;
+    align-items: center; /* Align items vertically centered */
+}
+
+.paragr {
+    line-height: 1.6;
+    color: #555;
+    margin-right: 20px; /* Add space between the paragraph and the image */
+    text-align: justify; /* Justify the text */
+}
+
+.recycling-image {
+    width: 300px; /* Set a fixed width for the image */
+    height: auto; 
+    border-radius: 4px;
+}
+
+/* Add justification to the second paragraph */
+.secondParagr {
+    line-height: 1.6;
+    color: #555;
+    text-align: justify; /* Justify the text */
+}
