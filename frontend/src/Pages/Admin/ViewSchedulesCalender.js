@@ -6,7 +6,7 @@ import { parseISO } from 'date-fns';
 import axios from 'axios';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import AdminMenu from '../../components/Layout/AdminMenu';
+import Header1 from '../../components/Layout/Header1';
 
 const localizer = momentLocalizer(moment);
 
@@ -75,8 +75,9 @@ const ViewSchedulesCalendar = () => {
     };
 
     return (
+        <Box>
+            <Header1/>
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
-            <AdminMenu />
             <Container sx={{ mt: 4 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Collection Schedules Calendar View
@@ -136,6 +137,7 @@ const ViewSchedulesCalendar = () => {
 
                 <ToastContainer />
             </Container>
+        </Box>
         </Box>
     );
 };
