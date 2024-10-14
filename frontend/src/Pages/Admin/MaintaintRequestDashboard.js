@@ -3,12 +3,15 @@ import axios from 'axios';
 import Header1 from '../../components/Layout/Header1'; // Reuse the Header1 component
 import { Link } from 'react-router-dom'; // We will no longer use useNavigate for navigation
 import ApproveForm from './ApproveForm'; // Import the ApproveForm component
+import RejectForm from './RejectForm';// Import RejectForm
+import AdminMenu from '../../components/Layout/AdminMenu';
 
 const AdminMaintenanceRequests = () => {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false); // State to show/hide modal
-  const [selectedRequest, setSelectedRequest] = useState(null); // Store the selected request for approval
+  const [showApproveModal, setShowApproveModal] = useState(false);
+  const [showRejectModal, setShowRejectModal] = useState(false); // State for reject modal
+  const [selectedRequest, setSelectedRequest] = useState(null);
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -25,16 +28,24 @@ const AdminMaintenanceRequests = () => {
     fetchRequests();
   }, []);
 
-  // Function to open the modal with the selected request data
   const handleApprove = (request) => {
     setSelectedRequest(request);
-    setShowModal(true); // Show the modal
+    setShowApproveModal(true);
   };
 
-  // Function to close the modal
-  const handleCloseModal = () => {
-    setShowModal(false);
-    setSelectedRequest(null); // Clear the selected request when modal is closed
+  const handleReject = (request) => {
+    setSelectedRequest(request);
+    setShowRejectModal(true); // Show the reject modal
+  };
+
+  const handleCloseApproveModal = () => {
+    setShowApproveModal(false);
+    setSelectedRequest(null);
+  };
+
+  const handleCloseRejectModal = () => {
+    setShowRejectModal(false);
+    setSelectedRequest(null);
   };
 
   if (loading) {
@@ -43,7 +54,7 @@ const AdminMaintenanceRequests = () => {
 
   return (
     <>
-      <Header1 />
+      <AdminMenu />
       <div style={styles.mainContainer}>
         <div style={styles.sidebar}>
           <h3>Navigation</h3>
@@ -67,15 +78,13 @@ const AdminMaintenanceRequests = () => {
               <p><strong>Object Type:</strong> {request.objectType}</p>
               <p><strong>Material:</strong> {request.material}</p>
               <div style={styles.actions}>
-                <button
-                  onClick={() => handleApprove(request)} // Open modal with request data
-                  style={styles.button}
-                >
+                <button onClick={() => handleApprove(request)} style={styles.button}>
                   Approve
                 </button>
                 <button
+                  onClick={() => handleReject(request)} // Open reject modal with request data
                   style={{ ...styles.button, backgroundColor: '#f44336' }}
-                  disabled={request.status !== 'Pending'}
+                  
                 >
                   Reject
                 </button>
@@ -86,10 +95,19 @@ const AdminMaintenanceRequests = () => {
       </div>
 
       {/* Modal for Approval Form */}
-      {showModal && (
+      {showApproveModal && (
         <div style={styles.modalOverlay}>
           <div style={styles.modalContent}>
-            <ApproveForm request={selectedRequest} onClose={handleCloseModal} />
+            <ApproveForm request={selectedRequest} onClose={handleCloseApproveModal} />
+          </div>
+        </div>
+      )}
+
+      {/* Modal for Reject Form */}
+      {showRejectModal && (
+        <div style={styles.modalOverlay}>
+          <div style={styles.modalContent}>
+            <RejectForm request={selectedRequest} onClose={handleCloseRejectModal} />
           </div>
         </div>
       )}
