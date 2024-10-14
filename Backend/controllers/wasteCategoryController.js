@@ -160,13 +160,15 @@ export const deleteWasteCategoryController = async (req, res) => {
 // update bulk category
 export const updateWasteCategoryController = async (req, res) => {
     try {
-        const { name, slug, description, additionalDescription, instructions, benefits } = req.fields;
+        const { name, slug, point, description, additionalDescription, instructions, benefits } = req.fields;
         const { photo } = req.files;
         
         // Validation
         switch (true) {
             case !name:
                 return res.status(500).send({ error: 'Name is Required' });
+            case !point:
+                return res.status(500).send({ error: 'Description is Required' });
             case !description:
                 return res.status(500).send({ error: 'Description is Required' });
             case !additionalDescription:
