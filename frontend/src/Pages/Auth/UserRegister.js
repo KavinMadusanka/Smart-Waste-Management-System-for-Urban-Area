@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, MenuItem, Grid, Container, Typography, Paper, Box, Avatar } from '@mui/material';
+import { TextField, Button, MenuItem, Container, Typography, Paper, Box, Avatar } from '@mui/material';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -84,6 +84,7 @@ const UserRegister = () => {
 
   return (
     <Box>
+<<<<<<< Updated upstream
       <Header1/>
     <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
@@ -96,6 +97,19 @@ const UserRegister = () => {
         <Grid container spacing={2}>
           {/* First Name */}
           <Grid item xs={12}>
+=======
+      <Header1 />
+      <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
+          <Avatar sx={{ m: 1, bgcolor: 'green' }} />
+          <Typography variant="h5" align="center" gutterBottom>
+            User Registration Form
+          </Typography>
+        </Box>
+        <form onSubmit={handleSubmit}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {/* First Name */}
+>>>>>>> Stashed changes
             <TextField
               fullWidth
               label="First Name"
@@ -105,10 +119,8 @@ const UserRegister = () => {
               error={!!errors.firstName}
               helperText={errors.firstName}
             />
-          </Grid>
 
-          {/* Last Name */}
-          <Grid item xs={12}>
+            {/* Last Name */}
             <TextField
               fullWidth
               label="Last Name"
@@ -118,10 +130,8 @@ const UserRegister = () => {
               error={!!errors.lastName}
               helperText={errors.lastName}
             />
-          </Grid>
 
-          {/* Email */}
-          <Grid item xs={12}>
+            {/* Email */}
             <TextField
               fullWidth
               label="Email"
@@ -132,10 +142,8 @@ const UserRegister = () => {
               error={!!errors.email}
               helperText={errors.email}
             />
-          </Grid>
 
-          {/* Password */}
-          <Grid item xs={12}>
+            {/* Password */}
             <TextField
               fullWidth
               label="Password"
@@ -146,10 +154,8 @@ const UserRegister = () => {
               error={!!errors.password}
               helperText={errors.password}
             />
-          </Grid>
 
-          {/* Contact Number */}
-          <Grid item xs={12}>
+            {/* Contact Number */}
             <TextField
               fullWidth
               label="Contact Number"
@@ -159,10 +165,8 @@ const UserRegister = () => {
               error={!!errors.contactNumber}
               helperText={errors.contactNumber}
             />
-          </Grid>
 
-          {/* Address Fields */}
-          <Grid item xs={12}>
+            {/* Address Fields */}
             <TextField
               fullWidth
               label="Street Address"
@@ -172,33 +176,29 @@ const UserRegister = () => {
               error={!!errors.street}
               helperText={errors.street}
             />
-          </Grid>
 
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label="City"
-              name="address.city"
-              value={formData.address.city}
-              onChange={handleChange}
-              error={!!errors.city}
-              helperText={errors.city}
-            />
-          </Grid>
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <TextField
+                fullWidth
+                label="City"
+                name="address.city"
+                value={formData.address.city}
+                onChange={handleChange}
+                error={!!errors.city}
+                helperText={errors.city}
+              />
 
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label="Postal Code"
-              name="address.postalCode"
-              value={formData.address.postalCode}
-              onChange={handleChange}
-              error={!!errors.postalCode}
-              helperText={errors.postalCode}
-            />
-          </Grid>
+              <TextField
+                fullWidth
+                label="Postal Code"
+                name="address.postalCode"
+                value={formData.address.postalCode}
+                onChange={handleChange}
+                error={!!errors.postalCode}
+                helperText={errors.postalCode}
+              />
+            </Box>
 
-          <Grid item xs={12}>
             <TextField
               fullWidth
               label="Country"
@@ -208,10 +208,8 @@ const UserRegister = () => {
               error={!!errors.country}
               helperText={errors.country}
             />
-          </Grid>
 
-          {/* Waste Bin Type */}
-          <Grid item xs={6}>
+            {/* Waste Bin Type */}
             <TextField
               fullWidth
               select
@@ -226,22 +224,27 @@ const UserRegister = () => {
                 </MenuItem>
               ))}
             </TextField>
-          </Grid>
 
-          {/* Submit Button */}
-          <Grid item xs={12}>
+            {/* Submit Button */}
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+<<<<<<< Updated upstream
               <Button type="submit" variant="contained" color="success">
+=======
+<<<<<<< Updated upstream
+              <Button type="submit" variant="contained" color="primary">
+=======
+              <Button type="submit" variant="contained" color="success" sx={{ width: '500px' }}>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 Register
               </Button>
             </Box>
-          </Grid>
-        </Grid>
-      </form>
+          </Box>
+        </form>
 
-      {/* Toast Notification Container */}
-      <ToastContainer />
-    </Container>
+        {/* Toast Notification Container */}
+        <ToastContainer />
+      </Container>
     </Box>
   );
 };
