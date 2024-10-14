@@ -84,20 +84,6 @@ const UserRegister = () => {
 
   return (
     <Box>
-<<<<<<< Updated upstream
-      <Header1/>
-    <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-        <Avatar sx={{ m: 1, bgcolor: 'green' }} />
-        <Typography variant="h5" align="center" gutterBottom>
-          Registration Form
-        </Typography>
-      </Box>
-      <form onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          {/* First Name */}
-          <Grid item xs={12}>
-=======
       <Header1 />
       <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
@@ -109,7 +95,6 @@ const UserRegister = () => {
         <form onSubmit={handleSubmit}>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             {/* First Name */}
->>>>>>> Stashed changes
             <TextField
               fullWidth
               label="First Name"
@@ -227,15 +212,7 @@ const UserRegister = () => {
 
             {/* Submit Button */}
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-<<<<<<< Updated upstream
-              <Button type="submit" variant="contained" color="success">
-=======
-<<<<<<< Updated upstream
-              <Button type="submit" variant="contained" color="primary">
-=======
               <Button type="submit" variant="contained" color="success" sx={{ width: '500px' }}>
->>>>>>> Stashed changes
->>>>>>> Stashed changes
                 Register
               </Button>
             </Box>
