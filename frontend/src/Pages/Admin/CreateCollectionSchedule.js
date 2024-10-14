@@ -6,8 +6,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminMenu from './../../components/Layout/AdminMenu';
 import dayjs from 'dayjs';
+import Header1 from './../../components/Layout/Header1';
 
 const CreateCollectionSchedule = () => {
     const [formData, setFormData] = useState({
@@ -102,8 +102,8 @@ const CreateCollectionSchedule = () => {
     };
 
     return (
+        <Box>  <Header1/>
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
-            <AdminMenu />
             <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Create Waste Collection Schedule
@@ -142,7 +142,7 @@ const CreateCollectionSchedule = () => {
                             <MenuItem value="08:00 AM-10:00 AM">08:00 AM-10:00 AM</MenuItem>
                             <MenuItem value="10:00 AM-12:00 PM">10:00 AM-12:00 PM</MenuItem>
                             <MenuItem value="12:00 PM-3:00 PM">12:00 PM-3:00 PM</MenuItem>
-                            <MenuItem value="02:00 PM-6:00 PM">02:00 PM-6:00 PM</MenuItem>
+                            <MenuItem value="02:00 PM-6:00 PM">02:00 PM-04:00 PM</MenuItem>
                         </TextField>
 
                         <TextField
@@ -191,6 +191,7 @@ const CreateCollectionSchedule = () => {
                 </form>
                 <ToastContainer />
             </Container>
+        </Box>
         </Box>
     );
 };

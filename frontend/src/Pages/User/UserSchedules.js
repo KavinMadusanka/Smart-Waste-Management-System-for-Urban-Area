@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Button, Paper, Grid, TextField } from '@mui/material';
+import { Container, Typography, Box, Button, Paper, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles';
-import { format, addDays, startOfWeek, subDays } from 'date-fns';
+import { format, addDays, startOfWeek } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth'; // Assuming you're using a context for authentication
 
@@ -49,15 +49,15 @@ const ViewAllSchedules = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const startDay = startOfWeek(new Date(), { weekStartsOn: 0 });
-        const days = Array.from({ length: 7 }, (_, i) => addDays(startDay, i));
+        const today = new Date();
+        const days = Array.from({ length: 7 }, (_, i) => addDays(today, i)); // Show 7 days from today
         setWeekDays(days);
 
         const fetchSchedules = async () => {
             try {
                 const response = await axios.get('/api/v1/collectionSchedule/get-schedules');
                 setSchedules(response.data);
-                filterSchedules(response.data, new Date());
+                filterSchedules(response.data, today); // Automatically display today's schedules on load
             } catch (error) {
                 console.error("Error fetching schedules", error);
                 toast.error('Error fetching schedules. Please try again.');
@@ -68,14 +68,20 @@ const ViewAllSchedules = () => {
     }, []);
 
     const filterSchedules = (schedulesList, selectedDate) => {
+        const today = new Date();
+
         const filtered = schedulesList.filter(schedule => {
-            // Check if the schedule area matches the user's city
+            const scheduleDate = new Date(schedule.pickupDate);
+
+            // Filter schedules from today or future dates, and ensure the area matches the user's city
             const userCity = auth?.user?.address?.city?.toLowerCase();
             return (
-                format(new Date(schedule.pickupDate), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd') &&
+                scheduleDate >= today && // Only current or future schedules
+                format(scheduleDate, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd') &&
                 schedule.area.toLowerCase() === userCity
             );
         });
+
         setFilteredSchedules(filtered);
     };
 
@@ -86,11 +92,11 @@ const ViewAllSchedules = () => {
 
     return (
         <Box>
-            <Header1/>
-            <Container maxWidth="lg" sx={{ p: 4, mt: 4 }}>
+            <Header1 />
+            <Container maxWidth="lg" sx={{ p: 4, mt: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Schedule pickups {auth?.user?.address?.city || 'Your City'}
-                </Typography>
+                </Typography><br/>
 
                 {/* Week Navigation */}
                 <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
@@ -115,29 +121,28 @@ const ViewAllSchedules = () => {
                         ))}
                     </Box>
                 </Box>
-
+                <br/>
                 {/* Schedule Cards */}
-                <Grid container spacing={2}>
+                <Box container spacing={2}>
                     {filteredSchedules.length > 0 ? (
                         filteredSchedules.map(schedule => (
-                            <Grid item xs={12} key={schedule._id}>
+                            <Box item xs={12} key={schedule._id}>
                                 <ScheduleCard>
-                                    <Typography variant="h6">{schedule.area}</Typography>
                                     <Typography>Pickup Time: {schedule.pickupTime}</Typography>
                                     <Typography>Bin Type: {schedule.binType}</Typography>
-                                    <Typography>
+                                    {/* <Typography>
                                         Collector: {schedule.assignedCollector ? `${schedule.assignedCollector.firstName} ${schedule.assignedCollector.lastName}` : 'N/A'}
-                                    </Typography>
+                                    </Typography> */}
                                     <Typography>Date: {format(new Date(schedule.pickupDate), 'dd MMM yyyy')}</Typography>
                                 </ScheduleCard>
-                            </Grid>
+                            </Box>
                         ))
                     ) : (
                         <Typography variant="body1" sx={{ textAlign: 'center', mt: 2 }}>
                             No schedules available for this date in your area.
                         </Typography>
                     )}
-                </Grid>
+                </Box>
 
                 {/* Toast Notification Container */}
                 <ToastContainer />

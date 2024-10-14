@@ -28,11 +28,11 @@ const AdminMenu = () => {
       <Box sx={{ overflow: 'auto' }}>
         <List>
           {/* Dashboard */}
-          <ListItem button component={Link} to="/admin/dashboard">
+          <ListItem button component={Link} to="/">
             <ListItemIcon>
               <Dashboard />
             </ListItemIcon>
-            <ListItemText primary="Dashboard" />
+            <ListItemText primary="Home" />
           </ListItem>
 
           <Divider />

@@ -1,5 +1,4 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -7,7 +6,7 @@ import { Box, Button } from '@mui/material';
 import { FaBell, FaUserCircle } from 'react-icons/fa';  // Icons
 import toast from 'react-hot-toast';
 import { useAuth } from '../../context/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import '../style/CollectorHeader.css';  // Import the CSS file for custom styling
 
 const CollectorHeader = () => {
@@ -28,7 +27,7 @@ const CollectorHeader = () => {
     };
 
     const goToHome = () => {
-        navigate('/'); // Adjust the route as needed
+        navigate('/whome'); // Adjust the route as needed
     };
 
     const goToCollections = () => {
@@ -36,7 +35,7 @@ const CollectorHeader = () => {
     };
 
     const goToAccount = () => {
-        navigate('/account'); // Adjust the route as needed
+        navigate('/collector-profile'); // Adjust the route as needed
     };
 
     return (
@@ -84,11 +83,11 @@ const CollectorHeader = () => {
                 </Box>
 
                 {/* Right side: Icons */}
-                <IconButton className="bell-icon">
-                    <FaBell />
-                </IconButton>
+                <Link to="/notify" style={{ textDecoration: 'none' }}>
+                    <FaBell className="bell-icon" />
+                </Link>
                 <IconButton className="profile-icon">
-                    <FaUserCircle />
+                    <FaUserCircle className="profile-icon" />
                 </IconButton>
             </Toolbar>
         </header>
