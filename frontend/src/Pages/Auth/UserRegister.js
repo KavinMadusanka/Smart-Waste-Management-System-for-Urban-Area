@@ -87,7 +87,7 @@ const UserRegister = () => {
       <Header1/>
     <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4, borderRadius: '8px' }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-        <Avatar sx={{ m: 1, bgcolor: 'primary.main' }} />
+        <Avatar sx={{ m: 1, bgcolor: 'green' }} />
         <Typography variant="h5" align="center" gutterBottom>
           Registration Form
         </Typography>
@@ -231,7 +231,7 @@ const UserRegister = () => {
           {/* Submit Button */}
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button type="submit" variant="contained" color="primary">
+              <Button type="submit" variant="contained" color="success">
                 Register
               </Button>
             </Box>

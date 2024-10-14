@@ -1,0 +1,63 @@
+.bulk-waste-form-container {
+    width: 60%;
+    margin: 50px auto; /* Add margin for top and bottom balance */
+    background-color: #f0f0f0;
+    padding: 40px; /* Increase padding to balance inside content */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.bulk-waste-form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bulk-waste-form-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.bulk-waste-form-address-group {
+    display: flex;
+    gap: 10px;
+}
+
+.bulk-waste-form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea.bulk-waste-form-control {
+    height: 100px;
+}
+
+.bulk-waste-image-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.bulk-waste-image-preview img {
+    width: 150px;
+    height: auto;
+}
+
+.bulk-waste-btn-submit {
+    background-color: #1A4D2E;
+    border-color: #1A4D2E;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.bulk-waste-btn-submit:hover {
+    background-color: #57A773; /* Hover effect */
+}
+
