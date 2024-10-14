@@ -40,7 +40,7 @@ import RejectForm from "./Pages/Admin/RejectForm";
 
 //import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 //import Rewards from "./Pages/Admin/CreateRedeemReward";
-import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+//import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
 
 //import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
