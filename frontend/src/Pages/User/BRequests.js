@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Modal, Typography, Select, MenuItem } from '@mui/material';
+import { Box, Button, TextField, Modal, Typography, Select, MenuItem, Stepper, Step, StepLabel } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import Header1 from '../../components/Layout/Header1'; // Import Header1
+import { styled } from '@mui/system'; // For custom styles
 
 const UserRequests = () => {
     const navigate = useNavigate();
@@ -25,6 +26,15 @@ const UserRequests = () => {
         '67036a9e861e7062afdd0b3a': 'Vehicles and Parts',
         '67036afe861e7062afdd0b56': 'Textiles and Clothing',
     };
+
+    const statusMap = {
+        one: 0,    // Sent request
+        two: 1,    // Collected
+        three: 2,  // Received payment
+        four: 3    // Completed
+    };
+
+    const steps = ['Sent Request', 'Collected', 'Received Payment', 'Completed'];
 
     const fetchRequests = async () => {
         try {
@@ -97,6 +107,40 @@ const UserRequests = () => {
         }
     };
 
+    // Custom styles for the Stepper
+    const CustomStepper = styled(Stepper)({
+        '& .MuiStepLabel-label': {
+            color: '#BDBDBD', // Inactive label color
+            fontSize: '14px',
+            '&.Mui-active': {
+                color: '#1A4D2E', // Active label color (green)
+                fontWeight: 600,
+            },
+            '&.Mui-completed': {
+                color: '#6A9C89', // Completed step label color (lighter green)
+                fontWeight: 600,
+            },
+        },
+        '& .MuiStepIcon-root': {
+            color: '#BDBDBD', // Default step icon color (inactive)
+            '&.Mui-active': {
+                color: '#1A4D2E', // Active step icon color (green)
+            },
+            '&.Mui-completed': {
+                color: '#6A9C89', // Completed step icon color (lighter green)
+            },
+        },
+        '& .MuiStepConnector-line': {
+            borderColor: '#BDBDBD', // Default connector color (inactive)
+            '&.Mui-active': {
+                borderColor: '#1A4D2E', // Active connector color (green)
+            },
+            '&.Mui-completed': {
+                borderColor: '#6A9C89', // Completed connector color (lighter green)
+            },
+        },
+    });
+
     return (
         <div>
             <Header1 /> {/* Include Header1 here */}
@@ -160,64 +204,103 @@ const UserRequests = () => {
                                 <Typography sx={{ color: '#333' }}>{request.address}</Typography>
                                 <Typography sx={{ color: '#333' }}>{categoryMap[request.category] || request.category}</Typography> {/* Display Category Name */}
                                 <Box display="flex" justifyContent="flex-end" mt={2}>
-                                <Button
-                                    variant="contained"
-                                    style={{ backgroundColor: '#1A4D2E', color: '#FFFFFF' }} // Update button with green fill
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // Prevent triggering the card click event
-                                        handleUpdateClick(request._id);
-                                    }}
-                                    sx={{ mr: 2 }} // Add margin-right to create space between the buttons
-                                >
-                                    Update
-                                </Button>
-                                <Button
-                                    variant="contained"
-                                    style={{ backgroundColor: '#FF0000', color: '#FFFFFF' }} // Delete button with red fill
-                                    onClick={(e) => {
-                                        e.stopPropagation(); // Prevent triggering the card click event
-                                        handleDeleteClick(request._id);
-                                    }}
-                                >
-                                    Delete
-                                </Button>
+                                    <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: '#1A4D2E', color: '#FFFFFF' }} // Update button with green fill
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent triggering the card click event
+                                            handleUpdateClick(request._id);
+                                        }}
+                                        sx={{ mr: 2 }} // Add margin-right to create space between the buttons
+                                    >
+                                        Update
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        style={{ backgroundColor: '#FF0000', color: '#FFFFFF' }} // Delete button with red fill
+                                        onClick={(e) => {
+                                            e.stopPropagation(); // Prevent triggering the card click event
+                                            handleDeleteClick(request._id);
+                                        }}
+                                    >
+                                        Delete
+                                    </Button>
                                 </Box>
                             </Box>
                         ))
                     ) : (
-                        <Typography>No requests found</Typography>
+                        <Typography>No requests found.</Typography>
                     )}
                 </Box>
 
-                <Modal
-                    open={modalOpen}
-                    onClose={handleModalClose}
-                    aria-labelledby="modal-title"
-                    aria-describedby="modal-description"
-                >
+                <Modal open={modalOpen} onClose={handleModalClose}>
                     <Box
                         sx={{
-                            position: 'absolute',
-                            top: '50%',
-                            left: '50%',
-                            transform: 'translate(-50%, -50%)',
-                            width: 400,
-                            bgcolor: 'background.paper',
-                            borderRadius: 2,
-                            boxShadow: 24,
-                            p: 4,
+                            width: '500px',
+                            backgroundColor: '#FFFFFF',
+                            margin: '100px auto',
+                            padding: '30px',
+                            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+                            borderRadius: '15px',
                         }}
                     >
                         {selectedRequest && (
                             <>
-                                <Typography id="modal-title" variant="h6" component="h2" sx={{ color: '#1A4D2E', fontWeight: 600 }}>
-                                    {selectedRequest.name}
+                                <Typography variant="h6" align="center" sx={{ color: '#1A4D2E', fontWeight: 600, marginBottom: '20px' }}>
+                                    Request Details
                                 </Typography>
-                                <Typography id="modal-description" sx={{ mt: 2 }}>
-                                    Category: {categoryMap[selectedRequest.category] || selectedRequest.category}
+
+                                <Typography sx={{ color: '#333', marginBottom: '10px' }}>
+                                    <strong>Name:</strong> {selectedRequest.name}
                                 </Typography>
-                                <Typography>Phone No: {selectedRequest.phoneNo}</Typography>
-                                <Typography>Email: {selectedRequest.emailAddress}</Typography>
+                                <Typography sx={{ color: '#333', marginBottom: '10px' }}>
+                                    <strong>Address:</strong> {selectedRequest.address}
+                                </Typography>
+                                <Typography sx={{ color: '#333', marginBottom: '20px' }}>
+                                    <strong>Category:</strong> {categoryMap[selectedRequest.category] || selectedRequest.category}
+                                </Typography>
+
+                                {/* Stepper for status tracking */}
+                                <Box sx={{ mt: 4 }}>
+                                    <CustomStepper activeStep={statusMap[selectedRequest.status]} alternativeLabel>
+                                        {steps.map((label) => (
+                                            <Step key={label}>
+                                                <StepLabel>{label}</StepLabel>
+                                            </Step>
+                                        ))}
+                                    </CustomStepper>
+                                </Box>
+
+                                {/* Display 'pvalue' and Confirm button only if status is "three" */}
+                                {selectedRequest.status === 'three' && (
+                                    <>
+                                        <Typography sx={{ color: '#333', marginTop: '20px' }}>
+                                            <strong>Payment Value:</strong> {/* Add pvalue display here */}
+                                            {selectedRequest.pvalue || 'Not Available'} {/* Example: You can modify this to reflect actual data */}
+                                        </Typography>
+                                        <Box mt={3} display="flex" justifyContent="center">
+                                            <Button
+                                                variant="contained"
+                                                style={{ backgroundColor: '#1A4D2E', color: '#FFFFFF' }} // Confirm button with green fill
+                                                onClick={async () => {
+                                                    try {
+                                                        // Make the API call to update status to 'four'
+                                                        await axios.patch(
+                                                            `/api/v1/bulkRequestForm/update-final-tatus-brequestform/${selectedRequest._id}`,
+                                                            { status: 'four' }
+                                                        );
+                                                        fetchRequests(); // Refresh requests after update
+                                                        handleModalClose(); // Close modal after updating
+                                                    } catch (error) {
+                                                        console.error('Error updating request status:', error);
+                                                    }
+                                                }}
+                                            >
+                                                Confirm Completion
+                                            </Button>
+                                        </Box>
+                                    </>
+                                )}
                             </>
                         )}
                     </Box>

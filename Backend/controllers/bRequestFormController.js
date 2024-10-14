@@ -257,3 +257,38 @@ export const updateBRequestFormPointsController = async (req, res) => {
     }
 };
 
+
+// Update status of Bulk Request Form to "four"
+export const completeBRequestFormStatusController = async (req, res) => {
+    const { _id } = req.params; // Get the ObjectId from the request parameters
+
+    try {
+        const updatedForm = await bRequestFormModel.findByIdAndUpdate(
+            _id,
+            { status: "four" }, // Update status to "four"
+            { new: true } // Return the updated document
+        );
+
+        if (!updatedForm) {
+            return res.status(404).send({
+                success: false,
+                message: 'Bulk Request Form not found',
+            });
+        }
+
+        res.status(200).send({
+            success: true,
+            message: 'Bulk Request Form status updated to "four" successfully',
+            updatedForm,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: 'Error while updating Bulk Request Form status',
+            error: error.message,
+        });
+    }
+};
+
+
