@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from '../../context/auth';
 import { Container,Link, Box, Typography, TextField, Button, Paper } from '@mui/material';
@@ -11,7 +11,6 @@ const AuthLogin = () => {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
-    const location = useLocation();
 
     const handleLoginClick = () => {
       navigate('/register-option'); // Redirect to the login page
@@ -41,7 +40,7 @@ const AuthLogin = () => {
     
                 // Redirect based on role
                 if (role === 2) {
-                    navigate('/collector-profile');  // Redirect shop owners to shop profile
+                    navigate('/whome');  // Redirect shop owners to shop profile
                 } else {
                     navigate('/');  // Redirect others to homepage
                 }
