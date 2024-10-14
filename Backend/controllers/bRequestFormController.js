@@ -5,7 +5,7 @@ import slugify from 'slugify';
 //create bulk request form
 export const createbRequestFormController = async (req,res) => {
     try {
-        const {name,slug,phoneNo,emailAddress,address,details,category,email} = req.fields
+        const {name,slug,phoneNo,emailAddress,address,details,category,email,pvalue,status,points} = req.fields
 
         //validation
         switch(true){
@@ -25,7 +25,14 @@ export const createbRequestFormController = async (req,res) => {
                 return res.status(500).send({error:'E mail is Required'})
         }
 
-        const bRequestForms = new bRequestFormModel({...req.fields,slug:slugify(name)})
+        const bRequestForms = new bRequestFormModel({
+            ...req.fields,
+            slug: slugify(name),
+            pvalue: pvalue || 0, // Default to 0 if not provided
+            status: status || "one", // Default to "one" if not provided
+            points: points || 0 // Default to 0 if not provided
+        });
+
         await bRequestForms.save()
         res.status(201).send({
             success:true,
@@ -38,7 +45,7 @@ export const createbRequestFormController = async (req,res) => {
             success:false,
             error,
             message:'Error in Sending Request Form'
-        })
+        });
     }
 };
 
@@ -124,7 +131,7 @@ export const deleteBRequestFormController = async (req,res) => {
 // update Bulk Request Form
 export const updateBRequestFormController = async (req,res) => {
     try {
-        const {name,slug,phoneNo,emailAddress,address,details,category,email} = req.fields
+        const {name,slug,phoneNo,emailAddress,address,details,category,email,pvalue,status,points} = req.fields
 
         //validation
         switch(true){
@@ -144,7 +151,17 @@ export const updateBRequestFormController = async (req,res) => {
                 return res.status(500).send({error:'E mail is Required'})
         }
 
-        const bRequestForms = await bRequestFormModel.findByIdAndUpdate(req.params._id, {...req.fields, slug:slugify(name)}, {new:true})
+        const bRequestForms = await bRequestFormModel.findByIdAndUpdate(
+            req.params._id,
+            {
+                ...req.fields,
+                slug: slugify(name),
+                pvalue: pvalue !== undefined ? pvalue : 0, // Keep existing value or set default to 0
+                status: status || "one", // Keep existing or default to "one"
+                points: points !== undefined ? points : 0 // Keep existing value or set default to 0
+            },
+            { new: true }
+        );
         await bRequestForms.save()
         res.status(201).send({
             success:true,

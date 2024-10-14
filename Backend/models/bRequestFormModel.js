@@ -35,6 +35,18 @@ const bRequstFormSchema = new mongoose.Schema({
     email:{
         type:String,
         required:true
+    },
+    pvalue: {
+        type: Number,
+        default: 0
+    },
+    status: {
+        type: String,
+        default: "one"
+    },
+    points: {
+        type: Number,
+        default: 0
     }
 },{timeStamps:true}
 );
