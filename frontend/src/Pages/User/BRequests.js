@@ -271,34 +271,37 @@ const UserRequests = () => {
                                     </CustomStepper>
                                 </Box>
 
-                                {/* Display 'pvalue' and Confirm button only if status is "three" */}
+                                {/* Check if the status is 'three' to show payment confirmation */}
                                 {selectedRequest.status === 'three' && (
                                     <>
-                                        <Typography sx={{ color: '#333', marginTop: '20px' }}>
-                                            <strong>Payment Value:</strong> {/* Add pvalue display here */}
-                                            {selectedRequest.pvalue || 'Not Available'} {/* Example: You can modify this to reflect actual data */}
+                                        <Typography sx={{ color: '#FF0000', fontWeight: 600, marginTop: '20px' }}>
+                                            Have you received the payment for this request?
                                         </Typography>
-                                        <Box mt={3} display="flex" justifyContent="center">
-                                            <Button
-                                                variant="contained"
-                                                style={{ backgroundColor: '#1A4D2E', color: '#FFFFFF' }} // Confirm button with green fill
-                                                onClick={async () => {
-                                                    try {
-                                                        // Make the API call to update status to 'four'
-                                                        await axios.patch(
-                                                            `/api/v1/bulkRequestForm/update-final-tatus-brequestform/${selectedRequest._id}`,
-                                                            { status: 'four' }
-                                                        );
-                                                        fetchRequests(); // Refresh requests after update
-                                                        handleModalClose(); // Close modal after updating
-                                                    } catch (error) {
-                                                        console.error('Error updating request status:', error);
-                                                    }
-                                                }}
-                                            >
-                                                Confirm Completion
-                                            </Button>
-                                        </Box>
+                                        <Typography sx={{ color: '#333', marginBottom: '20px' }}>
+                                            Please confirm only if you have received the payment.
+                                            <br></br>
+                                            <strong>Payment Value:</strong> {/* Add pvalue display here */}
+                                            Rs.{selectedRequest.pvalue}.00
+                                        </Typography>
+
+                                        <Button
+                                            variant="contained"
+                                            style={{ backgroundColor: '#1A4D2E', color: '#FFFFFF' }} // Confirm button with green fill
+                                            onClick={async () => {
+                                                try {
+                                                    await axios.patch(
+                                                        `/api/v1/bulkRequestForm/update-final-tatus-brequestform/${selectedRequest._id}`,
+                                                        { status: 'four' }
+                                                    );
+                                                    fetchRequests(); // Refresh the requests after updating the status
+                                                    handleModalClose(); // Close the modal
+                                                } catch (error) {
+                                                    console.error('Error updating status:', error);
+                                                }
+                                            }}
+                                        >
+                                            Confirm Payment Received
+                                        </Button>
                                     </>
                                 )}
                             </>
