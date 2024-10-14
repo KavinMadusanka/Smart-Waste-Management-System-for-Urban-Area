@@ -7,6 +7,7 @@ import WasteRequestForm from './../Form/WasteRequestForm'
 import Header1 from '../../components/Layout/Header1'; // Import Header1
 import {} from './../../components/style/RecyclingPage.css';
 import recyclingImage from './../../components/image/recycling-image.jpeg';
+import { useAuth } from '../../context/auth';
 
 const RedeemRewards = () => {
     const [categories, setCategories] = useState([]);
@@ -14,7 +15,19 @@ const RedeemRewards = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [modalContent, setModalContent] = useState(null);
+    const [auth, setAuth] = useAuth();
+    const [userPoint,setPoint] = useState("");
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (auth && auth.user) {
+            setEmail(auth.user.email);
+            setPoint(auth.user.points);
+        }
+    }, [auth]);
+    // console.log(email);
+    // console.log(userPoint);
 
     const getAllBulkCategories = async () => {
         try {
@@ -67,6 +80,11 @@ const RedeemRewards = () => {
                     Exclusive items from our<br/>
                     community partners
                 </h2>
+                <div style={{paddingLeft:'10px',textAlign: 'right'}}>
+                 Your have {userPoint} points.
+                </div>
+                
+                
 
                 {/* <h1 style={{
                     textAlign: 'center',
@@ -95,7 +113,7 @@ const RedeemRewards = () => {
                                         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
                                         borderRadius: '10px',
                                         width: '100%', 
-                                        height: '280px',
+                                        height: '320px',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         justifyContent: 'space-between',
@@ -153,6 +171,7 @@ const RedeemRewards = () => {
                                             WebkitBoxOrient: 'vertical',
                                             WebkitLineClamp: 2, 
                                         }}>{category.description}</p>
+                                        <p style={{color: '#1A4D2E'}}>(Eran at least {category.point} points.)</p>
                                     </div>
                                 </Card>
 
