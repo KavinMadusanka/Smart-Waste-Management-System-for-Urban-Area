@@ -36,6 +36,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Home from "./Pages/WasteCollector/Home";
 import CollectorNotifications from "./Pages/WasteCollector/CollectorNotifications";
+import RejectForm from "./Pages/Admin/RejectForm";
 
 function App() {
   return (
@@ -67,6 +68,11 @@ function App() {
       <Route path='/my-schedule' element={<UserSchedules />}/>
       <Route path='/bRequests' element={<BRequests />}/>
       <Route path='/allbRequests' element={<AllBRequests />}/>
+      <Route path='/rejectForm' element={<RejectForm />}/>
+
+
+
+
       <Route path='/notifications' element={<Notifications />}/>
       <Route path='/collection-history' element={<CollectionHistory />}/>
       <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
