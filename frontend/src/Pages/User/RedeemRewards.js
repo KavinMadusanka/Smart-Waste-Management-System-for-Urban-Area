@@ -50,39 +50,38 @@ const RedeemRewards = () => {
     };
 
     return (
-        <div style={{ backgroundColor: '#F3F4F6' }}>
+        <div >
             <Header1 /> {/* Include Header1 here */}
             <div style={{
-                padding: '30px',
-                backgroundColor: '#F3F4F6',
-                maxWidth: '1200px',
+                // padding: '30px',
+                paddingLeft:'10px',
+                paddingRight:'10px',
+                // backgroundColor: '#F3F4F6',
+                maxWidth: '100%',
+                maxHeight: '1000px',
                 margin: '0 auto',
             }}>
-                    <div className="recyclingContainer">
-                        <h1 className='h1Header'>What is Recycling?</h1>
-                        <div className="firstContent">
-                            <p className='paragr'>
-                            Recycling is the process of collecting, processing, and reusing materials that would otherwise be discarded as waste. By converting used materials into new products, recycling reduces the need for raw materials, conserves natural resources, and decreases the amount of waste sent to landfills and incinerators. Commonly recycled materials include paper, glass, metal, and plastic. Recycling not only helps protect the environment but also supports economic growth by creating jobs in the recycling and manufacturing industries. It's a key component of sustainable living, promoting the efficient use of resources and minimizing our ecological footprint.
-                            </p>
-                            <img src={recyclingImage} alt="Recycling" className="recycling-image" />
-                        </div>
-                        <h2 className='h2Header'>How to Identify Recyclable Materials?</h2>
-                        <p className='secondParagr'>
-                            Identifying recyclable materials involves checking labels, symbols, and local recycling guidelines. Look for the recycling symbol (♻️) with a number inside, indicating the type of plastic. Common recyclable items include paper, cardboard, glass bottles, aluminum cans, steel, and most plastics labeled #1 and #2. Always rinse and clean items before recycling.
-                        </p>
-                    </div>
+                <h2 className='h2Header' style={{color: '#1A4D2E'}}>
+                    Earn Rewards! <br/>
+                    and<br/>
+                    Exclusive items from our<br/>
+                    community partners
+                </h2>
 
-                <h1 style={{
+                {/* <h1 style={{
                     textAlign: 'center',
                     paddingTop:20,
                     color: '#1A4D2E',
                     fontWeight: 600,
                     marginBottom: '40px',
-                }}>Waste Categories</h1>
+                }}>Waste Categories</h1> */}
 
                 <div style={{
                     backgroundColor: '#EDEDED',
                     padding: '30px',
+                    // paddingLeft:'30px',
+                    // paddingRight:'30px',
+                    // paddingBottom:'30px',
                     borderRadius: '12px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
                 }}>
@@ -162,7 +161,7 @@ const RedeemRewards = () => {
                     </Row>
 
 
-                    <div style={{
+                    {/* <div style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
                         marginTop: '40px',
@@ -187,7 +186,7 @@ const RedeemRewards = () => {
                         >
                             To Request Form
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
 
                 <Modal
