@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Typography, Spin, Alert, Input, Modal, Select, Button } from 'antd'; // Ant Design components
+import { Table, Typography, Spin, Alert, Input, Modal, Select} from 'antd'; // Ant Design components
 import { useAuth } from '../../context/auth';  
 import { Box } from '@mui/material';
 import CollectorHeader from './../../components/Layout/CollectorHeader';
@@ -160,7 +160,7 @@ const CollectorSchedules = () => {
                 onCancel={() => setIsModalVisible(false)}
             >
                 <Select value={newStatus} onChange={setNewStatus} style={{ width: '100%' }}>
-                    <Option value="Pending">Missed</Option>
+                    <Option value="Missed">Missed</Option>
                     <Option value="Completed">Completed</Option>
                     <Option value="In Progress">In Progress</Option>
                 </Select>
