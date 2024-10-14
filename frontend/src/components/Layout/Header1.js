@@ -39,7 +39,7 @@ const Header1 = () => {
                   <div className="dropdown">
                 <a href="/usermaintenanceRequest" className="nav-link">Services</a>
                 <div className="dropdown-content">
-                  <a href="/bcategories">Bulk Waste Categories</a>
+                  <a href="/brequests">Request Bulk Waste Disposal</a>
                   <a href="/RedeemRewards">Redeem Rewards</a>
                   <a href="/usermaintenanceRequest">Maintain Request</a>
                 </div>

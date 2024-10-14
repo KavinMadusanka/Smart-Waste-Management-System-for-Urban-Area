@@ -3,6 +3,7 @@ import { Box, Button, TextField, Modal, Typography, Select, MenuItem } from '@mu
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
+import Header1 from '../../components/Layout/Header1'; // Import Header1
 
 const UserRequests = () => {
     const navigate = useNavigate();
@@ -97,9 +98,11 @@ const UserRequests = () => {
     };
 
     return (
+        <div>
+        <Header1 /> {/* Include Header1 here */}
         <div style={{ backgroundColor: '#F3F4F6', padding: '30px', width: '100%', margin: '0' }}>
             <h1 style={{ textAlign: 'center', color: '#1A4D2E', fontWeight: 600, marginBottom: '40px' }}>
-                Your Previous Requests
+            My Bulk Waste Disposal Requests
             </h1>
 
             <Box display="flex" justifyContent="flex-end" alignItems="center" mb={3}>
@@ -218,6 +221,7 @@ const UserRequests = () => {
                     )}
                 </Box>
             </Modal>
+        </div>
         </div>
     );
 };
