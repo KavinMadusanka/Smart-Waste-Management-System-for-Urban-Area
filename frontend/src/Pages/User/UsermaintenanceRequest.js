@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Header1 from '../../components/Layout/Header1'; // Import the Header1 component
-import { Link } from 'react-router-dom'; // Use Link for navigation if needed
+import { Link, useNavigate } from 'react-router-dom'; // Use Link for navigation if needed
+import { useAuth } from '../../context/auth'; // Import authentication context
 
 const UserMaintainRequest = () => {
+  const navigate = useNavigate();
+  const [auth, setAuth] = useAuth(); // Get authentication details from context
+  
   // State to manage form inputs
   const [formData, setFormData] = useState({
     fullName: '',
     contactNumber: '',
-    email: '',
+    email: '', // Email will be auto-filled from auth context
     issueDescription: '',
     objectType: '',
     material: ''
   });
+
+  // Auto-fill email if user is authenticated
+  useEffect(() => {
+    if (auth && auth.user) {
+      setFormData((prevData) => ({
+        ...prevData,
+        email: auth.user.email
+      }));
+    }
+  }, [auth]);
 
   // Handle form input changes
   const handleChange = (e) => {
@@ -35,11 +49,12 @@ const UserMaintainRequest = () => {
         setFormData({
           fullName: '',
           contactNumber: '',
-          email: '',
+          email: auth.user.email, // Retain the email field
           issueDescription: '',
           objectType: '',
           material: ''
         });
+        navigate('/maintenance-requests'); // Navigate to another page after submission if needed
       }
     } catch (error) {
       console.error('Error submitting form:', error);
@@ -57,13 +72,12 @@ const UserMaintainRequest = () => {
         
         {/* Sidebar with navigation tabs */}
         <div style={styles.sidebar}>
-          <h3>Navigation</h3>
+          
           <ul style={styles.navList}>
-            <li><Link to="/" style={styles.navLink}>Home</Link></li>
-            <li><Link to="/services" style={styles.navLink}>Services</Link></li>
-            <li><Link to="/contact" style={styles.navLink}>Contact Us</Link></li>
-            <li><Link to="/about" style={styles.navLink}>About Us</Link></li>
-            <li><Link to="/schedule-pickup" style={styles.navLink}>Schedule Pickup</Link></li>
+            <li><Link to="/" style={styles.navLink}>Create Request</Link></li>
+            <li><Link to="/allRequest" style={styles.navLink}>My All Requests</Link></li>
+            <li><Link to="/contact" style={styles.navLink}>Notifications</Link></li>
+            
           </ul>
         </div>
 
@@ -98,7 +112,7 @@ const UserMaintainRequest = () => {
               value={formData.email}
               onChange={handleChange}
               style={styles.input}
-              required
+              readOnly
             />
 
             <label style={styles.label}>Issue Description:</label>
