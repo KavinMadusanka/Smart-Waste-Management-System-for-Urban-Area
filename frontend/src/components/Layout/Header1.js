@@ -3,6 +3,7 @@ import { FaBell, FaUserCircle } from 'react-icons/fa';  // Importing icons
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';  // Assuming you have auth context
 import '../style/Header1.css';  // Import the CSS file
+import Logo from '../image/SmartWaste-logo.png';
 
 const Header1 = () => {
   const [auth] = useAuth(); // Get auth data
@@ -18,7 +19,7 @@ const Header1 = () => {
   return (
     <header className="navbar">
       <div className="navbar-left">
-        <img src="/path-to-logo" alt="Logo" className="logo" />  {/* Logo */}
+        <img src={Logo} alt="Logo" className="logo" />  {/* Logo */}
         <nav>
           <Link to="/" className="nav-link">Home</Link>
 
