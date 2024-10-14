@@ -27,6 +27,28 @@ export const createMaintenanceRequest = async (req, res) => {
     }
 };
 
+// Get all maintenance requests for a specific user
+// Get all maintenance requests for a specific user
+export const getAllMaintenanceRequestsForUser = async (req, res) => {
+    const { email } = req.params; // Assuming you are getting the email from the request parameters
+    try {
+        // Fetch all maintenance requests
+        const maintenanceRequests = await Maintenance.find({ email }); // Use the email to filter requests
+
+        // Check if requests were found
+        if (!maintenanceRequests || maintenanceRequests.length === 0) {
+            return res.status(404).json({ message: 'No maintenance requests found for this user.' });
+        }
+
+        // Send the filtered requests
+        res.status(200).json({ maintenance: maintenanceRequests }); // Ensure the structure matches what the frontend expects
+    } catch (error) {
+        console.error('Error fetching maintenance requests:', error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 // Get all maintenance requests
 export const getAllMaintenanceRequests = async (req, res) => {
     try {
