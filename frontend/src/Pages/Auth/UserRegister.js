@@ -231,7 +231,7 @@ const UserRegister = () => {
           {/* Submit Button */}
           <Grid item xs={12}>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button type="submit" variant="contained" color="success">
+              <Button type="submit" variant="contained" color="success" sx={{ width: '500px' }}>
                 Register
               </Button>
             </Box>
