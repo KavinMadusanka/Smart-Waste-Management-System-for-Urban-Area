@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // import toast from 'react-hot-toast';
 import { Modal, Button, Input, Form, Upload, Row, Col, Card } from 'antd'; 
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons'; 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; 
+import 'react-toastify/dist/ReactToastify.css';
 
-const WasteCategory = () => {
+const CreateRedeemReward = () => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,14 +16,14 @@ const WasteCategory = () => {
 
     const getAllBulkCategory = async () => {
         try {
-            const { data } = await axios.get('/api/v1/wasteCategory/get-wasteCategory');
+            const { data } = await axios.get('/api/v1/RewardRoutes/get-rewards');
             if (data?.success) {
                 setCategories(data.bulkCategories);
                 getAllBulkCategory();
             }
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong while fetching categories');
+            toast.error('Something went wrong while fetching Rewards');
         }
     };
 
@@ -37,9 +37,6 @@ const WasteCategory = () => {
                 name: selectedCategory.name,
                 point: selectedCategory.point,
                 description: selectedCategory.description,
-                additionalDescription: selectedCategory.additionalDescription,
-                instructions: selectedCategory.instructions,
-                benefits: selectedCategory.benefits,
             });
             setIsModalOpen(true);
         }
@@ -55,29 +52,26 @@ const WasteCategory = () => {
         formData.append('name', values.name);
         formData.append('point', values.point);
         formData.append('description', values.description);
-        formData.append('additionalDescription', values.additionalDescription);
-        formData.append('instructions', values.instructions);
-        formData.append('benefits', values.benefits);
 
         if (file) {
             formData.append('photo', file);
         }
 
         try {
-            const { data } = await axios.put(`/api/v1/wasteCategory/update-wasteCategory/${selectedCategory._id}`, formData, {
+            const { data } = await axios.put(`/api/v1/RewardRoutes/update-reward/${selectedCategory._id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data', 
                 },
             });
             if (data?.success) {
-                toast.success('Category updated successfully');
+                toast.success('Reward updated successfully');
                 getAllBulkCategory();
                 setIsModalOpen(false);
                 setSelectedCategory(null);
             }
         } catch (error) {
             console.log(error);
-            toast.error('Something went wrong while updating category');
+            toast.error('Something went wrong while updating reward');
         }
     };
 
@@ -88,16 +82,13 @@ const WasteCategory = () => {
         formData.append('name', values.name);
         formData.append('point', values.point);
         formData.append('description', values.description);
-        formData.append('additionalDescription', values.additionalDescription || '');
-        formData.append('instructions', values.instructions || '');
-        formData.append('benefits', values.benefits || '');
     
         if (file) {
             formData.append('photo', file);
         }
     
         try {
-            const { data } = await axios.post('/api/v1/wasteCategory/create-wasteCategory', formData, {
+            const { data } = await axios.post('/api/v1/RewardRoutes/create-reward', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -112,8 +103,8 @@ const WasteCategory = () => {
                 toast.error(data.message);
             }
         } catch (error) {
-            console.log('Error while adding category:', error);
-            toast.error('Something went wrong while adding category');
+            console.log('Error while adding reward:', error);
+            toast.error('Something went wrong while adding reward');
         } finally {
             setAddLoading(false);
         }
@@ -121,22 +112,22 @@ const WasteCategory = () => {
 
     const handleDeleteCategory = async () => {
         Modal.confirm({
-            title: 'Are you sure you want to delete this category?',
+            title: 'Are you sure you want to delete this reward?',
             content: 'This action cannot be undone.',
             onOk: async () => {
                 try {
-                    const { data } = await axios.delete(`/api/v1/wasteCategory/delete-wasteCategory/${selectedCategory._id}`);
+                    const { data } = await axios.delete(`/api/v1/RewardRoutes/delete-reward/${selectedCategory._id}`);
                     if (data?.success) {
-                        toast.success('Category deleted successfully');
+                        toast.success('Reward deleted successfully');
                         getAllBulkCategory();
                         setIsModalOpen(false);
                         setSelectedCategory(null);
                     } else {
-                        toast.error('Failed to delete category');
+                        toast.error('Failed to delete reward');
                     }
                 } catch (error) {
                     console.log(error);
-                    toast.error('Something went wrong while deleting category');
+                    toast.error('Something went wrong while deleting reward');
                 }
             },
         });
@@ -163,30 +154,18 @@ const WasteCategory = () => {
             <Row gutter={16}>
                 {/* Add Bulk Waste Category Section */}
                 <Col span={8}>
-                    <Card className="add-category-card" title="Add Waste Category" style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
+                    <Card className="add-category-card" title="Add New Rewards" style={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', borderRadius: '10px' }}>
                         <Form onFinish={handleAddCategory} layout="vertical">
-                            <Form.Item label="Category Name" name="name" rules={[{ required: true, message: 'Please input the category name!' }]}>
+                            <Form.Item label="Reward Name" name="name" rules={[{ required: true, message: 'Please input the category name!' }]}>
                                 <Input className="category-name-input" />
                             </Form.Item>
 
-                            <Form.Item label="Category Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
+                            <Form.Item label="Reward Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
                                 <Input className="category-name-input" />
                             </Form.Item>
 
                             <Form.Item label="Description" name="description" rules={[{ required: true, message: 'Please input the description!' }]}>
                                 <Input.TextArea rows={4} className="description-textarea" />
-                            </Form.Item>
-
-                            <Form.Item label="Additional Description" name="additionalDescription">
-                                <Input.TextArea rows={3} className="additional-description-textarea" />
-                            </Form.Item>
-
-                            <Form.Item label="Instructions" name="instructions">
-                                <Input.TextArea rows={3} className="instructions-textarea" />
-                            </Form.Item>
-
-                            <Form.Item label="Benefits" name="benefits">
-                                <Input.TextArea rows={3} className="benefits-textarea" />
                             </Form.Item>
 
                             <Form.Item label="Upload Photo" className="upload-photo-item">
@@ -211,7 +190,7 @@ const WasteCategory = () => {
 
                 {/* Bulk Waste Categories Section */}
                 <Col span={16}>
-                    <h2 className="categories-title" style={{ color: '#1A4D2E' }}>Waste Categories</h2>
+                    <h2 className="categories-title" style={{ color: '#1A4D2E' }}>All Rewards</h2>
                     <div className="categories-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'flex-start' }}>
                         {categories.map((category) => (
                             <Card
@@ -230,7 +209,7 @@ const WasteCategory = () => {
                                 cover={
                                     category.photo ? (
                                         <img
-                                            src={`/api/v1/wasteCategory/watecategory-photo/${category._id}?t=${new Date().getTime()}`}
+                                            src={`/api/v1/RewardRoutes/reward-photo/${category._id}?t=${new Date().getTime()}`}
                                             alt={category.name}
                                             style={{
                                                 width: '100%',
@@ -261,7 +240,10 @@ const WasteCategory = () => {
                             >
                                 <Card.Meta
                                     title={<span style={{ color: '#1A4D2E' }}>{category.name}</span>}
-                                    description={category.description}
+                                    description={<span>
+                                                    <strong>{category.description}</strong><br />
+                                                    Points: {category.point}
+                                                </span>}
                                 />
                             </Card>
                         ))}
@@ -283,28 +265,16 @@ const WasteCategory = () => {
                     layout="vertical"
                     className="update-category-form"
                 >
-                    <Form.Item label="Category Name" name="name" rules={[{ required: true, message: 'Please input the category name!' }]}>
+                    <Form.Item label="Category Name" name="name" rules={[{ required: true, message: 'Please input the Reward name!' }]}>
                         <Input />
                     </Form.Item>
 
-                    <Form.Item label="Category Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
+                    <Form.Item label="Reward Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the Reward points!' }]}>
                         <Input />
                     </Form.Item>
 
                     <Form.Item label="Description" name="description" rules={[{ required: true, message: 'Please input the description!' }]}>
                         <Input.TextArea rows={4} />
-                    </Form.Item>
-
-                    <Form.Item label="Additional Description" name="additionalDescription">
-                        <Input.TextArea rows={3} />
-                    </Form.Item>
-
-                    <Form.Item label="Instructions" name="instructions">
-                        <Input.TextArea rows={3} />
-                    </Form.Item>
-
-                    <Form.Item label="Benefits" name="benefits">
-                        <Input.TextArea rows={3} />
                     </Form.Item>
 
                     <Form.Item label="Upload Photo" className="upload-photo-item">
@@ -329,4 +299,4 @@ const WasteCategory = () => {
     );
 };
 
-export default WasteCategory;
+export default CreateRedeemReward;

@@ -5,7 +5,7 @@ import { styled } from '@mui/system';
 import Header1 from './../../components/Layout/Header1';
 
 const GradientBackground = styled(Box)({
-  height: '100vh',
+  height: '80vh',
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
