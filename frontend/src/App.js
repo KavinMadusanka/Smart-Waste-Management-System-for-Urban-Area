@@ -31,6 +31,7 @@ import Notifications from "./Pages/User/Notifications";
 import CollectionHistory from "./Pages/User/WasteCollectionHistory";
 import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 import Rewards from "./Pages/Admin/CreateRedeemReward";
+import RedeemRewards from "./Pages/User/RedeemRewards"
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -73,6 +74,7 @@ function App() {
       <Route path='/collection-history' element={<CollectionHistory />}/>
       <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
       <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
     </Routes>
 
     <ToastContainer />  
