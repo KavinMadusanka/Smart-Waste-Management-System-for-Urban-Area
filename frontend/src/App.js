@@ -25,6 +25,17 @@ import RegisterOption from "./Pages/Auth/RegisterOption";
 import UserSchedules from "./Pages/User/UserSchedules";
 import Notifications from "./Pages/User/Notifications";
 import CollectionHistory from "./Pages/User/WasteCollectionHistory";
+<<<<<<< Updated upstream
+=======
+import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+import Rewards from "./Pages/Admin/CreateRedeemReward";
+import RedeemRewards from "./Pages/User/RedeemRewards"
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from "./Pages/WasteCollector/Home";
+import CollectorNotifications from "./Pages/WasteCollector/CollectorNotifications";
+>>>>>>> Stashed changes
 
 function App() {
   return (
@@ -57,7 +68,18 @@ function App() {
 
       <Route path='/notifications' element={<Notifications />}/>
       <Route path='/collection-history' element={<CollectionHistory />}/>
+<<<<<<< Updated upstream
     </Routes>  
+=======
+      <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+      <Route path='/whome' element={<Home />}/>
+      <Route path="/notify" element={<CollectorNotifications />}/>
+    </Routes>
+
+    <ToastContainer />  
+>>>>>>> Stashed changes
     </>
   );
 }
