@@ -5,6 +5,7 @@ import { Modal, Button, Input, Form, Upload, Row, Col, Card } from 'antd';
 import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
+import Header1 from '../../components/Layout/Header1';
 
 const WasteCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -159,6 +160,8 @@ const WasteCategory = () => {
     };
 
     return (
+        <div style={{ backgroundColor: '#F3F4F6' }}>
+        <Header1/>
         <div className="bulk-categories-container" style={{ padding: '30px', backgroundColor: '#F3F4F6', minHeight: '100vh' }}>
             <Row gutter={16}>
                 {/* Add Bulk Waste Category Section */}
@@ -269,6 +272,7 @@ const WasteCategory = () => {
                 </Col>
             </Row>
 
+
             {/* Modal for updating category */}
             <Modal
                 title="Update Category"
@@ -325,6 +329,7 @@ const WasteCategory = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+        </div>
         </div>
     );
 };
