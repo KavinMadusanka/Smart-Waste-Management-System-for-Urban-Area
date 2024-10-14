@@ -37,7 +37,7 @@ const Header1 = () => {
               {auth.user.role === 0 && (
                 <>
                   <div className="dropdown">
-                <a href="/services" className="nav-link">Services</a>
+                <a href="/usermaintenanceRequest" className="nav-link">Services</a>
                 <div className="dropdown-content">
                   <a href="/bcategories">Bulk Waste Categories</a>
                   <a href="/RedeemRewards">Redeem Rewards</a>
@@ -58,7 +58,7 @@ const Header1 = () => {
             <>
               {/* If not logged in */}
               <div className="dropdown">
-                <a href="/services" className="nav-link">Services</a>
+                <a href="/usermaintenanceRequest" className="nav-link">Services</a>
                 <div className="dropdown-content">
                   <a href="/bcategories">Bulk Waste Categories</a>
                   <a href="/RedeemRewards">Redeem Rewards</a>
