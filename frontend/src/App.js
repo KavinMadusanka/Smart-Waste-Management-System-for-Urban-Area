@@ -29,7 +29,8 @@ import BRequests from "./Pages/User/BRequests"
 import AllBRequests from "./Pages/WasteCollector/AllBRequests";
 import Notifications from "./Pages/User/Notifications";
 import CollectionHistory from "./Pages/User/WasteCollectionHistory";
-import WasteRequestForm from "./Pages/Form/WasteRequestForm"
+import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+import Rewards from "./Pages/Admin/CreateRedeemReward";
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -71,6 +72,7 @@ function App() {
       <Route path='/notifications' element={<Notifications />}/>
       <Route path='/collection-history' element={<CollectionHistory />}/>
       <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
     </Routes>
 
     <ToastContainer />  
