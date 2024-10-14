@@ -4,130 +4,122 @@ import { toast } from 'react-toastify'; // Import toast for notifications
 import 'react-toastify/dist/ReactToastify.css'; // Import toastify CSS
 
 const RejectForm = ({ request, onClose }) => {
-  const [rejectDescription, setRejectDescription] = useState(''); // Update state variable name
-  const [status, setStatus] = useState('Rejected'); // Set default status to "Rejected"
+
+   
+  // State for reject description and status
+  const [rejectDescription, setRejectDescription] = useState('');
+  const [status, setStatus] = useState('Rejected'); // Default status as 'Rejected'
+  const [errors, setErrors] = useState({}); // Add an errors state to handle form validation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const payload = {
+      requestId: request._id, // Must be a valid ObjectId
+      status: status, // Status is set to 'Rejected'
+      rejectDescription: rejectDescription, // Description provided by user
+    };
+  
     try {
-      const response = await axios.post('/api/v1/replies/create-reply', {
-        requestId: request._id,
-        status: status, // Use the status state here
-        rejectDescription: rejectDescription, // Update here to use rejectDescription
-      });
-      console.log('Reply created:', response.data);
-      toast.success('Request rejected successfully!'); // Notify user of success
-      onClose(); // Close the modal after submission
+      const response = await axios.post('/api/v1/replies/create-reply', payload);
+      console.log('Response:', response.data); // Log the response to check
+      toast.success('Request rejected successfully!');
+      onClose(); // Close modal after successful submission
     } catch (error) {
-      console.error('Error creating reply:', error);
-      toast.error('There was an issue rejecting the request. Please try again.'); // Notify user of error
+      console.error('Error rejecting request:', error?.response?.data || error.message);
+      toast.error('There was an issue rejecting the request. Please try again.');
     }
   };
+  
 
   return (
-    <div style={styles.overlay}>
-      <div style={styles.modalContainer}>
-        <h2 style={styles.heading}>Reject Request</h2>
-        <form onSubmit={handleSubmit} style={styles.form}>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Reject Description</label> {/* Updated label */}
-            <textarea
-              value={rejectDescription} // Update to use rejectDescription
-              onChange={(e) => setRejectDescription(e.target.value)} // Update to use rejectDescription
-              required
-              style={styles.textarea}
-            />
-          </div>
-          <div style={styles.formGroup}>
-            <label style={styles.label}>Status</label>
-            <select
-                   value={status}
-                   onChange={(e) => setStatus(e.target.value)}
-                   required
-                   style={styles.select}
-              >
-              <option value="Rejected">Rejected</option>
-           </select>
-          </div>
-          <div style={styles.buttonGroup}>
-            <button type="submit" style={styles.submitButton}>Submit</button>
-            <button type="button" onClick={onClose} style={styles.cancelButton}>Cancel</button>
-          </div>
-        </form>
-      </div>
+    <div style={styles.modalContent}>
+      <h2 style={styles.header}>Reject Request for {request?.fullName}</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <label style={styles.label}>
+          Reject Description:
+          <textarea
+            value={rejectDescription}
+            onChange={(e) => setRejectDescription(e.target.value)}
+            required
+            style={{ ...styles.input, height: '80px', resize: 'none' }} // Set specific height for textarea
+          />
+        </label>
+
+        <label style={styles.label}>
+          Status:
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            style={styles.input}
+            required
+          >
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </label>
+
+        <div style={styles.buttonContainer}>
+          <button type="submit" style={styles.submitButton}>Reject</button>
+          <button type="button" onClick={onClose} style={styles.cancelButton}>Cancel</button>
+        </div>
+      </form>
     </div>
   );
 };
 
-// Inline styles remain the same
+// Inline styles
 const styles = {
-  overlay: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dimmed background
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 1000, // High z-index to ensure it overlays other content
-  },
-  modalContainer: {
+  modalContent: {
+    backgroundColor: '#fff',
     padding: '20px',
     borderRadius: '8px',
-    backgroundColor: '#fff',
-    boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
-    width: '400px', // Set a fixed width for the modal
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    width: '400px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
-  heading: {
+  header: {
     marginBottom: '20px',
+    fontSize: '1.5em',
     textAlign: 'center',
   },
   form: {
     display: 'flex',
     flexDirection: 'column',
   },
-  formGroup: {
-    marginBottom: '15px',
-  },
   label: {
-    marginBottom: '5px',
+    marginBottom: '10px',
     fontWeight: 'bold',
   },
-  textarea: {
+  input: {
     padding: '10px',
-    border: '1px solid #ccc',
+    marginTop: '5px',
+    marginBottom: '15px',
     borderRadius: '4px',
-    resize: 'vertical', // Allows resizing vertically
-  },
-  select: {
-    padding: '10px',
     border: '1px solid #ccc',
-    borderRadius: '4px',
+    width: '100%',
   },
-  buttonGroup: {
-    marginTop: '15px',
+  buttonContainer: {
     display: 'flex',
     justifyContent: 'space-between',
   },
   submitButton: {
     padding: '10px 15px',
-    backgroundColor: '#f44336', // Red for rejection
+    backgroundColor: '#f44336',
     color: 'white',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    transition: 'background 0.3s',
   },
   cancelButton: {
     padding: '10px 15px',
-    backgroundColor: '#4CAF50', // Green for cancel
-    color: 'white',
+    backgroundColor: '#ccc',
+    color: 'black',
     border: 'none',
     borderRadius: '4px',
     cursor: 'pointer',
-    transition: 'background 0.3s',
   },
 };
 
