@@ -13,7 +13,7 @@ app.post('/api/v1/wasteRequest', createWasteRequest);
 
 describe('POST /api/v1/wasteRequest', () => {
   beforeEach(async () => {
-    jest.clearAllMocks(); // Clear mock history before each test
+    // jest.clearAllMocks(); // Clear mock history before each test
     await mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true });
   });
 
@@ -47,6 +47,7 @@ describe('POST /api/v1/wasteRequest', () => {
     expect(response.status).toBe(201);
     expect(response.body.success).toBe(true);
     expect(response.body.message).toBe('Waste request submitted successfully!');
+    expect(response.body.data).toBeDefined();
     // expect(response.body.data.items).toEqual(requestData.items);
     // expect(response.body.data.bulkCategories.userEmail).toEqual(requestData.userEmail);
   });
