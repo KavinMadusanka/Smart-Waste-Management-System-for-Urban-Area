@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Typography, Box, Button, Paper, Grid, IconButton, TextField } from '@mui/material';
+import { Container, Typography, Box, Button, Paper, IconButton, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AdminMenu from '../../components/Layout/AdminMenu';
 import { styled } from '@mui/material/styles';
 import { format, addDays, startOfWeek, subDays } from 'date-fns';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import Header1 from '../../components/Layout/Header1';
 
 // Styled component for Day Button
 const DayButton = styled(Button)(({ selected }) => ({
@@ -113,9 +113,10 @@ const ViewSchedules = () => {
     };
 
     return (
+        <Box>
+            <Header1/>
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
-            <AdminMenu />
-            <Container maxWidth="lg" sx={{ p: 4, mt: 4 }}>
+            <Container maxWidth="lg" sx={{ p: 4, mt: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     All Pickups
                 </Typography>
@@ -182,10 +183,10 @@ const ViewSchedules = () => {
                 )}
 
                 {/* Schedule Cards */}
-                <Grid container spacing={2}>
+                <Box container spacing={2}>
                     {filteredSchedules.length > 0 ? (
                         filteredSchedules.map(schedule => (
-                            <Grid item xs={12} key={schedule._id}>
+                            <Box item xs={12} key={schedule._id}>
                                 <ScheduleCard onClick={() => handleRowClick(schedule._id)}>
                                     <Typography variant="h6">{schedule.area}</Typography>
                                     <Typography>Pickup Time: {schedule.pickupTime}</Typography>
@@ -195,19 +196,20 @@ const ViewSchedules = () => {
                                     </Typography>
                                     <Typography>Status: {schedule.status}</Typography>
                                 </ScheduleCard>
-                            </Grid>
+                            </Box>
                         ))
                     ) : (
                         <Typography variant="body1" sx={{ textAlign: 'center', mt: 2 }}>
                             No schedules available for this date.
                         </Typography>
                     )}
-                </Grid>
+                </Box>
 
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
         </Box>
+    </Box>
     );
 };
 

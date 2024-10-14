@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import toast from 'react-hot-toast';
+// import toast from 'react-hot-toast';
 import { Modal, Button, Input, Form, Upload, Row, Col, Card } from 'antd'; 
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons'; 
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
+import Header1 from '../../components/Layout/Header1';
 
 const WasteCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -33,6 +36,7 @@ const WasteCategory = () => {
         if (selectedCategory) {
             form.setFieldsValue({
                 name: selectedCategory.name,
+                point: selectedCategory.point,
                 description: selectedCategory.description,
                 additionalDescription: selectedCategory.additionalDescription,
                 instructions: selectedCategory.instructions,
@@ -50,6 +54,7 @@ const WasteCategory = () => {
     const handleUpdateCategory = async (values) => {
         const formData = new FormData();
         formData.append('name', values.name);
+        formData.append('point', values.point);
         formData.append('description', values.description);
         formData.append('additionalDescription', values.additionalDescription);
         formData.append('instructions', values.instructions);
@@ -155,6 +160,8 @@ const WasteCategory = () => {
     };
 
     return (
+        <div style={{ backgroundColor: '#F3F4F6' }}>
+        <Header1/>
         <div className="bulk-categories-container" style={{ padding: '30px', backgroundColor: '#F3F4F6', minHeight: '100vh' }}>
             <Row gutter={16}>
                 {/* Add Bulk Waste Category Section */}
@@ -265,6 +272,7 @@ const WasteCategory = () => {
                 </Col>
             </Row>
 
+
             {/* Modal for updating category */}
             <Modal
                 title="Update Category"
@@ -280,6 +288,10 @@ const WasteCategory = () => {
                     className="update-category-form"
                 >
                     <Form.Item label="Category Name" name="name" rules={[{ required: true, message: 'Please input the category name!' }]}>
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item label="Category Points" onKeyPress={handleKeyNumber} name="point" rules={[{ required: true, message: 'Please input the category points!' }]}>
                         <Input />
                     </Form.Item>
 
@@ -317,6 +329,7 @@ const WasteCategory = () => {
                     </Form.Item>
                 </Form>
             </Modal>
+        </div>
         </div>
     );
 };

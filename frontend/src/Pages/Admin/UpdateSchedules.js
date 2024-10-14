@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
-import AdminMenu from '../../components/Layout/AdminMenu';
+import Header1 from '../../components/Layout/Header1';
 
 const UpdatesSchedules = () => {
     const { id } = useParams(); 
@@ -101,8 +101,9 @@ const UpdatesSchedules = () => {
     };
 
     return (
+        <Box>
+            <Header1/>
         <Box sx={{ display: 'flex', flexGrow: 1 }}>
-            <AdminMenu />
             <Container component={Paper} maxWidth="sm" sx={{ p: 4, mt: 4 }}>
                 <Typography variant="h5" align="center" gutterBottom>
                     Edit Waste Collection Schedule
@@ -210,6 +211,7 @@ const UpdatesSchedules = () => {
 
                 <ToastContainer />
             </Container>
+        </Box>
         </Box>
     );
 };

@@ -1,29 +1,25 @@
 import { error } from "console";
 import fs from 'fs'
 import slugify from 'slugify';
-import wasteCategoryModel from "../models/wasteCategoryModel.js"
+import RewardModel from "../models/RewardModel.js";
 
 // create bulk category
-export const createWasteCategoryController = async (req,res) => {
+export const createReward = async (req,res) => {
     try {
-        const {name,slug,point,description,additionalDescription,instructions,benefits} = req.fields
+        const {name,slug,point,description} = req.fields
         const {photo} = req.files
         //validation
         switch(true){
             case !name:
                 return res.status(500).send({error:'Name is Required'})
+            case !point:
+                return res.status(500).send({error:'point is Required'})
             case !description:
                 return res.status(500).send({error:'Description is Required'})
-            case !additionalDescription:
-                return res.status(500).send({error:'Additional Description is Required'})
-            case !instructions:
-                return res.status(500).send({error:'Instructions are Required'})
-            case !benefits:
-                return res.status(500).send({error:'Benefits are Required'})
             case photo && photo.size > 1000000:
                 return res.status(500).send({error:'Photo is Required and less than 1MB'})
         }
-        const bulkCategories = new wasteCategoryModel({...req.fields, slug:slugify(name)})
+        const bulkCategories = new RewardModel({...req.fields, slug:slugify(name)})
         if(photo){
             bulkCategories.photo.data = fs.readFileSync(photo.path)
             bulkCategories.photo.contentType = photo.type
@@ -45,10 +41,10 @@ export const createWasteCategoryController = async (req,res) => {
 }
 
 // get all bulk categories
-export const getAllWasteCategoryController = async (req, res) => {
+export const getAllReward = async (req, res) => {
     try {
         // Correctly call the model to fetch bulk categories
-        const bulkCategories = await wasteCategoryModel.find({});  // Use bulkCategoryModel here
+        const bulkCategories = await RewardModel.find({});  // Use bulkCategoryModel here
         
         res.status(200).send({
             success: true,
@@ -67,10 +63,10 @@ export const getAllWasteCategoryController = async (req, res) => {
 };
 
 // get single bulk category
-export const getSingleWasteCategoryController = async (req, res) => {
+export const getSingleRewaard = async (req, res) => {
     const { slug } = req.params;
     try {
-        const bulkCategory = await wasteCategoryModel.findOne({ slug }).select("-photo");
+        const bulkCategory = await RewardModel.findOne({ slug }).select("-photo");
         
         if (!bulkCategory) {
             return res.status(404).send({
@@ -95,10 +91,10 @@ export const getSingleWasteCategoryController = async (req, res) => {
 };
 
 // get photo
-export const wasteCategoryPhotoController = async (req, res) => {
+export const RewardPhotoController = async (req, res) => {
     try {
         // Ensure the request parameter is defined and valid
-        const bulkCategory = await wasteCategoryModel.findById(req.params.cid).select("photo");
+        const bulkCategory = await RewardModel.findById(req.params.cid).select("photo");
 
         // Check if bulkCategory was found
         if (!bulkCategory) {
@@ -129,10 +125,10 @@ export const wasteCategoryPhotoController = async (req, res) => {
 };
 
 // delete bulk category
-export const deleteWasteCategoryController = async (req, res) => {
+export const deleteReward = async (req, res) => {
     try {
         // Find the bulk category by the correct parameter (cid)
-        const bulkCategory = await wasteCategoryModel.findByIdAndDelete(req.params.cid).select("-photo");
+        const bulkCategory = await RewardModel.findByIdAndDelete(req.params.cid).select("-photo");
 
         // If no bulk category is found, return 404
         if (!bulkCategory) {
@@ -158,9 +154,9 @@ export const deleteWasteCategoryController = async (req, res) => {
 };
 
 // update bulk category
-export const updateWasteCategoryController = async (req, res) => {
+export const updateReward = async (req, res) => {
     try {
-        const { name, slug, point, description, additionalDescription, instructions, benefits } = req.fields;
+        const { name, slug, point, description } = req.fields;
         const { photo } = req.files;
         
         // Validation
@@ -170,19 +166,13 @@ export const updateWasteCategoryController = async (req, res) => {
             case !point:
                 return res.status(500).send({ error: 'Description is Required' });
             case !description:
-                return res.status(500).send({ error: 'Description is Required' });
-            case !additionalDescription:
-                return res.status(500).send({ error: 'Additional Description is Required' });
-            case !instructions:
-                return res.status(500).send({ error: 'Instructions are Required' });
-            case !benefits:
-                return res.status(500).send({ error: 'Benefits are Required' });
+                return res.status(500).send({error:'Description is Required'})
             case photo && photo.size > 1000000:
                 return res.status(500).send({ error: 'Photo is Required and less than 1MB' });
         }
 
         // Update the bulk category
-        const bulkCategory = await wasteCategoryModel.findByIdAndUpdate(
+        const bulkCategory = await RewardModel.findByIdAndUpdate(
             req.params.cid, 
             { ...req.fields, slug: slugify(name) }, 
             { new: true } // To return the updated document

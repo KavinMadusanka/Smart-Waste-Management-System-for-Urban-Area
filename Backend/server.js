@@ -13,6 +13,8 @@ import BrequestFormRoutes from './routes/bRequestFormRoutes.js';
 import {router as WasteCategoryRoutes} from './routes/wasteCategoryRoute.js';
 import {router as MaintenanceRoutes} from './routes/maintenanceRoute.js';
 import {router as MaintainReplyRoutes} from './routes/maintainReplyRoutes.js';
+import WasteRequestRoutes from './routes/wasteRequestRoutes.js';
+import RewardRoutes from './routes/RewardRoute.js'
 
 //configure env
 dotenv.config();
@@ -38,6 +40,8 @@ app.use('/api/v1/bulkRequestForm',BrequestFormRoutes)
 app.use('/api/v1/wasteCategory',WasteCategoryRoutes)
 app.use('/api/v1/maintenance',MaintenanceRoutes)
 app.use('/api/v1/replies',MaintainReplyRoutes)
+app.use('/api/v1/wasteRequest',WasteRequestRoutes)
+app.use('/api/v1/RewardRoutes',RewardRoutes)
 
 // rest api
 app.get("/" , (req,res) => {

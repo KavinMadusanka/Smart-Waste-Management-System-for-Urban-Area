@@ -29,6 +29,14 @@ import BRequests from "./Pages/User/BRequests"
 import AllBRequests from "./Pages/WasteCollector/AllBRequests";
 import Notifications from "./Pages/User/Notifications";
 import CollectionHistory from "./Pages/User/WasteCollectionHistory";
+import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+import Rewards from "./Pages/Admin/CreateRedeemReward";
+import RedeemRewards from "./Pages/User/RedeemRewards"
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Home from "./Pages/WasteCollector/Home";
+import CollectorNotifications from "./Pages/WasteCollector/CollectorNotifications";
+import RejectForm from "./Pages/Admin/RejectForm";
 
 import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 import Rewards from "./Pages/Admin/CreateRedeemReward";
@@ -69,13 +77,23 @@ function App() {
       <Route path='/bRequests' element={<BRequests />}/>
       <Route path='/allbRequests' element={<AllBRequests />}/>
       <Route path='/updatebRequest/:_id' element={<UpdateBRequestForm />}/>
+      <Route path='/rejectForm' element={<RejectForm />}/>
 
 
 
 
       <Route path='/notifications' element={<Notifications />}/>
       <Route path='/collection-history' element={<CollectionHistory />}/>
-    </Routes>  
+      <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+      <Route path='/whome' element={<Home />}/>
+      <Route path="/notify" element={<CollectorNotifications />}/>
+      <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
+      <Route path='/Rewards' element={<Rewards/>}/>
+      <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+    </Routes>
+
     </>
   );
 }

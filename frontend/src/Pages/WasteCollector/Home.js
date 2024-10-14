@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Col, Row, Modal, Button } from 'antd';
+import { Card, Col, Row, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import WasteRequestForm from './Form/WasteRequestForm'
-import Header1 from '../components/Layout/Header1'
-import {} from './../components/style/RecyclingPage.css';
-import recyclingImage from './../components/image/recycling-image.jpeg';
+import Header1 from '../../components/Layout/CollectorHeader'
+import {} from './../../components/style/RecyclingPage.css';
+import recyclingImage from './../../components/image/recycling-image.jpeg';
 
-const HomePage = () => {
+const Home = () => {
   const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [modalContent, setModalContent] = useState(null);
-    const navigate = useNavigate();
-
+    const [modalContent, setModalContent] = useState(null)
     const getAllBulkCategories = async () => {
         try {
             const { data } = await axios.get('/api/v1/wasteCategory/get-wasteCategory');
@@ -43,11 +40,6 @@ const HomePage = () => {
         setSelectedCategory(null);
     };
 
-    // Function to handle modal visibility and content
-    const handleModal = (content) => {
-        setVisible(true);
-        setModalContent(content);
-    };
   return (
     <div style={{ backgroundColor: '#F3F4F6' }}>
             <Header1 /> {/* Include Header1 here */}
@@ -166,26 +158,7 @@ const HomePage = () => {
                         justifyContent: 'flex-end',
                         marginTop: '40px',
                     }}>
-                        <Button
-                            type="primary"
-                            onClick={() => { handleModal(<WasteRequestForm />);}}
-                            style={{
-                                backgroundColor: '#1A4D2E',
-                                color: '#fff',
-                                border: 'none',
-                                padding: '12px 28px',
-                                borderRadius: '8px',
-                                fontSize: '16px',
-                                fontWeight: 600,
-                                boxShadow: '0 5px 15px rgba(0, 0, 0, 0.15)',
-                                cursor: 'pointer',
-                                transition: 'background-color 0.3s ease',
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#57A773'} // Hover effect
-                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#1A4D2E'} // Reset color
-                        >
-                            To Request Form
-                        </Button>
+                        
                     </div>
                 </div>
 
@@ -225,4 +198,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage
+export default Home
