@@ -5,6 +5,8 @@ import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import WasteRequestForm from './../Form/WasteRequestForm'
 import Header1 from '../../components/Layout/Header1'; // Import Header1
+import {} from './../../components/style/RecyclingPage.css';
+import recyclingImage from './../../components/image/recycling-image.jpeg';
 
 const WasteCategoryUser = () => {
     const [categories, setCategories] = useState([]);
@@ -56,8 +58,23 @@ const WasteCategoryUser = () => {
                 maxWidth: '1200px',
                 margin: '0 auto',
             }}>
+                    <div className="recyclingContainer">
+                        <h1 className='h1Header'>What is Recycling?</h1>
+                        <div className="firstContent">
+                            <p className='paragr'>
+                            Recycling is the process of collecting, processing, and reusing materials that would otherwise be discarded as waste. By converting used materials into new products, recycling reduces the need for raw materials, conserves natural resources, and decreases the amount of waste sent to landfills and incinerators. Commonly recycled materials include paper, glass, metal, and plastic. Recycling not only helps protect the environment but also supports economic growth by creating jobs in the recycling and manufacturing industries. It's a key component of sustainable living, promoting the efficient use of resources and minimizing our ecological footprint.
+                            </p>
+                            <img src={recyclingImage} alt="Recycling" className="recycling-image" />
+                        </div>
+                        <h2 className='h2Header'>How to Identify Recyclable Materials?</h2>
+                        <p className='secondParagr'>
+                            Identifying recyclable materials involves checking labels, symbols, and local recycling guidelines. Look for the recycling symbol (♻️) with a number inside, indicating the type of plastic. Common recyclable items include paper, cardboard, glass bottles, aluminum cans, steel, and most plastics labeled #1 and #2. Always rinse and clean items before recycling.
+                        </p>
+                    </div>
+
                 <h1 style={{
                     textAlign: 'center',
+                    paddingTop:20,
                     color: '#1A4D2E',
                     fontWeight: 600,
                     marginBottom: '40px',
