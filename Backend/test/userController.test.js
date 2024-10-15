@@ -1,4 +1,3 @@
-// test/userController.test.js
 import request from 'supertest';
 import mongoose from 'mongoose';
 import userModel from '../models/userModel';
@@ -17,7 +16,8 @@ describe('User Registration', () => {
     server.close(); // Ensure the server is closed after tests
   });
 
-  it('should register a new user', async () => {
+  // Test Case 1: Successful User Registration
+  it('should register a new user successfully', async () => {
     const newUser = {
       firstName: 'John',
       lastName: 'Doe',
@@ -42,5 +42,60 @@ describe('User Registration', () => {
     expect(res.statusCode).toEqual(201);
     expect(res.body.success).toBe(true);
     expect(res.body.message).toBe('User Register Successfully');
+  });
+
+  // Test Case 2: Missing Required Fields
+  it('should return an error if required fields are missing', async () => {
+    const incompleteUser = {
+      firstName: 'John',
+      // lastName is missing
+      email: 'john@example.com',
+      password: '123456',
+      contactNumber: '1234567890',
+      address: {
+        street: '123 Street',
+        city: 'City',
+        postalCode: '12345',
+        country: 'Country',
+      },
+      wasteBinType: 'General',
+    };
+
+    const res = await request(app)
+      .post('/api/v1/auth/registerUser')
+      .send(incompleteUser);
+
+    expect(res.statusCode).toEqual(200); // Assuming your validation returns a 200 with a message
+    expect(res.body.success).toBe(undefined);
+    expect(res.body.message).toBe('Full name name is Required'); // Ensure this matches your validation message
+  });
+
+  // Test Case 3: User Already Registered
+  it('should return an error if the user is already registered', async () => {
+    const existingUser = {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john@example.com',
+      password: '123456',
+      contactNumber: '1234567890',
+      address: {
+        street: '123 Street',
+        city: 'City',
+        postalCode: '12345',
+        country: 'Country',
+      },
+      wasteBinType: 'General',
+    };
+
+    // Simulate existing user
+    userModel.findOne = jest.fn().mockResolvedValue(existingUser);
+
+    const res = await request(app)
+      .post('/api/v1/auth/registerUser')
+      .send(existingUser);
+
+    expect(res.statusCode).toEqual(200); // Assuming you return 200 for existing users
+    expect(res.body.success).toBe(false);
+    expect(res.body.message).toBe('Already Registered customer,Please login');
   });
 });
