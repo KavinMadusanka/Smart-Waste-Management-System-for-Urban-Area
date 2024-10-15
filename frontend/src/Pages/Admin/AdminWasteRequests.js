@@ -5,14 +5,19 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QRCodeCanvas } from 'qrcode.react'; // Use QRCodeCanvas for the QR code
 import Header1 from '../../components/Layout/Header1';
+import { useAuth } from '../../context/auth';
 
 const { Option } = Select;
 
 const AdminWasteRequests = () => {
-  const [wasteRequests, setWasteRequests] = useState([]); // Store all waste requests
-  const [selectedRequest, setSelectedRequest] = useState(null); // For modal to show QR code and update status
-  const [loading, setLoading] = useState(true); // Loading state
-  const [modalVisible, setModalVisible] = useState(false); // Modal visibility
+const [wasteRequests, setWasteRequests] = useState([]); // Store all waste requests
+const [selectedRequest, setSelectedRequest] = useState(null); // For modal to show QR code and update status
+const [loading, setLoading] = useState(true); // Loading state
+const [modalVisible, setModalVisible] = useState(false); // Modal visibility
+const [auth, setAuth] = useAuth();
+const [userPoint,setPoint] = useState("");
+const [email, setEmail] = useState("");
+const [ID,setID] = useState("");
 
   // Fetch all waste requests from the server
   const fetchWasteRequests = async () => {
@@ -34,20 +39,49 @@ const AdminWasteRequests = () => {
     fetchWasteRequests();
   }, []);
 
+  useEffect(() => {
+    if (auth && auth.user) {
+        setID(auth.user._id)
+        setEmail(auth.user.email);
+        setPoint(auth.user.points);
+    }
+}, [auth]);
+
   // Function to update the status of the selected waste request
-  const handleStatusChange = async (id, status) => {
+const handleStatusChange = async (id, status) => {
     if (status === 'completed') {
       try {
-        // Send PUT request to update the waste request status in the database
-        const response = await axios.put(`/api/v1/wasteRequest/${id}/update-status`, {
-          status,
-        });
-        if (response?.data?.success) {
-          toast.success('Status updated successfully');
-          // Refresh the waste requests list
-          fetchWasteRequests();
-        } else {
-          toast.error('Failed to update status');
+        // Find the selected waste request to calculate total points
+        const { data } = await axios.get(`/api/v1/wasteRequest/get-SingleRequest/${id}`);
+        const ReqEmail = data.userEmail;
+        console.log(ReqEmail)
+        if (data?.success) {
+          const wasteRequest = data.WasteReq;
+          
+          // Calculate total points from the items array
+          const totalPoints = wasteRequest.items.reduce((total, item) => {
+            return total + (item.quantity * item.points); // Calculate points for each item
+          }, 0);
+
+          console.log(totalPoints);
+          
+          // Send PUT request to update the waste request status in the database
+          const response = await axios.put(`/api/v1/wasteRequest/${id}/update-status`, {
+            status,
+          });
+  
+          if (response?.data?.success) {
+            // Update user points after successfully completing the request
+            await axios.put(`/api/v1/auth/update-points/${ReqEmail}`, {
+              points: totalPoints, // Sending the total calculated points to update
+            });
+  
+            toast.success('Status updated successfully');
+            // Refresh the waste requests list
+            fetchWasteRequests();
+          } else {
+            toast.error('Failed to update status');
+          }
         }
       } catch (error) {
         console.error('Error updating status:', error);
@@ -57,6 +91,7 @@ const AdminWasteRequests = () => {
       toast.warn('You can only update to "Completed" status.');
     }
   };
+  
 
   // Open modal to show QR code for the selected waste request
   const handleShowQrCode = (request) => {
