@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Col, Row, Modal, Button } from 'antd';
+import { Card, Col, Row, Modal, Button, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import WasteRequestForm from './../Form/WasteRequestForm'
@@ -23,11 +23,25 @@ const RedeemRewards = () => {
     useEffect(() => {
         if (auth && auth.user) {
             setEmail(auth.user.email);
-            setPoint(auth.user.points);
         }
     }, [auth]);
-    // console.log(email);
-    // console.log(userPoint);
+
+    useEffect(() => {
+        getUserDetails();
+    }, [email]);
+
+    const getUserDetails = async() =>{
+        try {
+            const userResponse = await axios.get(`/api/v1/auth/get-SingleUser/${email}`);
+            // console.log(email);
+            const user = userResponse.data?.user;
+            setPoint(user?.points);
+            console.log(user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     const getAllBulkCategories = async () => {
         try {
@@ -46,21 +60,46 @@ const RedeemRewards = () => {
         getAllBulkCategories();
     }, []);
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-        setIsModalVisible(true);
-    };
+    const handleCategoryClick = async (category) => {
+        // Check if user has enough points
+        if (userPoint >= category.point) {
 
-    const handleCloseModal = () => {
-        setIsModalVisible(false);
-        setSelectedCategory(null);
+            const totalPoints = userPoint- category.point ;
+            setPoint(totalPoints);
+            console.log(totalPoints);
+            await axios.put(`/api/v1/auth/update-points/${email}`, {
+                points: totalPoints, // Sending the total calculated points to update
+              });
+            // Show success notification
+            notification.success({
+                message: 'Redemption Successful',
+                description: `You received this item. It will be delivered within 10 days.`,
+                duration: 3, // Duration the toast message stays visible (in seconds)
+            });
+    
+            // Optionally, update the backend to deduct points or register the reward redemption here
+    
+        } else {
+            // Show error notification
+            notification.error({
+                message: 'Not Enough Points',
+                description: `You need at least ${category.point} points to redeem this reward.`,
+                duration: 3,
+            });
+        }
     };
+    
 
-    // Function to handle modal visibility and content
-    const handleModal = (content) => {
-        setVisible(true);
-        setModalContent(content);
-    };
+    // const handleCloseModal = () => {
+    //     setIsModalVisible(false);
+    //     setSelectedCategory(null);
+    // };
+
+    // // Function to handle modal visibility and content
+    // const handleModal = (content) => {
+    //     setVisible(true);
+    //     setModalContent(content);
+    // };
 
     return (
         <div >
@@ -208,7 +247,7 @@ const RedeemRewards = () => {
                     </div> */}
                 </div>
 
-                <Modal
+                {/* <Modal
                     title={<h2 style={{ fontWeight: 600, color: '#1A4D2E' }}>{selectedCategory?.name}</h2>}
                     visible={isModalVisible}
                     onCancel={handleCloseModal}
@@ -231,13 +270,13 @@ const RedeemRewards = () => {
                             />
                         )}
                     </div>
-                </Modal>
-                <Modal
+                </Modal> */}
+                {/* <Modal
                     onCancel={() => setVisible(false)}
                     footer={null}
                     visible={visible}>
                     {modalContent}
-              </Modal> 
+              </Modal>  */}
 
             </div>
         </div>
