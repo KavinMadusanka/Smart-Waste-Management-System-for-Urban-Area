@@ -97,8 +97,9 @@ const AllBRequests = () => {
         const confirmed = window.confirm(`Confirm payment of ${paymentValue}?`);
         if (confirmed) {
             try {
-                await axios.put(`/api/v1/bulkRequestForm/update-points-brequestform/${requestId}`, paymentValue);
                 console.log('Payment confirmed for request:', requestId); // Log confirmation
+                await axios.patch(`/api/v1/bulkRequestForm/update-pvalue-status-points/${requestId}?pvalue=`,paymentValue);
+                // console.log('Payment confirmed for request:', requestId); // Log confirmation
                 setPvalues(prev => ({ ...prev, [requestId]: '' })); // Reset the specific pvalue after confirming payment
                 fetchRequests(); // Refresh the request list after updating
             } catch (error) {
