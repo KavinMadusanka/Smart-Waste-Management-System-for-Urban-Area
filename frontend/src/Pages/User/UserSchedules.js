@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles';
-import { format, addDays, startOfWeek } from 'date-fns';
+import { format, addDays, startOfWeek, startOfDay } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth'; // Assuming you're using a context for authentication
 import Footer from '../../components/Layout/Footer';
@@ -69,16 +69,16 @@ const ViewAllSchedules = () => {
     }, []);
 
     const filterSchedules = (schedulesList, selectedDate) => {
-        const today = new Date();
+        const today = startOfDay(new Date());
 
         const filtered = schedulesList.filter(schedule => {
-            const scheduleDate = new Date(schedule.pickupDate);
+            const scheduleDate = startOfDay(new Date(schedule.pickupDate));
 
             // Filter schedules from today or future dates, and ensure the area matches the user's city
             const userCity = auth?.user?.address?.city?.toLowerCase();
             return (
                 scheduleDate >= today && // Only current or future schedules
-                format(scheduleDate, 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd') &&
+                scheduleDate.getTime() === startOfDay(selectedDate).getTime() && // Compare dates without time component
                 schedule.area.toLowerCase() === userCity
             );
         });
@@ -96,7 +96,7 @@ const ViewAllSchedules = () => {
             <Header1 />
             <Container maxWidth="lg" sx={{ p: 4, mt: 2 }}>
                 <Typography variant="h5" align="center" gutterBottom>
-                    Schedule pickups {auth?.user?.address?.city || 'Your City'}
+                    Schedule pickups in {auth?.user?.address?.city || 'Your City'}
                 </Typography><br/>
 
                 {/* Week Navigation */}
@@ -131,9 +131,6 @@ const ViewAllSchedules = () => {
                                 <ScheduleCard>
                                     <Typography>Pickup Time: {schedule.pickupTime}</Typography>
                                     <Typography>Bin Type: {schedule.binType}</Typography>
-                                    {/* <Typography>
-                                        Collector: {schedule.assignedCollector ? `${schedule.assignedCollector.firstName} ${schedule.assignedCollector.lastName}` : 'N/A'}
-                                    </Typography> */}
                                     <Typography>Date: {format(new Date(schedule.pickupDate), 'dd MMM yyyy')}</Typography>
                                 </ScheduleCard>
                             </Box>
@@ -148,7 +145,7 @@ const ViewAllSchedules = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <Footer />
         </Box>
     );
