@@ -30,6 +30,7 @@ const Header1 = () => {
                 <>
                   <Link to="/adminDashboard" className="nav-link">Dashboard</Link>
                   <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
+                  <Link to="/bulkcategories" className="nav-link">Bulk Categories</Link>
                 </>
               )}
 

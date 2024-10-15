@@ -3,7 +3,7 @@ import { Box, Button, TextField, Modal, Typography, Select, MenuItem } from '@mu
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
-import Header1 from '../../components/Layout/Header1';
+import CollectorHeader from '../../components/Layout/CollectorHeader';
 
 const AllBRequests = () => {
     const navigate = useNavigate();
@@ -98,8 +98,8 @@ const AllBRequests = () => {
         if (confirmed) {
             try {
                 console.log('Payment confirmed for request:', requestId); // Log confirmation
-                await axios.patch(`/api/v1/bulkRequestForm/update-pvalue-status-points/${requestId}?pvalue=`,paymentValue);
-                // console.log('Payment confirmed for request:', requestId); // Log confirmation
+                await axios.put(`/api/v1/bulkRequestForm/update-pvalue-status-points/${requestId}`,{ pvalue: paymentValue });
+                console.log('Payment confirmed for request:', requestId); // Log confirmation
                 setPvalues(prev => ({ ...prev, [requestId]: '' })); // Reset the specific pvalue after confirming payment
                 fetchRequests(); // Refresh the request list after updating
             } catch (error) {
@@ -111,7 +111,7 @@ const AllBRequests = () => {
 
     return (
         <div>
-            <Header1 />
+            <CollectorHeader />
             <div style={{ backgroundColor: '#F3F4F6', padding: '30px', width: '100%', margin: '0' }}>
                 <h1 style={{ textAlign: 'center', color: '#1A4D2E', fontWeight: 600, marginBottom: '40px' }}>
                     Bulk Waste Disposal Requests

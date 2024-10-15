@@ -34,6 +34,10 @@ const CollectorHeader = () => {
         navigate('/collector-schedule'); // Adjust the route as needed
     };
 
+    const goToBulkRequests = () => {
+        navigate('/allbrequests'); // Adjust the route as needed
+    };
+
     const goToAccount = () => {
         navigate('/collector-profile'); // Adjust the route as needed
     };
@@ -64,6 +68,14 @@ const CollectorHeader = () => {
                             Schedule
                         </Button>
                     )}
+
+                        <Button
+                            color="inherit"
+                            onClick={goToBulkRequests}
+                            className="nav-link"
+                        >
+                            Bulk Requests
+                        </Button>
 
                     <Button
                         color="inherit"
