@@ -205,7 +205,8 @@ export const updateUserPoints = async (req, res) => {
       // Find the user by email and update their points
       const updatedUser = await userModel.findOneAndUpdate(
           { email: userEmail }, // Query by email
-          { $inc: { points } }, // Increment the user's points
+          // { $inc: { points } }, // Increment the user's points
+          { points },
           { new: true } // Return the updated user
       );
 
@@ -217,5 +218,39 @@ export const updateUserPoints = async (req, res) => {
   } catch (error) {
       console.error('Error updating user points:', error.message); // Log the error message
       res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
+
+// Get single user by email
+export const getSingleUser = async (req, res) => {
+  const { email } = req.params; // Correctly extract email from req.params
+  try {
+      // Find user by email
+      const user = await userModel.findOne({ email: email }); // Use findOne with email as an object
+      
+      if (!user) {
+          return res.status(404).send({
+              success: false,
+              message: "User not found",
+          });
+      }
+
+      // Get current points
+      const currentPoint = user.points;
+
+      // Return user and their points
+      res.status(200).send({
+          success: true,
+          message: 'Single User Fetched',
+          user,
+          currentPoint,
+      });
+  } catch (error) {
+      console.log(error);
+      res.status(500).send({
+          success: false,
+          message: 'Error while getting single user',
+          error: error.message,
+      });
   }
 };
