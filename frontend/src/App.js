@@ -41,6 +41,7 @@ import RejectForm from "./Pages/Admin/RejectForm";
 //import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 //import Rewards from "./Pages/Admin/CreateRedeemReward";
 import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+import AdminWasteRequests from "./Pages/Admin/AdminWasteRequests"
 
 //import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -92,6 +93,7 @@ function App() {
       <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
       <Route path='/Rewards' element={<Rewards/>}/>
       <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+      <Route path='/AdminWasteRequests' element={<AdminWasteRequests/>} />
     </Routes>
 
     </>
