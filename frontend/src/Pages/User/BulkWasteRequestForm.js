@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
+import Footer from '../../components/Layout/Footer';
 
 const CreateRequest = () => {
     const navigate = useNavigate();
@@ -169,6 +170,7 @@ const CreateRequest = () => {
             </Box>
             <Toaster />
         </Box>
+        <Footer/>
         </div>
     );
 };

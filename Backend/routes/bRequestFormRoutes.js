@@ -19,7 +19,7 @@ router.delete('/delete-brequestform/:_id',deleteBRequestFormController);
 // Update status of bulk request form
 router.patch('/update-status-brequestform/:_id', updateBRequestFormStatusController);
 // Update pvalue, status to "three", and calculate points
-router.patch('/update-pvalue-status-points/:_id', formidable(), updatePvalueAndStatusController);
+router.put('/update-pvalue-status-points/:_id', formidable(), updatePvalueAndStatusController);
 // Update status of bulk request form
 router.patch('/update-final-tatus-brequestform/:_id', completeBRequestFormStatusController);
 

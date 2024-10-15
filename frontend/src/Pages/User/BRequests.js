@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/auth';
 import Header1 from '../../components/Layout/Header1'; // Import Header1
 import { styled } from '@mui/system'; // For custom styles
+import Footer from './../../components/Layout/Footer';
 
 const UserRequests = () => {
     const navigate = useNavigate();
@@ -309,6 +310,7 @@ const UserRequests = () => {
                     </Box>
                 </Modal>
             </div>
+            <Footer/>
         </div>
     );
 };
