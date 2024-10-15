@@ -43,7 +43,6 @@ const [ID,setID] = useState("");
     if (auth && auth.user) {
         setID(auth.user._id)
         setEmail(auth.user.email);
-        setPoint(auth.user.points);
     }
 }, [auth]);
 
@@ -69,11 +68,19 @@ const handleStatusChange = async (id, status) => {
           const response = await axios.put(`/api/v1/wasteRequest/${id}/update-status`, {
             status,
           });
+          // Fetch the user details by email
+          const userResponse = await axios.get(`/api/v1/auth/get-SingleUser/${ReqEmail}`);
+          const user = userResponse.data?.user; // Ensure correct access to user data
+          const userCurrectPoint = user?.points;
+          console.log(userCurrectPoint);
+          const currentPoint = (totalPoints + userCurrectPoint);
+          console.log(currentPoint);
+
   
           if (response?.data?.success) {
             // Update user points after successfully completing the request
             await axios.put(`/api/v1/auth/update-points/${ReqEmail}`, {
-              points: totalPoints, // Sending the total calculated points to update
+              points: currentPoint, // Sending the total calculated points to update
             });
   
             toast.success('Status updated successfully');
