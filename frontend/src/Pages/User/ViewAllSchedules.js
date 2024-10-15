@@ -175,7 +175,7 @@ const ViewAllSchedules = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
-            <br/><br/>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
             <Footer />
         </Box>
     );
