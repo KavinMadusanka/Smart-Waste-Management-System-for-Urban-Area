@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import { format, addDays, startOfWeek } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth'; // Assuming you're using a context for authentication
+import Footer from '../../components/Layout/Footer';
 
 // Styled component for Day Button
 const DayButton = styled(Button)(({ selected }) => ({
@@ -147,6 +148,8 @@ const ViewAllSchedules = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <Footer />
         </Box>
     );
 };

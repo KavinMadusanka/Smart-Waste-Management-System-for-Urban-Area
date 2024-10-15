@@ -5,6 +5,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from '../../context/auth';
 import { Container,Link, Box, Typography, TextField, Button, Paper } from '@mui/material';
 import Header1 from '../../components/Layout/Header1';
+import Footer from '../../components/Layout/Footer';
 
 const AuthLogin = () => {
     const [email, setEmail] = useState("");
@@ -126,6 +127,8 @@ const AuthLogin = () => {
                 </Paper>
             </Box>
             </Container>
+            <br/><br/><br/><br/>
+            <Footer/>
         <Toaster />
   </Box>
     );

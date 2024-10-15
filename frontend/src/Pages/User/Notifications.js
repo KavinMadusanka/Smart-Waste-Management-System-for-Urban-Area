@@ -9,6 +9,7 @@ import { format } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import Footer from '../../components/Layout/Footer';
 
 // Styled component for Schedule Card
 const ScheduleCard = styled(Paper)(({ theme }) => ({
@@ -85,6 +86,8 @@ const Notifications = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <Footer/>
         </Box>
     );
 };

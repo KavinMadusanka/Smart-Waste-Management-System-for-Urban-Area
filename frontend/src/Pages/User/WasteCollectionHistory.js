@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { format } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth';
+import Footer from '../../components/Layout/Footer';
 
 const CollectionHistory = () => {
     const [schedules, setSchedules] = useState([]);
@@ -87,6 +88,8 @@ const CollectionHistory = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <Footer />
         </Box>
     );
 };

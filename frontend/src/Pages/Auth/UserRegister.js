@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import Header1 from '../../components/Layout/Header1';
+import Footer from '../../components/Layout/Footer';
 
 // Account types and waste bin types for dropdowns
 const wasteBinTypes = ['General', 'Recyclable'];
@@ -245,6 +246,8 @@ const UserRegister = () => {
         {/* Toast Notification Container */}
         <ToastContainer />
       </Container>
+      <br/><br/><br/>
+      <Footer/>
     </Box>
   );
 };

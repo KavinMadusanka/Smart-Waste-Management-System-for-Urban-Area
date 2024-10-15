@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import Header1 from '../../components/Layout/Header1';
+import Footer from '../../components/Layout/Footer';
 
 const WasteCollectorRegister = () => {
   const navigate = useNavigate();
@@ -225,6 +226,8 @@ const WasteCollectorRegister = () => {
         {/* Toast Notification Container */}
         <ToastContainer />
       </Container>
+      <br/><br/><br/>
+      <Footer/>
     </Box>
   );
 };
