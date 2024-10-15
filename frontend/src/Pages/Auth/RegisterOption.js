@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography, Paper } from '@mui/material';
 import { styled } from '@mui/system';
 import Header1 from './../../components/Layout/Header1';
+import Footer from '../../components/Layout/Footer';
 
 const GradientBackground = styled(Box)({
   height: '80vh',
@@ -74,7 +75,10 @@ const RegisterOption = () => {
         </Box>
       </Card>
     </GradientBackground>
+    <br/><br/><br/>
+    <Footer/>
     </Box>
+     
   );
 };
 
