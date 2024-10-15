@@ -91,19 +91,22 @@ export const getAllWasteRequests = async (req, res) => {
 export const getSingleRequest = async (req, res) => {
   const { id } = req.params;
   try {
-      const bulkCategory = await WasteRequest.findById({ id });
+      const WasteReq = await WasteRequest.findById(id);
       
-      if (!bulkCategory) {
+      if (!WasteReq) {
           return res.status(404).send({
               success: false,
               message: "Request not found",
           });
       }
 
+      const userEmail = WasteReq.userEmail;
+
       res.status(200).send({
           success: true,
           message: 'Single request Fetched',
-          bulkCategory,
+          WasteReq,
+          userEmail,
       });
   } catch (error) {
       console.log(error);
