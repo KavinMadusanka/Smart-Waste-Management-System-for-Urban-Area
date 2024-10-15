@@ -32,8 +32,8 @@ const Header1 = () => {
                 <a href="/adminDashboard" className="nav-link">Dashboard</a>
                 <div className="dropdown-content">
                   <a href="/AdminWasteRequests">Waste Request</a>
-                  <a href="/RedeemRewards">Redeem Rewards</a>
-                  <a href="/usermaintenanceRequest">Maintain Request</a>
+                  <a href="/WasteCategory">Add waste Category</a>
+                  <a href="/Rewards">Add Rewards</a>
                 </div>
               </div>
                   {/* <Link to="/adminDashboard" className="nav-link">Dashboard</Link> */}
