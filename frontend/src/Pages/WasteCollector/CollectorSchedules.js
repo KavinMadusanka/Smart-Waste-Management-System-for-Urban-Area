@@ -166,6 +166,7 @@ const CollectorSchedules = () => {
                     <Option value="Missed">Missed</Option>
                     <Option value="Completed">Completed</Option>
                     <Option value="In Progress">In Progress</Option>
+                    <Option value="Confirmed">Confirmed</Option>
                 </Select>
             </Modal>
         </Box>
