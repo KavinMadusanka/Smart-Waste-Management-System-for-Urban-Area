@@ -1,6 +1,6 @@
 import express from 'express'
 import { isAdmin, requireSignIn } from '../middlewares/AuthMiddleware.js'
-import { getAllWasteCollectors, LoginController, userRegisterController, wasteCollectorRegisterController } from '../controllers/AuthController.js'
+import { getAllWasteCollectors, LoginController, userRegisterController, wasteCollectorRegisterController, updateUserPoints } from '../controllers/AuthController.js'
 
 //router object
 const router = express.Router()
@@ -17,5 +17,8 @@ router.post('/registerCollector',wasteCollectorRegisterController)
 
 //login
 router.post('/login',LoginController)
+
+// Update user points
+router.put('/update-points/:email', updateUserPoints);
 
 export default router
