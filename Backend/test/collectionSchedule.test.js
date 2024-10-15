@@ -14,7 +14,7 @@ describe('Create Collection Schedule', () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close(); // Close the MongoDB connection
+    await mongoose.connection.close();
     server.close(); // Close the Express server
   });
 
@@ -34,7 +34,7 @@ describe('Create Collection Schedule', () => {
     collectionScheduleModel.prototype.save = jest.fn().mockResolvedValue(newSchedule);
 
     const res = await request(app)
-      .post('/api/v1/collectionSchedule/create-schedule') // Ensure this endpoint matches your routing
+      .post('/api/v1/collectionSchedule/create-schedule') 
       .send(newSchedule);
 
     expect(res.statusCode).toEqual(201);
@@ -54,10 +54,10 @@ describe('Create Collection Schedule', () => {
     };
 
     const res = await request(app)
-      .post('/api/v1/collectionSchedule/create-schedule') // Ensure this endpoint matches your routing
+      .post('/api/v1/collectionSchedule/create-schedule') 
       .send(newSchedule);
 
     expect(res.statusCode).toEqual(400); // Change this to the expected status code from your controller
-    expect(res.body.message).toBe('Invalid Waste Collector'); // Check the error message
+    expect(res.body.message).toBe('Invalid Waste Collector');
   });
 });

@@ -1,7 +1,7 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import userModel from '../models/userModel';
-import { app, server } from '../server.js'; // Import both the app and server instances
+import { app, server } from '../server.js';
 
 // Mock Mongoose model to avoid hitting the database in unit tests
 jest.mock('../models/userModel');
@@ -36,7 +36,7 @@ describe('User Registration', () => {
     userModel.prototype.save = jest.fn().mockResolvedValue(newUser);
 
     const res = await request(app)
-      .post('/api/v1/auth/registerUser') // Ensure this endpoint matches your routing
+      .post('/api/v1/auth/registerUser')
       .send(newUser);
 
     expect(res.statusCode).toEqual(201);
@@ -65,9 +65,9 @@ describe('User Registration', () => {
       .post('/api/v1/auth/registerUser')
       .send(incompleteUser);
 
-    expect(res.statusCode).toEqual(200); // Assuming your validation returns a 200 with a message
+    expect(res.statusCode).toEqual(200); 
     expect(res.body.success).toBe(undefined);
-    expect(res.body.message).toBe('Full name name is Required'); // Ensure this matches your validation message
+    expect(res.body.message).toBe('Full name name is Required'); 
   });
 
   // Test Case 3: User Already Registered

@@ -2,8 +2,8 @@
 import request from 'supertest';
 import mongoose from 'mongoose';
 import userModel from '../models/userModel';
-import { app, server } from '../server.js'; // Import both the app and server instances
-import { comparePassword } from '../helpers/AuthHelper'; // Ensure this path is correct
+import { app, server } from '../server.js';
+import { comparePassword } from '../helpers/AuthHelper'; 
 
 // Mock Mongoose model and AuthHelper
 jest.mock('../models/userModel');
@@ -40,33 +40,33 @@ describe('User Login', () => {
     expect(res.statusCode).toEqual(200);
     expect(res.body.success).toBe(true);
     expect(res.body.message).toBe('Login successful');
-    expect(res.body.role).toEqual(mockUser.role); // Check role
-    expect(res.body.token).toBeDefined(); // Check if token is present
+    expect(res.body.role).toEqual(mockUser.role); 
+    expect(res.body.token).toBeDefined();
   });
 
   it('should return error if login credentials are incorrect', async () => {
     userModel.findOne.mockResolvedValue(null); // Simulate user not found
 
     const res = await request(app)
-      .post('/api/v1/auth/login') // Ensure this endpoint matches your routing
+      .post('/api/v1/auth/login') 
       .send({ email: 'invalid@example.com', password: '123456' });
 
     // Assertions
     expect(res.statusCode).toEqual(400);
     expect(res.body.message).toBe('Invalid email or password');
-    expect(res.body.success).toBe(false); // Check success flag
-    expect(res.body.token).toBeUndefined(); // Check that no token is returned
+    expect(res.body.success).toBe(false);
+    expect(res.body.token).toBeUndefined();
   });
 
   // New test case for missing credentials
   it('should return error if email or password is missing', async () => {
     const res = await request(app)
-      .post('/api/v1/auth/login') // Ensure this endpoint matches your routing
+      .post('/api/v1/auth/login')
       .send({ email: 'testuser@example.com' }); // Missing password
 
     // Assertions
     expect(res.statusCode).toEqual(400);
-    expect(res.body.message).toBe('Email and password are required'); // Adjust according to your implementation
-    expect(res.body.success).toBe(false); // Check success flag
+    expect(res.body.message).toBe('Email and password are required');
+    expect(res.body.success).toBe(false);
   });
 });
