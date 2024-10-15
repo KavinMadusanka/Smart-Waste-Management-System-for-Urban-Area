@@ -167,7 +167,7 @@ const AllBRequests = () => {
                                 <Typography sx={{ color: '#333' }}>Address: {request.address}</Typography>
                                 <Typography sx={{ color: '#333' }}>Details: {request.details}</Typography>
 
-                                {request.status === 'two' && (
+                                {request.status === 'f' && (
                                     <Box mt={2} display="flex" alignItems="center">
                                         <TextField
                                             label="Payment Amount"
