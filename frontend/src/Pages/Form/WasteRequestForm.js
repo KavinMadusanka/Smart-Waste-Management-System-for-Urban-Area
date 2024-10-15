@@ -6,6 +6,7 @@ import { useAuth } from '../../context/auth';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { toast } from 'react-hot-toast';
+import QRCode from 'qrcode';
 
 const WasteRequestForm = () => {
   const [categories, setCategories] = useState([]); // Store waste categories from the backend
@@ -87,7 +88,16 @@ const WasteRequestForm = () => {
       if (response?.data?.success) {
         toast.success(response.data.message);
         console.log('Waste request submitted:', response.data);
+
+        // Generate QR Code with waste request ID
+        // const wasteRequestId = response.data.data;
+        // const qrCodeUrl = await QRCode.toDataURL(wasteRequestId);
+
+        // console.log('QR Code URL:', qrCodeUrl);
+        // setQrCodeUrl(qrCodeUrl);
+
         setWasteItems([{ category: null, quantity: 0, points: 0 }]);
+
       } else {
         toast.error('Failed to submit waste request');
       }
