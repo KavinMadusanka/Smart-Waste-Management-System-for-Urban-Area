@@ -189,3 +189,33 @@ export const getAllWasteCollectors = async (req, res) => {
       });
   }
 };
+
+
+// Update user points by email
+export const updateUserPoints = async (req, res) => {
+  const userEmail = req.params.email; // Get user email from the URL parameters
+  const { points } = req.body; // Get points from request body
+
+  try {
+      // Ensure points is a number
+      if (typeof points !== 'number') {
+          return res.status(400).json({ success: false, message: 'Points must be a number' });
+      }
+
+      // Find the user by email and update their points
+      const updatedUser = await userModel.findOneAndUpdate(
+          { email: userEmail }, // Query by email
+          { $inc: { points } }, // Increment the user's points
+          { new: true } // Return the updated user
+      );
+
+      if (!updatedUser) {
+          return res.status(404).json({ success: false, message: 'User not found' });
+      }
+
+      res.status(200).json({ success: true, data: updatedUser });
+  } catch (error) {
+      console.error('Error updating user points:', error.message); // Log the error message
+      res.status(500).json({ success: false, message: 'Internal Server Error' });
+  }
+};
