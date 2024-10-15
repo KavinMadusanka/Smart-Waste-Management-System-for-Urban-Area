@@ -46,7 +46,7 @@ const Header1 = () => {
               </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
                   <Link to="/my-schedule" className="nav-link">Schedule Pickup</Link>
-                  <Link to="/collection-history" className="nav-link">Collection Hostory</Link>
+                  <Link to="/collection-history" className="nav-link">Collection History</Link>
                 </>
               )}
 
