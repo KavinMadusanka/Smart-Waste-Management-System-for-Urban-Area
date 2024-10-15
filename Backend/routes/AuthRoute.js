@@ -1,6 +1,6 @@
 import express from 'express'
 import { isAdmin, requireSignIn } from '../middlewares/AuthMiddleware.js'
-import { getAllWasteCollectors, LoginController, userRegisterController, wasteCollectorRegisterController, updateUserPoints } from '../controllers/AuthController.js'
+import { getAllWasteCollectors, LoginController, userRegisterController, wasteCollectorRegisterController, updateUserPoints, getSingleUser } from '../controllers/AuthController.js'
 
 //router object
 const router = express.Router()
@@ -20,5 +20,8 @@ router.post('/login',LoginController)
 
 // Update user points
 router.put('/update-points/:email', updateUserPoints);
+
+//get single user
+router.get('/get-SingleUser/:email',getSingleUser);
 
 export default router
