@@ -28,12 +28,15 @@ const Header1 = () => {
               {/* If admin role (role === 1) */}
               {auth.user.role === 1 && (
                 <>
+                  <Link to="/adminDashboard" className="nav-link">Dashboard</Link>
                 <div className="dropdown">
                 <a href="/adminDashboard" className="nav-link">Dashboard</a>
                 <div className="dropdown-content">
                   <a href="/AdminWasteRequests">Waste Request</a>
                   <a href="/WasteCategory">Add waste Category</a>
                   <a href="/Rewards">Add Rewards</a>
+                  <a href="/RedeemRewards">Redeem Rewards</a>
+                  <a href="/maintaintRequestDashboard">Maintance Request</a>
                 </div>
               </div>
                   {/* <Link to="/adminDashboard" className="nav-link">Dashboard</Link> */}
