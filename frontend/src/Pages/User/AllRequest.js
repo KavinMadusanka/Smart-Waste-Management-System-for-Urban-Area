@@ -41,23 +41,23 @@ const MaintenanceRequests = () => {
             <div style={styles.container}>
                 <h2 style={styles.heading}>Maintenance Requests</h2>
                 {loading ? (
-                    <p>Loading...</p>
+                    <p style={styles.loadingText}>Loading...</p>
                 ) : maintenance.length > 0 ? (
                     <ul style={styles.requestList}>
                         {maintenance.map(request => (
                             <li key={request._id} style={styles.requestItem}>
-                                <h4>{request.issueDescription}</h4>
-                                <p><strong>Full Name:</strong> {request.fullName}</p>
-                                <p><strong>Contact Number:</strong> {request.contactNumber}</p>
-                                <p><strong>Email:</strong> {request.email}</p>
-                                <p><strong>Object Type:</strong> {request.objectType}</p>
-                                <p><strong>Material:</strong> {request.material}</p>
-                                <p><strong>Submitted On:</strong> {new Date(request.createdAt).toLocaleString()}</p>
+                                <h4 style={styles.issueDescription}>{request.issueDescription}</h4>
+                                <p style={styles.details}><strong>Full Name:</strong> {request.fullName}</p>
+                                <p style={styles.details}><strong>Contact Number:</strong> {request.contactNumber}</p>
+                                <p style={styles.details}><strong>Email:</strong> {request.email}</p>
+                                <p style={styles.details}><strong>Object Type:</strong> {request.objectType}</p>
+                                <p style={styles.details}><strong>Material:</strong> {request.material}</p>
+                                <p style={styles.details}><strong>Submitted On:</strong> {new Date(request.createdAt).toLocaleString()}</p>
                             </li>
                         ))}
                     </ul>
                 ) : (
-                    <p>No maintenance requests found.</p>
+                    <p style={styles.noRequests}>No maintenance requests found.</p>
                 )}
             </div>
         </>
@@ -76,6 +76,11 @@ const styles = {
         marginBottom: '20px',
         color: '#333',
     },
+    loadingText: {
+        textAlign: 'center',
+        fontSize: '18px',
+        color: '#666',
+    },
     requestList: {
         listStyleType: 'none',
         padding: '0',
@@ -86,6 +91,19 @@ const styles = {
         margin: '10px 0',
         borderRadius: '5px',
         boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
+    },
+    issueDescription: {
+        color: '#4CAF50', // Green color for the issue description
+        marginBottom: '10px',
+    },
+    details: {
+        margin: '5px 0',
+        color: '#555', // Darker color for details
+    },
+    noRequests: {
+        textAlign: 'center',
+        fontSize: '18px',
+        color: '#666',
     },
 };
 
