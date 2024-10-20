@@ -43,6 +43,14 @@ import AllRequest from "./Pages/User/AllRequest"
 import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
 import AdminWasteRequests from "./Pages/Admin/AdminWasteRequests"
 
+//import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
+//import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+//import Rewards from "./Pages/Admin/CreateRedeemReward";
+//import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+
 import AllReply from "./Pages/Admin/AllReply"
 //import { ToastContainer } from 'react-toastify';
 
@@ -85,6 +93,7 @@ function App() {
       <Route path='/my-schedule' element={<UserSchedules />}/>
       <Route path='/bRequests' element={<BRequests />}/>
       <Route path='/allbRequests' element={<AllBRequests />}/>
+      <Route path='/updatebRequest/:_id' element={<UpdateBRequestForm />}/>
       <Route path='/rejectForm' element={<RejectForm />}/>
       <Route path='/allRequest' element={<AllRequest />}/>
       <Route path='/requestReply' element={<RequestReply />}/>
@@ -100,6 +109,7 @@ function App() {
       <Route path='/WasteRequestForm' element={<WasteRequestForm/>}/>
       <Route path='/Rewards' element={<Rewards/>}/>
       <Route path='/RedeemRewards' element={<RedeemRewards/>} />
+      <Route path='/AdminWasteRequests' element={<AdminWasteRequests/>} />
     </Routes>
 
     </>

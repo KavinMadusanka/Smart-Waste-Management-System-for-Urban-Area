@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { styled } from '@mui/material/styles';
 import { format, addDays, startOfToday } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
+import Footer from './../../components/Layout/Footer';
 
 // Styled component for Day Button
 const DayButton = styled(Button)(({ selected, disabled }) => ({
@@ -174,6 +175,8 @@ const ViewAllSchedules = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/>
+            <Footer />
         </Box>
     );
 };
