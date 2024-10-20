@@ -37,9 +37,22 @@ const UserMaintainRequest = () => {
     });
   };
 
+  // Validate contact number
+  const validateContactNumber = (contactNumber) => {
+    const regex = /^\d{10}$/; // Regex for 10 digits
+    return regex.test(contactNumber);
+  };
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Validate contact number
+    if (!validateContactNumber(formData.contactNumber)) {
+      alert('Contact number must be exactly 10 digits.');
+      return;
+    }
+
     try {
       // Post form data to the backend
       const response = await axios.post('/api/v1/maintenance/create-maintenance', formData);
@@ -76,8 +89,7 @@ const UserMaintainRequest = () => {
           <ul style={styles.navList}>
             <li><Link to="/" style={styles.navLink}>Create Request</Link></li>
             <li><Link to="/allRequest" style={styles.navLink}>My All Requests</Link></li>
-            <li><Link to="/contact" style={styles.navLink}>Notifications</Link></li>
-            
+            <li><Link to="/requestReply" style={styles.navLink}>Notifications</Link></li>
           </ul>
         </div>
 
@@ -187,7 +199,7 @@ const styles = {
   navLink: {
     display: 'block',
     padding: '10px 0',
-    color: '#333',
+    color: '#4CAF50', // Updated color for navigation links
     textDecoration: 'none',
     fontWeight: 'bold',
     fontSize: '16px',
@@ -204,7 +216,7 @@ const styles = {
   heading: {
     textAlign: 'center',
     marginBottom: '20px',
-    color: '#333',
+    color: '#4CAF50', // Updated heading color
   },
   form: {
     display: 'flex',
@@ -212,7 +224,7 @@ const styles = {
   },
   label: {
     marginBottom: '5px',
-    color: '#333',
+    color: '#4CAF50', // Updated label color
     fontWeight: 'bold',
   },
   input: {
@@ -243,7 +255,7 @@ const styles = {
   button: {
     padding: '10px 15px',
     borderRadius: '4px',
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#4CAF50', // Updated button color
     color: 'white',
     fontSize: '16px',
     border: 'none',

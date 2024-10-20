@@ -1,4 +1,5 @@
 import Maintenance from '../models/maintenanceModel.js';
+import Reply from '../models/maintainReplyModel.js';
 import fs from 'fs'
 
 // Create a new maintenance request
@@ -20,7 +21,9 @@ export const createMaintenanceRequest = async (req, res) => {
         const savedRequest = await newRequest.save();
 
         // Send a success response
-        res.status(201).json(savedRequest);
+        res.status(201).json({success: true,
+            message: 'create maintenance successfully!',
+            data: savedRequest,});
     } catch (error) {
         // Send an error response in case of failure
         res.status(400).json({ message: error.message });
@@ -47,6 +50,50 @@ export const getAllMaintenanceRequestsForUser = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+
+// Get all maintenance requests and replies for a specific user
+export const getUserMaintenanceRequestsWithReplies = async (req, res) => {
+    const { email } = req.params;
+
+    try {
+        // Fetch all maintenance requests for the user based on their email
+        const maintenanceRequests = await Maintenance.find({ email });
+
+        if (maintenanceRequests.length === 0) {
+            return res.status(404).json({ message: 'No maintenance requests found for this user.' });
+        }
+
+        // Log fetched maintenance requests
+        console.log('Fetched maintenance requests:', maintenanceRequests);
+
+        // For each request, find the associated reply, if any
+        const requestsWithReplies = await Promise.all(
+            maintenanceRequests.map(async (request) => {
+                const reply = await Reply.findOne({ requestId: request._id }).populate('assignedTechnician');
+                
+                // Log each request and its reply
+                console.log('Request:', request);
+                console.log('Reply:', reply);
+
+                return {
+                    requestDetails: request,
+                    replyDetails: reply ? reply : { message: 'No reply yet from the admin' }
+                };
+            })
+        );
+
+        // Log the final result before sending the response
+        console.log('Requests with replies:', requestsWithReplies);
+        
+        res.status(200).json({ userRequestsWithReplies: requestsWithReplies });
+
+    } catch (error) {
+        console.error('Error fetching user maintenance requests and replies:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
 
 
 // Get all maintenance requests

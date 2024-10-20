@@ -54,16 +54,16 @@ const AdminMaintenanceRequests = () => {
 
   return (
     <>
-      <AdminMenu />
+      <Header1 />
       <div style={styles.mainContainer}>
         <div style={styles.sidebar}>
-          <h3>Navigation</h3>
+          <h3>Repair Requests</h3>
           <ul style={styles.navList}>
-            <li><Link to="/" style={styles.navLink}>Home</Link></li>
-            <li><Link to="/services" style={styles.navLink}>Services</Link></li>
-            <li><Link to="/contact" style={styles.navLink}>Contact Us</Link></li>
-            <li><Link to="/about" style={styles.navLink}>About Us</Link></li>
-            <li><Link to="/admin/maintenance" style={styles.navLink}>Maintenance Requests</Link></li>
+            <li><Link to="/" style={styles.navLink}>OverView</Link></li>
+            <li><Link to="/allReply" style={styles.navLink}>All Reply</Link></li>
+            <li><Link to="/contact" style={styles.navLink}>Repair Process</Link></li>
+            <li><Link to="/about" style={styles.navLink}>Notification</Link></li>
+            <li><Link to="/admin/maintenance" style={styles.navLink}>Profile</Link></li>
           </ul>
         </div>
 

@@ -27,13 +27,13 @@ const ApproveForm = ({ request, onClose }) => {
         toast.error('Error fetching technicians. Please try again.');
       }
     };
-  
+
     fetchTechnicians();
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const payload = {
       requestId: request._id, // Must be a valid ObjectId
       status: status, // Use the status state here
@@ -42,7 +42,7 @@ const ApproveForm = ({ request, onClose }) => {
       repairDescription: scheduleData.repairDescription,
       assignedTechnician: scheduleData.assignedTechnician, // Should be a string
     };
-  
+
     try {
       const response = await axios.post('/api/v1/replies/create-reply', payload);
       console.log('Response:', response.data); // Log the response to check
@@ -53,6 +53,9 @@ const ApproveForm = ({ request, onClose }) => {
       toast.error('There was an issue approving the request. Please try again.');
     }
   };
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div style={styles.modalContent}>
@@ -65,6 +68,7 @@ const ApproveForm = ({ request, onClose }) => {
             value={scheduleData.scheduledDate}
             onChange={(e) => setScheduleData({ ...scheduleData, scheduledDate: e.target.value })}
             required
+            min={today} // Prevent selection of previous dates
             style={styles.input}
           />
         </label>

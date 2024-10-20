@@ -1,5 +1,5 @@
 import express from 'express';
-import { createMaintenanceRequest, deleteMaintenanceRequest, getAllMaintenanceRequests, getAllMaintenanceRequestsForUser, getMaintenanceRequestById, updateMaintenanceRequest } from '../controllers/maintenanceController.js';
+import { createMaintenanceRequest, deleteMaintenanceRequest, getAllMaintenanceRequests, getAllMaintenanceRequestsForUser, getMaintenanceRequestById, getUserMaintenanceRequestsWithReplies, updateMaintenanceRequest } from '../controllers/maintenanceController.js';
 import formidable from 'express-formidable';
 
 
@@ -10,6 +10,9 @@ router.post('/create-maintenance', createMaintenanceRequest);
 
 // In your routes file, define the new route
 router.get('/get-user-maintenance/:email', getAllMaintenanceRequestsForUser);
+
+// Route to get all maintenance requests and replies for a specific user
+router.get('/get-user-maintenance-replies/:email', getUserMaintenanceRequestsWithReplies);
 
 router.get('/get-maintenance', getAllMaintenanceRequests);
 
