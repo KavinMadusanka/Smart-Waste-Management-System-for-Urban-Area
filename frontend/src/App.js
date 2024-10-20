@@ -41,9 +41,18 @@ import AllRequest from "./Pages/User/AllRequest"
 //import WasteRequestForm from "./Pages/Form/WasteRequestForm";
 //import Rewards from "./Pages/Admin/CreateRedeemReward";
 import UpdateBRequestForm from "./Pages/User/UpdateBulkWasteRequestForm"
+import AdminWasteRequests from "./Pages/Admin/AdminWasteRequests"
+
+import AllReply from "./Pages/Admin/AllReply"
+//import { ToastContainer } from 'react-toastify';
+
+
+
+//import WasteRequestForm from "./Pages/Form/WasteRequestForm";
+//import Rewards from "./Pages/Admin/CreateRedeemReward";
 
 //import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import RequestReply from "./Pages/User/RequestReply"
 
 
 function App() {
@@ -78,8 +87,8 @@ function App() {
       <Route path='/allbRequests' element={<AllBRequests />}/>
       <Route path='/rejectForm' element={<RejectForm />}/>
       <Route path='/allRequest' element={<AllRequest />}/>
-
-
+      <Route path='/requestReply' element={<RequestReply />}/>
+      <Route path='/allReply' element={<AllReply />}/>
 
       <Route path='/notifications' element={<Notifications />}/>
       <Route path='/collection-history' element={<CollectionHistory />}/>
