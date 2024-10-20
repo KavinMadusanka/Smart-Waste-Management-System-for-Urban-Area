@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "Smart Waste Management System for Urban Area",
@@ -26,9 +27,18 @@
     "node": "^22.9.0",
     "nodemodule": "^0.3.0",
     "nodemon": "^3.1.7",
+    "qrcode": "^1.5.4",
     "react-bootstrap": "^2.10.5",
     "react-datepicker": "^7.4.0",
     "react-icons": "^5.3.0",
     "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.8",
+    "@babel/preset-env": "^7.25.8",
+    "@babel/register": "^7.25.7",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

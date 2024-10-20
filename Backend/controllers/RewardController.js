@@ -27,7 +27,7 @@ export const createReward = async (req,res) => {
         await bulkCategories.save()
         res.status(201).send({
             success:true,
-            message:'Product Created Successfully',
+            message:'Reward Created Successfully',
             bulkCategories
         })
     } catch (error) {
@@ -35,7 +35,7 @@ export const createReward = async (req,res) => {
         res.status(500).send({
             success:false,
             error,
-            message:'Error in Creating Bulk Category'
+            message:'Error in Creating Reqards'
         })
     }
 }

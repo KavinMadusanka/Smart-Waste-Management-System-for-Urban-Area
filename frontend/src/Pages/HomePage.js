@@ -7,6 +7,7 @@ import WasteRequestForm from './Form/WasteRequestForm'
 import Header1 from '../components/Layout/Header1'
 import {} from './../components/style/RecyclingPage.css';
 import recyclingImage from './../components/image/recycling-image.jpeg';
+import Footer from './../components/Layout/Footer';
 
 const HomePage = () => {
   const [categories, setCategories] = useState([]);
@@ -221,6 +222,7 @@ const HomePage = () => {
               </Modal> 
 
             </div>
+            <Footer />
         </div>
   );
 };

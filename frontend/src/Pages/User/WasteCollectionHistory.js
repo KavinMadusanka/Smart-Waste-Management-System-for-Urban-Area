@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { format } from 'date-fns';
 import Header1 from '../../components/Layout/Header1';
 import { useAuth } from '../../context/auth';
+import Footer from '../../components/Layout/Footer';
 
 const CollectionHistory = () => {
     const [schedules, setSchedules] = useState([]);
@@ -68,7 +69,7 @@ const CollectionHistory = () => {
                                         <TableCell>{format(new Date(schedule.pickupDate), 'dd MMM yyyy')}</TableCell>
                                         <TableCell>{schedule.pickupTime}</TableCell>
                                         <TableCell>{schedule.binType}</TableCell>
-                                        <TableCell>{schedule.status}</TableCell>
+                                        <TableCell>{schedule.status.toLowerCase() === 'completed' ? 'Collected' : schedule.status}</TableCell>
                                     </TableRow>
                                 ))
                             ) : (
@@ -87,6 +88,8 @@ const CollectionHistory = () => {
                 {/* Toast Notification Container */}
                 <ToastContainer />
             </Container>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <Footer />
         </Box>
     );
 };

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Card, Col, Row, Modal, Button } from 'antd';
+import { Card, Col, Row, Modal, Button, notification } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import WasteRequestForm from './../Form/WasteRequestForm'
 import Header1 from '../../components/Layout/Header1'; // Import Header1
 import {} from './../../components/style/RecyclingPage.css';
 import recyclingImage from './../../components/image/recycling-image.jpeg';
+import { useAuth } from '../../context/auth';
 
 const RedeemRewards = () => {
     const [categories, setCategories] = useState([]);
@@ -14,7 +15,33 @@ const RedeemRewards = () => {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [visible, setVisible] = useState(false);
     const [modalContent, setModalContent] = useState(null);
+    const [auth, setAuth] = useAuth();
+    const [userPoint,setPoint] = useState("");
+    const [email, setEmail] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (auth && auth.user) {
+            setEmail(auth.user.email);
+        }
+    }, [auth]);
+
+    useEffect(() => {
+        getUserDetails();
+    }, [email]);
+
+    const getUserDetails = async() =>{
+        try {
+            const userResponse = await axios.get(`/api/v1/auth/get-SingleUser/${email}`);
+            // console.log(email);
+            const user = userResponse.data?.user;
+            setPoint(user?.points);
+            console.log(user);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
 
     const getAllBulkCategories = async () => {
         try {
@@ -33,56 +60,85 @@ const RedeemRewards = () => {
         getAllBulkCategories();
     }, []);
 
-    const handleCategoryClick = (category) => {
-        setSelectedCategory(category);
-        setIsModalVisible(true);
-    };
+    const handleCategoryClick = async (category) => {
+        // Check if user has enough points
+        if (userPoint >= category.point) {
 
-    const handleCloseModal = () => {
-        setIsModalVisible(false);
-        setSelectedCategory(null);
+            const totalPoints = userPoint- category.point ;
+            setPoint(totalPoints);
+            console.log(totalPoints);
+            await axios.put(`/api/v1/auth/update-points/${email}`, {
+                points: totalPoints, // Sending the total calculated points to update
+              });
+            // Show success notification
+            notification.success({
+                message: 'Redemption Successful',
+                description: `You received this item. It will be delivered within 10 days.`,
+                duration: 3, // Duration the toast message stays visible (in seconds)
+            });
+    
+            // Optionally, update the backend to deduct points or register the reward redemption here
+    
+        } else {
+            // Show error notification
+            notification.error({
+                message: 'Not Enough Points',
+                description: `You need at least ${category.point} points to redeem this reward.`,
+                duration: 3,
+            });
+        }
     };
+    
 
-    // Function to handle modal visibility and content
-    const handleModal = (content) => {
-        setVisible(true);
-        setModalContent(content);
-    };
+    // const handleCloseModal = () => {
+    //     setIsModalVisible(false);
+    //     setSelectedCategory(null);
+    // };
+
+    // // Function to handle modal visibility and content
+    // const handleModal = (content) => {
+    //     setVisible(true);
+    //     setModalContent(content);
+    // };
 
     return (
-        <div style={{ backgroundColor: '#F3F4F6' }}>
+        <div >
             <Header1 /> {/* Include Header1 here */}
             <div style={{
-                padding: '30px',
-                backgroundColor: '#F3F4F6',
-                maxWidth: '1200px',
+                // padding: '30px',
+                paddingLeft:'10px',
+                paddingRight:'10px',
+                // backgroundColor: '#F3F4F6',
+                maxWidth: '100%',
+                maxHeight: '1000px',
                 margin: '0 auto',
             }}>
-                    <div className="recyclingContainer">
-                        <h1 className='h1Header'>What is Recycling?</h1>
-                        <div className="firstContent">
-                            <p className='paragr'>
-                            Recycling is the process of collecting, processing, and reusing materials that would otherwise be discarded as waste. By converting used materials into new products, recycling reduces the need for raw materials, conserves natural resources, and decreases the amount of waste sent to landfills and incinerators. Commonly recycled materials include paper, glass, metal, and plastic. Recycling not only helps protect the environment but also supports economic growth by creating jobs in the recycling and manufacturing industries. It's a key component of sustainable living, promoting the efficient use of resources and minimizing our ecological footprint.
-                            </p>
-                            <img src={recyclingImage} alt="Recycling" className="recycling-image" />
-                        </div>
-                        <h2 className='h2Header'>How to Identify Recyclable Materials?</h2>
-                        <p className='secondParagr'>
-                            Identifying recyclable materials involves checking labels, symbols, and local recycling guidelines. Look for the recycling symbol (♻️) with a number inside, indicating the type of plastic. Common recyclable items include paper, cardboard, glass bottles, aluminum cans, steel, and most plastics labeled #1 and #2. Always rinse and clean items before recycling.
-                        </p>
-                    </div>
+                <h2 className='h2Header' style={{color: '#1A4D2E'}}>
+                    Earn Rewards! <br/>
+                    and<br/>
+                    Exclusive items from our<br/>
+                    community partners
+                </h2>
+                <div style={{paddingLeft:'10px',textAlign: 'right'}}>
+                 Your have {userPoint} points.
+                </div>
+                
+                
 
-                <h1 style={{
+                {/* <h1 style={{
                     textAlign: 'center',
                     paddingTop:20,
                     color: '#1A4D2E',
                     fontWeight: 600,
                     marginBottom: '40px',
-                }}>Waste Categories</h1>
+                }}>Waste Categories</h1> */}
 
                 <div style={{
                     backgroundColor: '#EDEDED',
                     padding: '30px',
+                    // paddingLeft:'30px',
+                    // paddingRight:'30px',
+                    // paddingBottom:'30px',
                     borderRadius: '12px',
                     boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
                 }}>
@@ -96,7 +152,7 @@ const RedeemRewards = () => {
                                         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
                                         borderRadius: '10px',
                                         width: '100%', 
-                                        height: '280px',
+                                        height: '320px',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         justifyContent: 'space-between',
@@ -154,6 +210,7 @@ const RedeemRewards = () => {
                                             WebkitBoxOrient: 'vertical',
                                             WebkitLineClamp: 2, 
                                         }}>{category.description}</p>
+                                        <p style={{color: '#1A4D2E'}}>(Eran at least {category.point} points.)</p>
                                     </div>
                                 </Card>
 
@@ -162,7 +219,7 @@ const RedeemRewards = () => {
                     </Row>
 
 
-                    <div style={{
+                    {/* <div style={{
                         display: 'flex',
                         justifyContent: 'flex-end',
                         marginTop: '40px',
@@ -187,10 +244,10 @@ const RedeemRewards = () => {
                         >
                             To Request Form
                         </Button>
-                    </div>
+                    </div> */}
                 </div>
 
-                <Modal
+                {/* <Modal
                     title={<h2 style={{ fontWeight: 600, color: '#1A4D2E' }}>{selectedCategory?.name}</h2>}
                     visible={isModalVisible}
                     onCancel={handleCloseModal}
@@ -213,13 +270,13 @@ const RedeemRewards = () => {
                             />
                         )}
                     </div>
-                </Modal>
-                <Modal
+                </Modal> */}
+                {/* <Modal
                     onCancel={() => setVisible(false)}
                     footer={null}
                     visible={visible}>
                     {modalContent}
-              </Modal> 
+              </Modal>  */}
 
             </div>
         </div>

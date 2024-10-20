@@ -22,6 +22,9 @@ const wasteRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  qrCode: {
+    type: String,
+  },
   status: {
     type: String,
     default: 'pending',

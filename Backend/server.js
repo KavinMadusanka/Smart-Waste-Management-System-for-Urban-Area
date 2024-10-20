@@ -2,7 +2,7 @@ import express from "express";
 import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
-import connectDB from "./config/db.js";
+import database from "./config/db.js";
 import cors from "cors";
 import AuthRoutes from './routes/AuthRoute.js'
 import CollectionSchedule from './routes/collectionScheduleRoutes.js'
@@ -19,8 +19,16 @@ import RewardRoutes from './routes/RewardRoute.js'
 //configure env
 dotenv.config();
 
-//database config
-connectDB();
+// //database config
+// connectDB();
+
+// Connect to the database
+const connectDatabase = async () => {
+    await database.connect();  // Use the new connect method from the singleton
+};
+
+connectDatabase();  // Call the database connection function
+
 
 //rest object
 const app = express();
@@ -53,7 +61,14 @@ app.get("/" , (req,res) => {
 //Port
 const PORT = process.env.PORT || 8082;
 
-//run listen
-app.listen(PORT, () => {
+// //run listen
+// app.listen(PORT, () => {
+//     console.log(`Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white);
+// });
+
+// Start the server
+const server = app.listen(PORT ,() => {
     console.log(`Server Running on ${process.env.DEV_MODE} mode on port ${PORT}`.bgCyan.white);
-});
+  });
+  
+export { server, app };  // Export both the server and app instances

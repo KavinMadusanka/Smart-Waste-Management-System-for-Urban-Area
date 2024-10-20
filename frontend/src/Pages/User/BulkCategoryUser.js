@@ -4,6 +4,7 @@ import { Card, Col, Row, Modal, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import Header1 from '../../components/Layout/Header1'; // Import Header1
+import Footer from '../../components/Layout/Footer';
 
 const BulkCategoryUser = () => {
     const [categories, setCategories] = useState([]);
@@ -184,6 +185,7 @@ const BulkCategoryUser = () => {
                 </Modal>
 
             </div>
+            <Footer/>
         </div>
     );
 };

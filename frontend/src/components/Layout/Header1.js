@@ -41,6 +41,7 @@ const Header1 = () => {
               </div>
                   {/* <Link to="/adminDashboard" className="nav-link">Dashboard</Link> */}
                   <Link to="/schedule-management" className="nav-link">Waste Collection</Link>
+                  <Link to="/bulkcategories" className="nav-link">Bulk Categories</Link>
                 </>
               )}
 
@@ -50,14 +51,14 @@ const Header1 = () => {
                   <div className="dropdown">
                 <a href="/usermaintenanceRequest" className="nav-link">Services</a>
                 <div className="dropdown-content">
-                  <a href="/bcategories">Bulk Waste Categories</a>
+                  <a href="/brequests">Request Bulk Waste Disposal</a>
                   <a href="/RedeemRewards">Redeem Rewards</a>
                   <a href="/usermaintenanceRequest">Maintain Request</a>
                 </div>
               </div>
                   <Link to="/contact" className="nav-link">Contact Us</Link>
                   <Link to="/my-schedule" className="nav-link">Schedule Pickup</Link>
-                  <Link to="/collection-history" className="nav-link">Collection Hostory</Link>
+                  <Link to="/collection-history" className="nav-link">Collection History</Link>
                 </>
               )}
 
